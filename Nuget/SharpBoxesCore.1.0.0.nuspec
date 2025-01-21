@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SharpBoxesCore</id>
+    <version>1.0.0</version>
+    <title>SharpBoxesCore</title>
+    <authors>zheng</authors>
+    <owners>zheng</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <readme>buildMultiTargeting\readme.md</readme>
+    <description>该库作为SharpBoxes[https://github.com/dumbnessrf/SharpBoxes/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</description>
+    <releaseNotes>First Update</releaseNotes>
+  </metadata>
+  <files>
+        <file src="lib\**" target="lib" />
+  </files>
+</package>
