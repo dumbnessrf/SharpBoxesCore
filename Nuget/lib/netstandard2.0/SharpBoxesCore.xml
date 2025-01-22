@@ -657,15 +657,15 @@
             <summary>
             压缩
             </summary>
-            <param name="filename"> 压缩后的文件名(包含物理路径)</param>
-            <param name="directory">待压缩的文件夹(包含物理路径)</param>
+            <param name="outputFileName"> 压缩后的文件名(包含物理路径)</param>
+            <param name="dirBePacked">待压缩的文件夹(包含物理路径)</param>
         </member>
         <member name="M:SharpBoxes.Helpers.ZipHelper.UnpackFiles(System.String,System.String)">
             <summary>
             解压缩
             </summary>
-            <param name="file">待解压文件名(包含物理路径)</param>
-            <param name="dir"> 解压到哪个目录中(包含物理路径)</param>
+            <param name="fileBeUnpacked">待解压文件名(包含物理路径)</param>
+            <param name="outputDir"> 解压到哪个目录中(包含物理路径)</param>
         </member>
         <member name="T:SharpBoxes.Reflection.ClassHelper">
             <summary>
@@ -955,6 +955,207 @@
             <para>检查集合的元素数量是否为0，并返回一个消息。</para>
             <para>如果集合的元素数量为0，则返回false和一个描述错误的消息。</para>
             </summary>
+        </member>
+        <member name="T:SharpBoxesCore.Helpers.HTTPHelper">
+            <summary>
+            用于处理HTTP请求的帮助类
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.Get(System.String)">
+            <summary>
+            发送GET请求
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.Get``1(System.String)">
+            <summary>
+            发送GET请求并反序列化为指定类型
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.Post(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            发送POST请求
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.Post``1(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            发送POST请求并反序列化为指定类型
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.GetAsync(System.String)">
+            <summary>
+            <inheritdoc cref="M:SharpBoxesCore.Helpers.HTTPHelper.Get(System.String)" />
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.GetAsync``1(System.String)">
+            <summary>
+            <inheritdoc cref="M:SharpBoxesCore.Helpers.HTTPHelper.Get``1(System.String)" />
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.PostAsync(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            <inheritdoc cref="M:SharpBoxesCore.Helpers.HTTPHelper.Post(System.String,System.String,System.Text.Encoding)" />
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.HTTPHelper.PostAsync``1(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            <inheritdoc cref="M:SharpBoxesCore.Helpers.HTTPHelper.Post``1(System.String,System.String,System.Text.Encoding)" />
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.GetPrivateProfileSectionNames(System.IntPtr,System.UInt32,System.String)">
+            <summary>
+            获取所有节点名称(Section)
+            </summary>
+            <param name="lpszReturnBuffer">存放节点名称的内存地址,每个节点之间用\0分隔</param>
+            <param name="nSize">内存大小(characters)</param>
+            <param name="lpFileName">Ini文件</param>
+            <returns>内容的实际长度,为0表示没有内容,为nSize-2表示内存大小不够</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.GetPrivateProfileSection(System.String,System.IntPtr,System.UInt32,System.String)">
+            <summary>
+            获取某个指定节点(Section)中所有KEY和Value
+            </summary>
+            <param name="lpAppName">节点名称</param>
+            <param name="lpReturnedString">返回值的内存地址,每个之间用\0分隔</param>
+            <param name="nSize">内存大小(characters)</param>
+            <param name="lpFileName">Ini文件</param>
+            <returns>内容的实际长度,为0表示没有内容,为nSize-2表示内存大小不够</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.GetPrivateProfileString(System.String,System.String,System.String,System.Char[],System.UInt32,System.String)">
+            <summary>
+            读取INI文件中指定的Key的值
+            </summary>
+            <param name="lpAppName">节点名称。如果为null,则读取INI中所有节点名称,每个节点名称之间用\0分隔</param>
+            <param name="lpKeyName">Key名称。如果为null,则读取INI中指定节点中的所有KEY,每个KEY之间用\0分隔</param>
+            <param name="lpDefault">读取失败时的默认值</param>
+            <param name="lpReturnedString">读取的内容缓冲区，读取之后，多余的地方使用\0填充</param>
+            <param name="nSize">内容缓冲区的长度</param>
+            <param name="lpFileName">INI文件名</param>
+            <returns>实际读取到的长度</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.WritePrivateProfileSection(System.String,System.String,System.String)">
+            <summary>
+            将指定的键值对写到指定的节点，如果已经存在则替换。
+            </summary>
+            <param name="lpAppName">节点，如果不存在此节点，则创建此节点</param>
+            <param name="lpString">
+            Item键值对，多个用\0分隔,形如key1=value1\0key2=value2
+            <para>如果为string.Empty，则删除指定节点下的所有内容，保留节点</para>
+            <para>如果为null，则删除指定节点下的所有内容，并且删除该节点</para>
+            </param>
+            <param name="lpFileName">INI文件</param>
+            <returns>是否成功写入</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.WritePrivateProfileString(System.String,System.String,System.String,System.String)">
+            <summary>
+            将指定的键和值写到指定的节点，如果已经存在则替换
+            </summary>
+            <param name="lpAppName">节点名称</param>
+            <param name="lpKeyName">键名称。如果为null，则删除指定的节点及其所有的项目</param>
+            <param name="lpString">值内容。如果为null，则删除指定节点中指定的键。</param>
+            <param name="lpFileName">INI文件</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadSectionNames(System.String)">
+            <summary>
+            读取INI文件中指定INI文件中的所有节点名称(Section)
+            </summary>
+            <returns>所有节点,没有内容返回string[0]</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadAllItems(System.String,System.String)">
+            <summary>
+            获取INI文件中指定节点(Section)中的所有条目(key=value形式)
+            </summary>
+            <param name="section">节点名称</param>
+            <returns>指定节点中的所有项目,没有内容返回string[0]</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadAllItemKeys(System.String,System.String)">
+            <summary>
+            获取INI文件中指定节点(Section)中的所有条目的Key列表
+            </summary>
+            <param name="section">节点名称</param>
+            <returns>如果没有内容,反回string[0]</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadItemValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            读取INI文件中指定KEY的字符串型值
+            </summary>
+            <param name="section">节点名称</param>
+            <param name="key">键名称</param>
+            <param name="defaultValue">读取为空时返回的值</param>
+            <returns>读取到的值</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.WriteItems(System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，将指定的键值对写到指定的节点，如果已经存在则替换
+            </summary>
+            <param name="section">节点，如果不存在此节点，则创建此节点</param>
+            <param name="items">键值对，多个用\0分隔,形如key1=value1\0key2=value2</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.WriteValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，指定节点写入指定的键及值。如果已经存在，则替换。如果没有则创建。
+            </summary>
+            <param name="section">节点</param>
+            <param name="key">键</param>
+            <param name="value">值</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.DeleteKey(System.String,System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定节点中的指定的键。
+            </summary>
+            <param name="section">节点</param>
+            <param name="key">键</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.DeleteSection(System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定的节点。
+            </summary>
+            <param name="section">节点</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.EmptySection(System.String,System.String)">
+            <summary>
+            在INI文件中，删除指定节点中的所有内容。
+            </summary>
+            <param name="section">节点</param>
+            <returns>操作是否成功</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ToDictionary(System.String,System.String,System.Char)">
+            <summary>
+            获取指定节点下的key和value，返回字典
+            </summary>
+            <param name="iniPath"></param>
+            <param name="section"></param>
+            <param name="split"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadKeys(System.String,System.String)">
+            <summary>
+            获取指定节点下的key列表
+            </summary>
+            <param name="SectionName"></param>
+            <param name="iniFilename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.IniHelper.ReadVals(System.String,System.String)">
+            <summary>
+            获取指定节点下的value列表
+            </summary>
+            <param name="SectionName"></param>
+            <param name="iniFilename"></param>
+            <returns></returns>
         </member>
         <member name="T:System.Runtime.CompilerServices.IsExternalInit">
             <summary>
