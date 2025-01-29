@@ -17,16 +17,13 @@
     <dependencies>
       <dependency id="Newtonsoft.Json" version="13.0.3" />
     </dependencies>
-
     <frameworkAssemblies>
- 
-
-    <frameworkAssembly assemblyName="System.IO.Compression" targetFramework="net48" />
+      <frameworkAssembly assemblyName="System.IO.Compression" targetFramework="net48" />
       <frameworkAssembly assemblyName="System.IO.Compression.FileSystem" targetFramework="net48" />
-        <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net48" />
-</frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net48" />
+    </frameworkAssemblies>
   </metadata>
- <files>
-        <file src="lib\**" target="lib" />
+  <files>
+    <file src="lib\**" target="lib" />
   </files>
 </package>
