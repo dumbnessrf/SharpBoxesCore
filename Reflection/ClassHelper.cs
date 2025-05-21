@@ -286,7 +286,7 @@ public static class ClassHelper
         property.SetValue(instance, value);
     }
 
-    public static TResult GetStaticFieldValue<TClass, TResult>(this TClass @class, string name)
+    public static TResult GetStaticFieldValue<TClass, TResult>( string name)
     {
         var field = typeof(TClass).GetField(
             name,
@@ -312,7 +312,7 @@ public static class ClassHelper
     }
 
     public static void SetStaticFieldValue<TClass, TValue>(
-        this TClass @class,
+ 
         string name,
         TValue value
     )
@@ -333,7 +333,7 @@ public static class ClassHelper
         field.SetValue(null, value);
     }
 
-    public static TResult GetStaticPropertyValue<TClass, TResult>(this TClass @class, string name)
+    public static TResult GetStaticPropertyValue<TClass, TResult>( string name)
     {
         var property = typeof(TClass).GetProperty(
             name,
@@ -359,7 +359,7 @@ public static class ClassHelper
     }
 
     public static void SetStaticPropertyValue<TClass, TValue>(
-        this TClass @class,
+
         string name,
         TValue value
     )
@@ -382,7 +382,7 @@ public static class ClassHelper
     }
 
     public static TResult InvokeStaticMethod<TClass, TResult>(
-        this TClass @class,
+
         string name,
         params object[] args
     )
@@ -411,7 +411,7 @@ public static class ClassHelper
     }
 
     public static void InvokeStaticVoidMethod<TClass>(
-        this TClass @class,
+
         string name,
         params object[] args
     )
@@ -485,7 +485,7 @@ public static class ClassHelper
         method.Invoke(instance, args);
     }
 
-    public static MethodInfo GetStaticMethod<TClass>( this TClass @class, string name)
+    public static MethodInfo GetStaticMethod<TClass>(  string name)
     {
         var method = typeof(TClass).GetMethod(
             name,
