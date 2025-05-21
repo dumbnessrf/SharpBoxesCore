@@ -125,7 +125,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (field == null)
@@ -166,7 +165,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (property == null)
@@ -195,7 +193,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (field == null)
@@ -225,7 +222,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (field == null)
@@ -248,7 +244,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (property == null)
@@ -278,7 +273,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (property == null)
@@ -296,8 +290,7 @@ public static class ClassHelper
     {
         var field = typeof(TClass).GetField(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -326,8 +319,7 @@ public static class ClassHelper
     {
         var field = typeof(TClass).GetField(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -345,8 +337,7 @@ public static class ClassHelper
     {
         var property = typeof(TClass).GetProperty(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -375,8 +366,7 @@ public static class ClassHelper
     {
         var property = typeof(TClass).GetProperty(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -399,8 +389,7 @@ public static class ClassHelper
     {
         var method = typeof(TClass).GetMethod(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -429,8 +418,7 @@ public static class ClassHelper
     {
         var method = typeof(TClass).GetMethod(
             name,
-            BindingFlags.Instance
-                | BindingFlags.Public
+            BindingFlags.Public
                 | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
@@ -455,7 +443,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (method == null)
@@ -485,7 +472,6 @@ public static class ClassHelper
             name,
             BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.Static
                 | BindingFlags.NonPublic
         );
         if (method == null)
@@ -498,4 +484,43 @@ public static class ClassHelper
 
         method.Invoke(instance, args);
     }
+
+    public static MethodInfo GetStaticMethod<TClass>( this TClass @class, string name)
+    {
+        var method = typeof(TClass).GetMethod(
+            name,
+            BindingFlags.Public
+                | BindingFlags.Static        
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return method;
+    }
+
+    public static MethodInfo GetInstanceMethod<TInstance>( this TInstance instance, string name)
+    {
+        var method = typeof(TInstance).GetMethod(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return method;
+    }
+
 }
