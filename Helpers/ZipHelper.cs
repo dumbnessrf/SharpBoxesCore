@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.Helpers;
+namespace SharpBoxesCore.Helpers;
 
 public static class ZipHelper
 {

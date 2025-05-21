@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace SharpBoxes.Helpers;
+namespace SharpBoxesCore.Helpers;
 
 public static class XMLHelper
 {

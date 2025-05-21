@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.Helpers;
+namespace SharpBoxesCore.Helpers;
 
 /// <summary>
 /// 删除指定时间以前的文件夹，并且支持指定间隔轮询判断文件夹是否符合要求

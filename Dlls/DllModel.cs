@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.AccessControl;
 
-namespace SharpBoxes.Dlls
+namespace SharpBoxesCore.Dlls
 {
     /// <summary>
     /// Dll模型类

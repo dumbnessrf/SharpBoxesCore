@@ -8,7 +8,7 @@
     <owners>zheng</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <readme>buildMultiTargeting\readme.md</readme>
-    <description>该库作为SharpBoxes[https://github.com/dumbnessrf/SharpBoxes/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</description>
+    <description>该库作为SharpBoxesCore[https://github.com/dumbnessrf/SharpBoxesCore/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</description>
     <releaseNotes>First Update</releaseNotes>
   </metadata>
   <files>

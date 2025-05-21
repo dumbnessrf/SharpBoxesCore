@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 
-namespace SharpBoxes.DataStruct.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 /// <summary>

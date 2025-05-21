@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharpBoxes.Dlls
+namespace SharpBoxesCore.Dlls
 {
     /// <summary>
     /// 提供Dll模型集合的类

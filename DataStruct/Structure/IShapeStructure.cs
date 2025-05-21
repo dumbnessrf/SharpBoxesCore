@@ -1,3 +1,3 @@
-﻿namespace SharpBoxes.DataStruct.Structure;
+﻿namespace SharpBoxesCore.DataStruct.Structure;
 
 public interface IShapeStructure { }

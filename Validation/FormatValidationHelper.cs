@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.Validation
+namespace SharpBoxesCore.Validation
 {
     /// <summary>
     /// FormatValidationHelper 是一个静态类，提供了一系列的格式验证方法。

@@ -1,5 +1,5 @@
-﻿using SharpBoxes.DataStruct;
-using SharpBoxes.DataStruct.Structure;
+﻿using SharpBoxesCore.DataStruct;
+using SharpBoxesCore.DataStruct.Structure;
 
 
 namespace SharpCanvas.Shapes.Structure;

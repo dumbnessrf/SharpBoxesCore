@@ -16,7 +16,7 @@ Orignal Source:
 
 其他相关工具、扩展
 Other Toolkit:
-[SharpBoxes.Cuts](https://marketplace.visualstudio.com/items?itemName=dumbnessrf.SharpBoxes)
+[SharpBoxesCore.Cuts](https://marketplace.visualstudio.com/items?itemName=dumbnessrf.SharpBoxesCore)
 
 其中提供了许多cSharp、xaml有用的代码片段，如`OnPropertyChanged`的完整属性语句，`Task.Run（）=>{}`）的自动环绕；…
 

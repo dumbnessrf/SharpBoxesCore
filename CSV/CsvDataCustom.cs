@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpBoxes.CsvServices
+namespace SharpBoxesCore.CsvServices
 {
     /// <summary>
     /// CsvDataCustom类，继承自<see cref="CsvDataBase"/>抽象类。

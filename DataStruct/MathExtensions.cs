@@ -6,10 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
-using SharpBoxes.DataStruct.Structure;
+using SharpBoxesCore.DataStruct.Structure;
 using SharpCanvas.Shapes.Structure;
 
-namespace SharpBoxes.DataStruct;
+namespace SharpBoxesCore.DataStruct;
 
 public static class Extensions
 {
@@ -28,24 +28,30 @@ public static class Extensions
         return (float)Math.Round(d, digits);
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point Round(this SharpBoxesCore.DataStruct.Structure.Point p, int digits = 5)
+    public static SharpBoxesCore.DataStruct.Structure.Point Round(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        int digits = 5
+    )
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X.Round(digits), p.Y.Round(digits));
     }
 
-    public static Point ToPoint(this SharpBoxesCore.DataStruct.Structure.Point p)
-    {
-        return new Point(p.X.ToInt(), p.Y.ToInt());
-    }
-
-    public static SharpBoxesCore.DataStruct.Structure.Point ToPointF(this SharpBoxesCore.DataStruct.Structure.Point p)
+    public static SharpBoxesCore.DataStruct.Structure.Point ToPointF(
+        this SharpBoxesCore.DataStruct.Structure.Point p
+    )
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X.ToFloat(), p.Y.ToFloat());
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Size Round(this SharpBoxesCore.DataStruct.Structure.Size s, int digits = 5)
+    public static SharpBoxesCore.DataStruct.Structure.Size Round(
+        this SharpBoxesCore.DataStruct.Structure.Size s,
+        int digits = 5
+    )
     {
-        return new SharpBoxesCore.DataStruct.Structure.Size(s.Width.Round(digits), s.Height.Round(digits));
+        return new SharpBoxesCore.DataStruct.Structure.Size(
+            s.Width.Round(digits),
+            s.Height.Round(digits)
+        );
     }
 
     public static Rectangle2D Round(this Rectangle2D r, int digits = 5)
@@ -83,15 +89,15 @@ public static class Extensions
 
     public static Rectangle1D ToRectangle1D(this Rectangle2D r)
     {
-        return new Rectangle1D(r.HalfWidth*2, r.HalfHeight*2, r.TopLeft.X, r.TopLeft.Y);
+        return new Rectangle1D(r.HalfWidth * 2, r.HalfHeight * 2, r.TopLeft.X, r.TopLeft.Y);
     }
 
     public static Rectangle2D ToRectangle2D(this Rectangle1D r)
     {
         return new Rectangle2D(
             new SharpBoxesCore.DataStruct.Structure.Point(r.CenterPoint.X, r.CenterPoint.Y),
-            r.Width/2,
-            r.Height/2,
+            r.Width / 2,
+            r.Height / 2,
             0
         );
     }
@@ -110,14 +116,20 @@ public static class Extensions
     /// <param name="p1"></param>
     /// <param name="p2"></param>
     /// <returns></returns>
-    public static double Angle(this SharpBoxesCore.DataStruct.Structure.Point p1, SharpBoxesCore.DataStruct.Structure.Point p2)
+    public static double Angle(
+        this SharpBoxesCore.DataStruct.Structure.Point p1,
+        SharpBoxesCore.DataStruct.Structure.Point p2
+    )
     {
         var dx = p2.X - p1.X;
         var dy = p2.Y - p1.Y;
         return Math.Atan2(dy, dx);
     }
 
-    public static double Distance(this SharpBoxesCore.DataStruct.Structure.Point p1, SharpBoxesCore.DataStruct.Structure.Point p2)
+    public static double Distance(
+        this SharpBoxesCore.DataStruct.Structure.Point p1,
+        SharpBoxesCore.DataStruct.Structure.Point p2
+    )
     {
         var dx = p2.X - p1.X;
         var dy = p2.Y - p1.Y;
@@ -131,7 +143,11 @@ public static class Extensions
     /// <param name="ps">线段的起点</param>
     /// <param name="pe">线段的终点</param>
     /// <returns>点p到线段(ps, pe)的距离</returns>
-    public static double DistanceToLine(this SharpBoxesCore.DataStruct.Structure.Point p, SharpBoxesCore.DataStruct.Structure.Point ps, SharpBoxesCore.DataStruct.Structure.Point pe)
+    public static double DistanceToLine(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        SharpBoxesCore.DataStruct.Structure.Point ps,
+        SharpBoxesCore.DataStruct.Structure.Point pe
+    )
     {
         // 计算点 p 到线段起点 ps 的水平和垂直距离
         var A = p.X - ps.X;
@@ -195,12 +211,20 @@ public static class Extensions
         return degrees * Math.PI / 180;
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point Translate(this SharpBoxesCore.DataStruct.Structure.Point p, double dx, double dy)
+    public static SharpBoxesCore.DataStruct.Structure.Point Translate(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        double dx,
+        double dy
+    )
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X + dx, p.Y + dy);
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point TranslateWithAngle(this SharpBoxesCore.DataStruct.Structure.Point p, double angle, double distance)
+    public static SharpBoxesCore.DataStruct.Structure.Point TranslateWithAngle(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        double angle,
+        double distance
+    )
     {
         var radians = angle.DegreesToRadians();
         var x = p.X + distance * Math.Cos(radians);
@@ -208,12 +232,20 @@ public static class Extensions
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
     }
 
-    public static List<SharpBoxesCore.DataStruct.Structure.Point> Translate(this List<SharpBoxesCore.DataStruct.Structure.Point> points, double dx, double dy)
+    public static List<SharpBoxesCore.DataStruct.Structure.Point> Translate(
+        this List<SharpBoxesCore.DataStruct.Structure.Point> points,
+        double dx,
+        double dy
+    )
     {
         return points.Select(p => p.Translate(dx, dy)).ToList();
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point Rotate(this SharpBoxesCore.DataStruct.Structure.Point p, double degree, SharpBoxesCore.DataStruct.Structure.Point center)
+    public static SharpBoxesCore.DataStruct.Structure.Point Rotate(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        double degree,
+        SharpBoxesCore.DataStruct.Structure.Point center
+    )
     {
         var radians = degree.DegreesToRadians();
         var cos = Math.Cos(radians);
@@ -223,7 +255,11 @@ public static class Extensions
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point ProjectionOfLine(this SharpBoxesCore.DataStruct.Structure.Point p, SharpBoxesCore.DataStruct.Structure.Point ps, SharpBoxesCore.DataStruct.Structure.Point pe)
+    public static SharpBoxesCore.DataStruct.Structure.Point ProjectionOfLine(
+        this SharpBoxesCore.DataStruct.Structure.Point p,
+        SharpBoxesCore.DataStruct.Structure.Point ps,
+        SharpBoxesCore.DataStruct.Structure.Point pe
+    )
     {
         double dx = pe.X - ps.X;
         double dy = pe.Y - ps.Y;
@@ -233,18 +269,27 @@ public static class Extensions
         return new SharpBoxesCore.DataStruct.Structure.Point(projectionX, projectionY);
     }
 
-    public static Rectangle2D Rotate(this Rectangle2D rect, double degree, SharpBoxesCore.DataStruct.Structure.Point center)
+    public static Rectangle2D Rotate(
+        this Rectangle2D rect,
+        double degree,
+        SharpBoxesCore.DataStruct.Structure.Point center
+    )
     {
         var radians = degree.DegreesToRadians();
         var cos = Math.Cos(radians);
         var sin = Math.Sin(radians);
-        var p = new SharpBoxesCore.DataStruct.Structure.Point(rect.CenterX, rect.CenterY).Rotate(degree, center);
-        var width = rect.HalfWidth*2 * cos + rect.HalfHeight*2 * sin;
-        var height = rect.HalfWidth*2 * sin + rect.HalfHeight*2 * cos;
-        return new Rectangle2D(width, height,p.X, p.Y, 0);
+        var p = new SharpBoxesCore.DataStruct.Structure.Point(rect.CenterX, rect.CenterY).Rotate(
+            degree,
+            center
+        );
+        var width = rect.HalfWidth * 2 * cos + rect.HalfHeight * 2 * sin;
+        var height = rect.HalfWidth * 2 * sin + rect.HalfHeight * 2 * cos;
+        return new Rectangle2D(width, height, p.X, p.Y, 0);
     }
 
-    public static SharpBoxesCore.DataStruct.Structure.Point Centroid(this List<SharpBoxesCore.DataStruct.Structure.Point> points)
+    public static SharpBoxesCore.DataStruct.Structure.Point Centroid(
+        this List<SharpBoxesCore.DataStruct.Structure.Point> points
+    )
     {
         if (points == null || points.Count == 0)
         {
@@ -267,7 +312,13 @@ public static class Extensions
         {
             rotateCenter = center;
         }
-        var rect = new Rectangle2D(width, height,center.X - width / 2, center.Y - height / 2, degrees);
+        var rect = new Rectangle2D(
+            width,
+            height,
+            center.X - width / 2,
+            center.Y - height / 2,
+            degrees
+        );
         rect = rect.Rotate(degrees, rotateCenter);
         return rect;
     }
@@ -278,7 +329,10 @@ public static class Extensions
     /// <param name="ps">点集</param>
     /// <param name="p">新点</param>
     /// <returns>插入索引</returns>
-    public static int GetIndexInPoints(this List<SharpBoxesCore.DataStruct.Structure.Point> ps, SharpBoxesCore.DataStruct.Structure.Point p)
+    public static int GetIndexInPoints(
+        this List<SharpBoxesCore.DataStruct.Structure.Point> ps,
+        SharpBoxesCore.DataStruct.Structure.Point p
+    )
     {
         //通过计算距离判断应该插入的索引
         List<double> distances = new();

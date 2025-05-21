@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.CsvServices
+namespace SharpBoxesCore.CsvServices
 {
     /// <summary>
     /// CSV数据的抽象基类。

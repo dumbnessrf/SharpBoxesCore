@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata>
     <id>SharpBoxesCore</id>
-    <version>1.0.0.3</version>
+    <version>1.0.0.4</version>
     <title>SharpBoxesCore</title>
     <authors>zheng</authors>
     <owners>zheng</owners>
@@ -12,7 +12,8 @@
     <readme>lib\readme.md</readme>
     <projectUrl>https://github.com/dumbnessrf/SharpBoxesCore</projectUrl>
     <description>该库作为SharpBoxesCore[https://github.com/dumbnessrf/SharpBoxesCore/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</description>
-    <releaseNotes>Update HTTPHelper and ZipHelper</releaseNotes>
+    <releaseNotes>feat: 添加几何图形结构及相关工具方法
+新增IShapeStructure接口及多种几何图形实现（如Circle、Rectangle1D、Rectangle2D等），并扩展了数学工具方法，包括点、线、矩形的计算与转换功能。</releaseNotes>
     <copyright>Copyright（C）Zheng</copyright>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="13.0.3" />

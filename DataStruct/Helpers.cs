@@ -4,9 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
-using SharpBoxes.Helpers;
+using SharpBoxesCore.Helpers;
 
-namespace SharpBoxes.DataStruct;
+namespace SharpBoxesCore.DataStruct;
 
 /// <summary>
 /// 辅助类

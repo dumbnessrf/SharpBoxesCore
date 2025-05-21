@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.CsvServices
+namespace SharpBoxesCore.CsvServices
 {
     /// <summary>
     /// CsvOprHelper静态类，提供CSV数据的操作方法。

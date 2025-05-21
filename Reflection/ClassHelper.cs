@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace SharpBoxes.Reflection;
+namespace SharpBoxesCore.Reflection;
 
 /// <summary>
 /// 提供类的辅助方法，包括设置属性的 Display Name 和 Description...

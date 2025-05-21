@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.CsvServices
+namespace SharpBoxesCore.CsvServices
 {
     /// <summary>
     /// CsvDataNormal类，继承自<see cref="CsvDataBase"/>抽象类。

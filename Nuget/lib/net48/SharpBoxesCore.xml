@@ -4,24 +4,24 @@
         <name>SharpBoxesCore</name>
     </assembly>
     <members>
-        <member name="T:SharpBoxes.Cache.CacheHelper">
+        <member name="T:SharpBoxesCore.Cache.CacheHelper">
             <summary>
             WPF的<see cref="!:System.Windows.Media"/>及其子类如<see cref="!:System.Windows.Media.Imaging.BitmapSource"/>等对象在使用完毕后，由于没有实现<see cref="T:System.IDisposable"/>接口，具体待定
             </summary>
         </member>
-        <member name="F:SharpBoxes.Cache.CacheHelper.Caches">
+        <member name="F:SharpBoxesCore.Cache.CacheHelper.Caches">
             <summary>
             缓存字典
             </summary>
         </member>
-        <member name="M:SharpBoxes.Cache.CacheHelper.SetCache(System.String,System.Object)">
+        <member name="M:SharpBoxesCore.Cache.CacheHelper.SetCache(System.String,System.Object)">
             <summary>
             设置缓存
             </summary>
             <param name="key">键</param>
             <param name="value">值</param>
         </member>
-        <member name="M:SharpBoxes.Cache.CacheHelper.GetCache``1(System.String)">
+        <member name="M:SharpBoxesCore.Cache.CacheHelper.GetCache``1(System.String)">
             <summary>
             获取缓存
             </summary>
@@ -29,13 +29,13 @@
             <param name="key">键</param>
             <returns>缓存的值</returns>
         </member>
-        <member name="M:SharpBoxes.Cache.CacheHelper.RemoveCache(System.String)">
+        <member name="M:SharpBoxesCore.Cache.CacheHelper.RemoveCache(System.String)">
             <summary>
             移除缓存
             </summary>
             <param name="key">键</param>
         </member>
-        <member name="T:SharpBoxes.Comparer.IgnoreLowerCaseAndUpperCaseStringEqualityComparer">
+        <member name="T:SharpBoxesCore.Comparer.IgnoreLowerCaseAndUpperCaseStringEqualityComparer">
             <summary>
             <example>
             <code>
@@ -47,11 +47,11 @@
             </example>
             </summary>
         </member>
-        <member name="T:SharpBoxes.CsvServices.CsvDataBase">
+        <member name="T:SharpBoxesCore.CsvServices.CsvDataBase">
              <summary>
              CSV数据的抽象基类。
              <example>
-             下面的示例演示了如何使用<see cref="T:SharpBoxes.CsvServices.CsvDataBase"/>类。
+             下面的示例演示了如何使用<see cref="T:SharpBoxesCore.CsvServices.CsvDataBase"/>类。
              <code>
              //模拟数据
              var datas1 = ClassInfo.FakeMany(2);
@@ -110,26 +110,26 @@
              </example>
              </summary>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataBase.GetString">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataBase.GetString">
             <summary>
             获取CSV数据的字符串表示形式。
             </summary>
             <returns>表示CSV数据的字符串。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataBase.Append(System.Text.StringBuilder)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataBase.Append(System.Text.StringBuilder)">
             <summary>
             将CSV数据追加到提供的StringBuilder。
             </summary>
             <param name="sb">要追加CSV数据的StringBuilder。</param>
             <returns>追加了CSV数据后的StringBuilder。</returns>
         </member>
-        <member name="T:SharpBoxes.CsvServices.CsvDataBlank">
+        <member name="T:SharpBoxesCore.CsvServices.CsvDataBlank">
             <summary>
             CsvDataBlank类，继承自CsvDataBase抽象类。
             该类主要用于处理空白的CSV数据。
             </summary>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataBlank.Append(System.Text.StringBuilder)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataBlank.Append(System.Text.StringBuilder)">
             <summary>
             重写Append方法，将GetString方法的返回值追加到StringBuilder对象。
             该方法的主要作用是将获取到的CSV数据字符串添加到StringBuilder对象中，以便于后续的数据处理和操作。
@@ -137,44 +137,44 @@
             <param name="sb">StringBuilder对象，用于存储和处理字符串。</param>
             <returns>追加了GetString方法返回值的StringBuilder对象。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataBlank.GetString">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataBlank.GetString">
             <summary>
             重写GetString方法，返回一个新行。
             该方法的主要作用是生成一个新的行字符串，用于表示CSV数据中的空白行。
             </summary>
             <returns>新行字符串，表示CSV数据中的空白行。</returns>
         </member>
-        <member name="T:SharpBoxes.CsvServices.CsvDataCustom">
+        <member name="T:SharpBoxesCore.CsvServices.CsvDataCustom">
             <summary>
-            CsvDataCustom类，继承自<see cref="T:SharpBoxes.CsvServices.CsvDataBase"/>抽象类。
+            CsvDataCustom类，继承自<see cref="T:SharpBoxesCore.CsvServices.CsvDataBase"/>抽象类。
             该类主要用于处理自定义的CSV数据。
             </summary>
         </member>
-        <member name="P:SharpBoxes.CsvServices.CsvDataCustom.Datas">
+        <member name="P:SharpBoxesCore.CsvServices.CsvDataCustom.Datas">
             <summary>
             数据列表，存储CSV数据。
             </summary>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataCustom.#ctor(System.Collections.Generic.List{System.String})">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataCustom.#ctor(System.Collections.Generic.List{System.String})">
             <summary>
             构造函数，接收一个<see cref="!:List&lt;string&gt;"/>作为CSV数据。
             </summary>
             <param name="datas">字符串列表，每个字符串代表CSV中的一条数据。</param>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataCustom.#ctor(System.String[])">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataCustom.#ctor(System.String[])">
             <summary>
             构造函数，接收一个字符串数组作为CSV数据。
             </summary>
             <param name="datas">字符串数组，每个字符串代表CSV中的一条数据。</param>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataCustom.#ctor(System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataCustom.#ctor(System.String)">
             <summary>
             构造函数，接收一个字符串作为CSV数据。
             如果字符串中包含逗号，则会被分割成多条数据；如果不包含逗号，则会被当作一条数据。
             </summary>
             <param name="datas">字符串，代表CSV中的数据。</param>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataCustom.Append(System.Text.StringBuilder)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataCustom.Append(System.Text.StringBuilder)">
             <summary>
             重写Append方法，将Datas中的每条数据追加到<see cref="T:System.Text.StringBuilder"/>对象。
             每条数据后面都会添加一个逗号，最后一条数据后的逗号会被移除，然后添加一个换行符。
@@ -182,37 +182,37 @@
             <param name="sb"><see cref="T:System.Text.StringBuilder"/>对象，用于存储和处理字符串。</param>
             <returns>追加了Datas中数据的<see cref="T:System.Text.StringBuilder"/>对象。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataCustom.GetString">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataCustom.GetString">
             <summary>
             重写GetString方法，但该方法尚未实现。
             </summary>
             <returns>抛出<see cref="T:System.NotImplementedException"/>异常。</returns>
             <exception cref="T:System.NotImplementedException">当方法未实现时抛出此异常。</exception>
         </member>
-        <member name="T:SharpBoxes.CsvServices.CsvDataNormal`1">
+        <member name="T:SharpBoxesCore.CsvServices.CsvDataNormal`1">
             <summary>
-            CsvDataNormal类，继承自<see cref="T:SharpBoxes.CsvServices.CsvDataBase"/>抽象类。
+            CsvDataNormal类，继承自<see cref="T:SharpBoxesCore.CsvServices.CsvDataBase"/>抽象类。
             该类主要用于处理常规的CSV数据。
             </summary>
         </member>
-        <member name="F:SharpBoxes.CsvServices.CsvDataNormal`1.dt">
+        <member name="F:SharpBoxesCore.CsvServices.CsvDataNormal`1.dt">
             <summary>
             DataTable对象，用于存储CSV数据。
             </summary>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataNormal`1.#ctor(System.Collections.Generic.List{`0})">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataNormal`1.#ctor(System.Collections.Generic.List{`0})">
             <summary>
             构造函数，接收一个<see cref="T:System.Collections.Generic.List`1"/>作为CSV数据。
             </summary>
             <param name="datas">数据列表，每个元素代表CSV中的一条数据。</param>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataNormal`1.#ctor(`0)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataNormal`1.#ctor(`0)">
             <summary>
             构造函数，接收一个数据对象作为CSV数据。
             </summary>
             <param name="data">数据对象，代表CSV中的一条数据。</param>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataNormal`1.Append(System.Text.StringBuilder)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataNormal`1.Append(System.Text.StringBuilder)">
             <summary>
             重写Append方法，将dt中的每条数据追加到<see cref="T:System.Text.StringBuilder"/>对象。
             每条数据后面都会添加一个逗号，最后一条数据后的逗号会被移除，然后添加一个换行符。
@@ -220,19 +220,19 @@
             <param name="sb"><see cref="T:System.Text.StringBuilder"/>对象，用于存储和处理字符串。</param>
             <returns>追加了dt中数据的<see cref="T:System.Text.StringBuilder"/>对象。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvDataNormal`1.GetString">
+        <member name="M:SharpBoxesCore.CsvServices.CsvDataNormal`1.GetString">
             <summary>
             重写GetString方法，但该方法尚未实现。
             </summary>
             <returns>抛出<see cref="T:System.NotImplementedException"/>异常。</returns>
             <exception cref="T:System.NotImplementedException">当方法未实现时抛出此异常。</exception>
         </member>
-        <member name="T:SharpBoxes.CsvServices.CsvOprHelper">
+        <member name="T:SharpBoxesCore.CsvServices.CsvOprHelper">
             <summary>
             CsvOprHelper静态类，提供CSV数据的操作方法。
             </summary>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.ToDT``1(System.Collections.Generic.List{``0},System.Boolean)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ToDT``1(System.Collections.Generic.List{``0},System.Boolean)">
             <summary>
             将<see cref="T:System.Collections.Generic.List`1"/>转换为<see cref="T:System.Data.DataTable"/>。
             </summary>
@@ -241,7 +241,7 @@
             <param name="isUseDisplayName">是否使用DisplayName属性作为列名，默认为false。</param>
             <returns>转换后的<see cref="T:System.Data.DataTable"/>。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.ToDT``1(``0,System.Boolean)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ToDT``1(``0,System.Boolean)">
             <summary>
             将单个数据对象转换为<see cref="T:System.Data.DataTable"/>。
             </summary>
@@ -250,21 +250,21 @@
             <param name="isUseDisplayName">是否使用DisplayName属性作为列名，默认为false。</param>
             <returns>转换后的<see cref="T:System.Data.DataTable"/>。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.ToCSV(System.Data.DataTable)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ToCSV(System.Data.DataTable)">
             <summary>
             将<see cref="T:System.Data.DataTable"/>转换为CSV格式的<see cref="T:System.Text.StringBuilder"/>。
             </summary>
             <param name="dt"><see cref="T:System.Data.DataTable"/>对象。</param>
             <returns>转换后的CSV格式的<see cref="T:System.Text.StringBuilder"/>。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.ToCSV(System.Collections.Generic.List{SharpBoxes.CsvServices.CsvDataBase})">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ToCSV(System.Collections.Generic.List{SharpBoxesCore.CsvServices.CsvDataBase})">
             <summary>
             将<see cref="T:System.Collections.Generic.List`1"/>转换为CSV格式的<see cref="T:System.Text.StringBuilder"/>。
             </summary>
             <param name="csvDatas">CSV数据列表。</param>
             <returns>转换后的CSV格式的<see cref="T:System.Text.StringBuilder"/>。</returns>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.SaveToFile(System.Text.StringBuilder,System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.SaveToFile(System.Text.StringBuilder,System.String)">
             <summary>
             将<see cref="T:System.Text.StringBuilder"/>保存为文件。
             </summary>
@@ -272,7 +272,7 @@
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当写入文件时发生错误。</exception>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.AppendDataToFile(System.Text.StringBuilder,System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.AppendDataToFile(System.Text.StringBuilder,System.String)">
             <summary>
             将<see cref="T:System.Text.StringBuilder"/>追加到文件。
             </summary>
@@ -280,16 +280,16 @@
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当写入文件时发生错误。</exception>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.AppendDataToFile``1(``0,System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.AppendDataToFile``1(``0,System.String)">
             <summary>
-            将<see cref="T:SharpBoxes.CsvServices.CsvDataBase"/>追加到文件。
+            将<see cref="T:SharpBoxesCore.CsvServices.CsvDataBase"/>追加到文件。
             </summary>
             <typeparam name="T">数据类型。</typeparam>
             <param name="data">数据对象。</param>
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当写入文件时发生错误。</exception>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.AppendDataToFile``1(System.Collections.Generic.List{``0},System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.AppendDataToFile``1(System.Collections.Generic.List{``0},System.String)">
             <summary>
             将<see cref="T:System.Collections.Generic.List`1"/>追加到文件。
             </summary>
@@ -298,7 +298,7 @@
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当写入文件时发生错误。</exception>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.RemoveFirstSpecificRowInFile(System.Predicate{System.String},System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.RemoveFirstSpecificRowInFile(System.Predicate{System.String},System.String)">
             <summary>
             从文件中移除第一个满足条件的行。
             </summary>
@@ -306,7 +306,7 @@
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当读取或写入文件时发生错误。</exception>
         </member>
-        <member name="M:SharpBoxes.CsvServices.CsvOprHelper.RemoveAllSpecificRowInFile(System.Predicate{System.String},System.String)">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.RemoveAllSpecificRowInFile(System.Predicate{System.String},System.String)">
             <summary>
             从文件中移除所有满足条件的行。
             </summary>
@@ -314,12 +314,125 @@
             <param name="filename">文件名。</param>
             <exception cref="T:System.IO.IOException">当读取或写入文件时发生错误。</exception>
         </member>
-        <member name="T:SharpBoxes.DataStruct.Helpers">
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ReadCsvToList(System.String)">
+            <summary>
+            <![CDATA[将CSV文件内容读取为嵌套列表（List<List<string>>），按行和逗号分隔]]>
+            </summary>
+            <param name="csvPath">CSV文件路径</param>
+            <returns>包含所有行数据的嵌套列表</returns>
+        </member>
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ReadCsvToListEntityc``1(System.String,System.Boolean,System.StringComparison,System.Action{System.Exception})">
+             <summary>
+             将CSV文件内容映射到指定实体类型的列表
+             </summary>
+             <typeparam name="T">目标实体类型</typeparam>
+             <param name="csvPath">CSV文件路径</param>
+             <param name="useDisplayName">是否使用DisplayName属性匹配列名</param>
+             <param name="stringComparison">字符串比较规则（默认忽略大小写）</param>
+             <param name="onErrorOccur">异常处理回调函数</param>
+             <returns>包含实体对象的列表</returns>
+             <example>
+             以下示例展示了如何使用DisplayName属性匹配列头并处理异常：
+             <code>
+             // 定义实体类
+             public class User
+             {
+                 [DisplayName("用户名")]
+                 public string Name { get; set; }
+            
+                 [DisplayName("年龄")]
+                 public int Age { get; set; }
+            
+                 [DisplayName("邮箱")]
+                 public string Email { get; set; }
+             }
+            
+             // 自定义异常处理逻辑
+             Action&lt;Exception&gt; onError = ex =>
+             {
+                 Console.WriteLine($"发生异常: {ex.Message}");
+             };
+            
+             // 读取CSV到实体列表
+             var users = CsvOprHelper.ReadCsvToListEntity&lt;User&gt;(
+                 "data.csv",
+                 useDisplayName: true, // 使用DisplayName属性匹配列头
+                 onErrorOccur: onError // 自定义异常处理
+             );
+            
+             // 输出结果
+             foreach (var user in users)
+             {
+                 Console.WriteLine($"Name: {user.Name}, Age: {user.Age}, Email: {user.Email}");
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.GetDisplayName(System.Reflection.PropertyInfo)">
+            <summary>
+            获取属性的DisplayName或默认名称
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.CsvServices.CsvOprHelper.ReadCsvToListEntity``1(System.String,System.Func{System.Reflection.PropertyInfo,System.String},System.StringComparison,System.Action{System.Exception})">
+             <summary>
+             将CSV文件内容映射到指定实体类型的列表，支持自定义列头匹配逻辑和异常处理
+             </summary>
+             <typeparam name="T">目标实体类型</typeparam>
+             <param name="csvPath">CSV文件路径</param>
+             <param name="headerMatchFunc">自定义列头匹配逻辑的函数</param>
+             <param name="stringComparison">字符串比较规则（默认忽略大小写）</param>
+             <param name="onErrorOccur">异常处理回调函数</param>
+             <returns>包含实体对象的列表</returns>
+             <example>
+             以下示例展示了如何使用自定义列头匹配逻辑和异常处理：
+             <code>
+             // 定义实体类
+             public class User
+             {
+                 public string Name { get; set; }
+                 public int Age { get; set; }
+                 public string Email { get; set; }
+             }
+            
+             // 自定义列头匹配逻辑
+             Func&lt;PropertyInfo, string&gt; customHeaderMatchFunc = prop =>
+             {
+                 return prop.Name switch
+                 {
+                     "Name" => "用户名", // 将 "Name" 属性映射到 "用户名" 列
+                     "Age" => "年龄",   // 将 "Age" 属性映射到 "年龄" 列
+                     "Email" => "邮箱", // 将 "Email" 属性映射到 "邮箱" 列
+                     _ => prop.Name     // 默认使用属性名
+                 };
+             };
+            
+             // 自定义异常处理逻辑
+             Action&lt;Exception&gt; onError = ex =>
+             {
+                 Console.WriteLine($"发生异常: {ex.Message}");
+             };
+            
+             // 读取CSV到实体列表
+             var users = CsvOprHelper.ReadCsvToListEntity&lt;User&gt;(
+                 "data.csv",
+                 customHeaderMatchFunc,
+                 onErrorOccur: onError
+             );
+            
+             // 输出结果
+             foreach (var user in users)
+             {
+                 Console.WriteLine($"Name: {user.Name}, Age: {user.Age}, Email: {user.Email}");
+             }
+             </code>
+             </example>
+        </member>
+        <member name="T:SharpBoxesCore.DataStruct.Helpers">
             <summary>
             辅助类
             </summary>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.DictToJson``2(System.Collections.Generic.Dictionary{``0,``1})">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.DictToJson``2(System.Collections.Generic.Dictionary{``0,``1})">
             <summary>
             将字典转换为Json字符串
             </summary>
@@ -328,7 +441,7 @@
             <param name="dict">字典</param>
             <returns>Json字符串</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.JsonToDict``2(System.String)">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.JsonToDict``2(System.String)">
             <summary>
             将Json字符串转换为字典
             </summary>
@@ -337,7 +450,7 @@
             <param name="json">Json字符串</param>
             <returns>字典</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.CloneByJson``1(``0)">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.CloneByJson``1(``0)">
             <summary>
             通过Json进行深度复制
             </summary>
@@ -345,7 +458,7 @@
             <param name="t">对象</param>
             <returns>复制的对象</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.FindAllIndex``1(System.Collections.Generic.List{``0},System.Predicate{``0})">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.FindAllIndex``1(System.Collections.Generic.List{``0},System.Predicate{``0})">
             <summary>
             查找所有符合条件的下标
             </summary>
@@ -354,7 +467,7 @@
             <param name="predicate"></param>
             <returns></returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToDoubleArr(System.String,System.String[])">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToDoubleArr(System.String,System.String[])">
             <summary>
             将字符串转换为double数组
             </summary>
@@ -362,7 +475,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>double数组</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToIntArr(System.String,System.String[])">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToIntArr(System.String,System.String[])">
             <summary>
             将字符串转换为int数组
             </summary>
@@ -370,7 +483,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>int数组</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToStringArr(System.String,System.String[])">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToStringArr(System.String,System.String[])">
             <summary>
             将字符串转换为字符串数组
             </summary>
@@ -378,7 +491,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>字符串数组</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.String},System.String)">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.String},System.String)">
             <summary>
             将字符串数组转换为字符串
             </summary>
@@ -386,7 +499,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>字符串</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.Int32},System.String)">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.Int32},System.String)">
             <summary>
             将int数组转换为字符串
             </summary>
@@ -394,7 +507,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>字符串</returns>
         </member>
-        <member name="M:SharpBoxes.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.Double},System.String)">
+        <member name="M:SharpBoxesCore.DataStruct.Helpers.ToStr(System.Collections.Generic.IEnumerable{System.Double},System.String)">
             <summary>
             将double数组转换为字符串
             </summary>
@@ -402,12 +515,90 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>字符串</returns>
         </member>
-        <member name="T:SharpBoxes.Dlls.DllModel">
+        <member name="M:SharpBoxesCore.DataStruct.Extensions.Scale(SharpCanvas.Shapes.Structure.Rectangle2D,System.Int32)">
+            <summary>
+            根据矩形中心扩大或缩小矩形
+            </summary>
+            <param name="r"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Extensions.Angle(SharpBoxesCore.DataStruct.Structure.Point,SharpBoxesCore.DataStruct.Structure.Point)">
+            <summary>
+            计算两个点之间的角度，单位为弧度
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Extensions.DistanceToLine(SharpBoxesCore.DataStruct.Structure.Point,SharpBoxesCore.DataStruct.Structure.Point,SharpBoxesCore.DataStruct.Structure.Point)">
+            <summary>
+            计算点p到线段(ps, pe)的距离
+            </summary>
+            <param name="p">要计算距离的点</param>
+            <param name="ps">线段的起点</param>
+            <param name="pe">线段的终点</param>
+            <returns>点p到线段(ps, pe)的距离</returns>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Extensions.GetIndexInPoints(System.Collections.Generic.List{SharpBoxesCore.DataStruct.Structure.Point},SharpBoxesCore.DataStruct.Structure.Point)">
+            <summary>
+            计算新点p在点集ps中的应该插入的索引
+            </summary>
+            <param name="ps">点集</param>
+            <param name="p">新点</param>
+            <returns>插入索引</returns>
+        </member>
+        <member name="F:SharpBoxesCore.DataStruct.Structure.Circle.Radius">
+            <summary>
+            圆的半径。
+            </summary>
+        </member>
+        <member name="F:SharpBoxesCore.DataStruct.Structure.Circle.CenterX">
+            <summary>
+            圆心的X坐标。
+            </summary>
+        </member>
+        <member name="F:SharpBoxesCore.DataStruct.Structure.Circle.CenterY">
+            <summary>
+            圆心的Y坐标。
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Diameter">
+            <summary>
+            获取圆的直径，并进行四舍五入。
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Center">
+            <summary>
+            获取圆的中心点。
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Top">
+            <summary>
+            获取圆的上方顶点
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Bottom">
+            <summary>
+            获取圆的下方顶点
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Left">
+            <summary>
+            获取圆的左侧顶点
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Circle.Right">
+            <summary>
+            获取圆的右侧顶点
+            </summary>
+        </member>
+        <member name="T:SharpBoxesCore.Dlls.DllModel">
             <summary>
             Dll模型类
             </summary>
         </member>
-        <member name="M:SharpBoxes.Dlls.DllModel.#ctor(System.String,System.String,System.Reflection.Assembly,System.Type)">
+        <member name="M:SharpBoxesCore.Dlls.DllModel.#ctor(System.String,System.String,System.Reflection.Assembly,System.Type)">
             <summary>
             构造函数
             </summary>
@@ -416,27 +607,27 @@
             <param name="assembly">程序集</param>
             <param name="baseTypeFilter">基类型过滤器</param>
         </member>
-        <member name="P:SharpBoxes.Dlls.DllModel.Name">
+        <member name="P:SharpBoxesCore.Dlls.DllModel.Name">
             <summary>
             名称
             </summary>
         </member>
-        <member name="P:SharpBoxes.Dlls.DllModel.Path">
+        <member name="P:SharpBoxesCore.Dlls.DllModel.Path">
             <summary>
             路径
             </summary>
         </member>
-        <member name="P:SharpBoxes.Dlls.DllModel.Assembly">
+        <member name="P:SharpBoxesCore.Dlls.DllModel.Assembly">
             <summary>
             程序集
             </summary>
         </member>
-        <member name="P:SharpBoxes.Dlls.DllModel.Types">
+        <member name="P:SharpBoxesCore.Dlls.DllModel.Types">
             <summary>
             类型列表
             </summary>
         </member>
-        <member name="M:SharpBoxes.Dlls.DllModel.CreateObjectFromDll``1(System.String@,System.Object[])">
+        <member name="M:SharpBoxesCore.Dlls.DllModel.CreateObjectFromDll``1(System.String@,System.Object[])">
             <summary>
             从Dll创建对象
             </summary>
@@ -445,7 +636,7 @@
             <param name="args">参数</param>
             <returns>创建的对象</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.DllModel.CreateObjectsFromDll(System.String@,System.Object[])">
+        <member name="M:SharpBoxesCore.Dlls.DllModel.CreateObjectsFromDll(System.String@,System.Object[])">
             <summary>
             从Dll创建所有类型的对象
             </summary>
@@ -453,7 +644,7 @@
             <param name="args">参数</param>
             <returns>创建的对象</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.DllModel.CreateObjectsFromDll(System.Type,System.String@,System.Object[])">
+        <member name="M:SharpBoxesCore.Dlls.DllModel.CreateObjectsFromDll(System.Type,System.String@,System.Object[])">
             <summary>
             从Dll创建对象
             </summary>
@@ -462,18 +653,18 @@
             <param name="args">参数</param>
             <returns>创建的对象</returns>
         </member>
-        <member name="T:SharpBoxes.Dlls.DllModelCollection">
+        <member name="T:SharpBoxesCore.Dlls.DllModelCollection">
             <summary>
             提供Dll模型集合的类
             </summary>
         </member>
-        <member name="T:SharpBoxes.Dlls.LibLoadHelper">
+        <member name="T:SharpBoxesCore.Dlls.LibLoadHelper">
             <summary>
             <para>提供库加载帮助的静态类。</para>
             <para>主要功能包括加载指定的DLL，获取指定类型的实例，从指定的文件夹中获取DLL文件，从指定的程序集中查找指定类型的子类或实现了指定接口的类等。</para>
             </summary>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.LoadDll``1(System.String,System.String,System.String,System.Object[],System.String@)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.LoadDll``1(System.String,System.String,System.String,System.Object[],System.String@)">
             <summary>
             <para>加载指定的DLL并获取指定类型的实例。</para>
             <para>首先加载指定名称的DLL，然后获取指定名称空间的指定类型，最后创建并返回该类型的实例。</para>
@@ -486,7 +677,7 @@
             <param name="message">返回的消息</param>
             <returns>创建的实例</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.LoadDll``1(System.String,System.String,System.String,System.String@)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.LoadDll``1(System.String,System.String,System.String,System.String@)">
             <summary>
             <para>加载指定的DLL并获取指定类型的实例。</para>
             <para>首先加载指定名称的DLL，然后获取指定名称空间的指定类型，最后创建并返回该类型的实例。</para>
@@ -498,7 +689,7 @@
             <param name="message">返回的消息</param>
             <returns>创建的实例</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.GeDllFiles(System.String)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.GeDllFiles(System.String)">
             <summary>
             <para>从指定的文件夹中获取DLL文件。</para>
             <para>遍历文件夹中的所有文件，只保留可以成功加载的DLL文件。</para>
@@ -506,7 +697,7 @@
             <param name="folder">文件夹路径</param>
             <returns>DLL文件列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.GetDllModelsFromFolder(System.String,System.Type)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.GetDllModelsFromFolder(System.String,System.Type)">
             <summary>
             <para>从指定的文件夹中获取DllModel列表。</para>
             <para>首先获取文件夹中的所有DLL文件，然后为每个文件创建一个DllModel实例。</para>
@@ -515,7 +706,7 @@
             <param name="baseTypeFilter">基类型过滤器</param>
             <returns>DllModel列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.FindSpecifiedTypeInheritFromAssembly(System.Reflection.Assembly,System.Type)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.FindSpecifiedTypeInheritFromAssembly(System.Reflection.Assembly,System.Type)">
             <summary>
             <para>从指定的程序集中查找指定类型的子类或实现了指定接口的类。</para>
             <para>遍历程序集中的所有类型，只保留是指定基类型的子类或实现了指定接口的类型。</para>
@@ -524,7 +715,7 @@
             <param name="baseType">基类型或接口类型</param>
             <returns>找到的类型列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.CreateObjectFromType``1(System.String@,System.Object[])">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.CreateObjectFromType``1(System.String@,System.Object[])">
             <summary>
             <para>创建指定类型的实例。</para>
             <para>使用Activator.CreateInstance方法创建指定类型的实例。</para>
@@ -534,7 +725,7 @@
             <param name="args">构造函数参数</param>
             <returns>创建的实例</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.FindSpecifiedTypeHasAttributeFromAssembly(System.Reflection.Assembly,System.Type)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.FindSpecifiedTypeHasAttributeFromAssembly(System.Reflection.Assembly,System.Type)">
             <summary>
             <para>从指定的程序集中查找附加了指定Attribute的类型。</para>
             <para>遍历程序集中的所有类型，只保留附加了指定Attribute的类型。</para>
@@ -543,7 +734,7 @@
             <param name="attr">Attribute类型</param>
             <returns>找到的类型列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.FindSpecifiedPropertyHasAttributeFromType(System.Type,System.Type[])">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.FindSpecifiedPropertyHasAttributeFromType(System.Type,System.Type[])">
             <summary>
             <para>从指定的类型中查找附加了指定Attribute的属性。</para>
             <para>遍历类型中的所有属性，只保留附加了指定Attribute的属性。</para>
@@ -552,7 +743,7 @@
             <param name="attrs">Attribute类型列表</param>
             <returns>找到的属性列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.FindSpecifiedPropertyExceptAttributeFromType(System.Type,System.Type[])">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.FindSpecifiedPropertyExceptAttributeFromType(System.Type,System.Type[])">
             <summary>
             <para>从指定的类型中查找没有附加指定Attribute的属性。</para>
             <para>遍历类型中的所有属性，只保留没有附加指定Attribute的属性。</para>
@@ -561,7 +752,7 @@
             <param name="attrs">Attribute类型列表</param>
             <returns>找到的属性列表</returns>
         </member>
-        <member name="M:SharpBoxes.Dlls.LibLoadHelper.FindSpecifiedMethodHasAttributeFromType(System.Type,System.Type)">
+        <member name="M:SharpBoxesCore.Dlls.LibLoadHelper.FindSpecifiedMethodHasAttributeFromType(System.Type,System.Type)">
             <summary>
             <para>从指定的类型中查找附加了指定Attribute的方法。</para>
             <para>遍历类型中的所有方法，只保留附加了指定Attribute的方法。</para>
@@ -570,17 +761,37 @@
             <param name="attr">Attribute类型</param>
             <returns>找到的方法列表</returns>
         </member>
-        <member name="T:SharpBoxes.Helpers.FastDateTime">
+        <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.NormalConfigFileName">
+            <summary>
+            config.json
+            </summary>
+        </member>
+        <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.SystemConfigFileName">
+            <summary>
+            system.json
+            </summary>
+        </member>
+        <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.SetupConfigFileName">
+            <summary>
+            setup.json
+            </summary>
+        </member>
+        <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.UserConfigFileName">
+            <summary>
+            user.json
+            </summary>
+        </member>
+        <member name="T:SharpBoxesCore.Helpers.FastDateTime">
             <summary>
             提供比原生DateTime.Now更快的Now属性，避免每次调用时都进行TimeZone转换。
             </summary>
         </member>
-        <member name="P:SharpBoxes.Helpers.FastDateTime.Now">
+        <member name="P:SharpBoxesCore.Helpers.FastDateTime.Now">
             <summary>
             获取当前时间，并根据本地时区进行时区转换。
             </summary>
         </member>
-        <member name="T:SharpBoxes.Helpers.FolderDeleteService">
+        <member name="T:SharpBoxesCore.Helpers.FolderDeleteService">
             <summary>
             删除指定时间以前的文件夹，并且支持指定间隔轮询判断文件夹是否符合要求
             <example>
@@ -594,22 +805,22 @@
             </example>
             </summary>
         </member>
-        <member name="E:SharpBoxes.Helpers.FolderDeleteService.OnFolderDeleted">
+        <member name="E:SharpBoxesCore.Helpers.FolderDeleteService.OnFolderDeleted">
             <summary>
             删除结束事件，参数为删除的文件夹名称
             </summary>
         </member>
-        <member name="E:SharpBoxes.Helpers.FolderDeleteService.OnFolderDeleteStarted">
+        <member name="E:SharpBoxesCore.Helpers.FolderDeleteService.OnFolderDeleteStarted">
             <summary>
             开始删除事件，参数为即将删除的文件夹名称
             </summary>
         </member>
-        <member name="E:SharpBoxes.Helpers.FolderDeleteService.OnFolderDeleteFailed">
+        <member name="E:SharpBoxesCore.Helpers.FolderDeleteService.OnFolderDeleteFailed">
             <summary>
             删除失败事件
             </summary>
         </member>
-        <member name="M:SharpBoxes.Helpers.FolderDeleteService.ChangeAndStartInterval(System.Int32)">
+        <member name="M:SharpBoxesCore.Helpers.FolderDeleteService.ChangeAndStartInterval(System.Int32)">
             <summary>
             应用间隔并启动
             </summary>
@@ -618,7 +829,7 @@
             </remarks>
             <param name="interval">间隔，单位ms</param>
         </member>
-        <member name="M:SharpBoxes.Helpers.FolderDeleteService.ChangeAndStartInterval(System.TimeSpan)">
+        <member name="M:SharpBoxesCore.Helpers.FolderDeleteService.ChangeAndStartInterval(System.TimeSpan)">
             <summary>
             应用间隔并启动
             </summary>
@@ -627,7 +838,7 @@
             </remarks>
             <param name="interval">间隔</param>
         </member>
-        <member name="M:SharpBoxes.Helpers.FolderDeleteService.ChangeDeleteDay(System.Int32)">
+        <member name="M:SharpBoxesCore.Helpers.FolderDeleteService.ChangeDeleteDay(System.Int32)">
              <summary>
              更改删除时间，最后写入时间刻超过该时间才进行删除
             
@@ -637,7 +848,7 @@
              </remarks>
              <param name="deleteDay">删除时间</param>
         </member>
-        <member name="M:SharpBoxes.Helpers.FolderDeleteService.AddDeleteFolders(System.String)">
+        <member name="M:SharpBoxesCore.Helpers.FolderDeleteService.AddDeleteFolders(System.String)">
             <summary>
             添加要进行检查并删除文件夹
             </summary>
@@ -646,315 +857,12 @@
             </remarks>
             <param name="path">文件夹路径</param>
         </member>
-        <member name="M:SharpBoxes.Helpers.FolderDeleteService.DeleteAllDirectoriesAsync(System.Collections.Generic.List{System.IO.DirectoryInfo},System.Int32)">
+        <member name="M:SharpBoxesCore.Helpers.FolderDeleteService.DeleteAllDirectoriesAsync(System.Collections.Generic.List{System.IO.DirectoryInfo},System.Int32)">
             <summary>
             delete folders based on last write time
             </summary>
             <param name="list">directory info be deleted</param>
             <param name="deleteDays">if directory last write time is less than <paramref name="deleteDays"/>, it would be delete</param>
-        </member>
-        <member name="M:SharpBoxes.Helpers.ZipHelper.PackFiles(System.String,System.String)">
-            <summary>
-            压缩
-            </summary>
-            <param name="outputFileName"> 压缩后的文件名(包含物理路径)</param>
-            <param name="dirBePacked">待压缩的文件夹(包含物理路径)</param>
-        </member>
-        <member name="M:SharpBoxes.Helpers.ZipHelper.UnpackFiles(System.String,System.String)">
-            <summary>
-            解压缩
-            </summary>
-            <param name="fileBeUnpacked">待解压文件名(包含物理路径)</param>
-            <param name="outputDir"> 解压到哪个目录中(包含物理路径)</param>
-        </member>
-        <member name="T:SharpBoxes.Reflection.ClassHelper">
-            <summary>
-            提供类的辅助方法，包括设置属性的 Display Name 和 Description...
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.SetDisplayName``1(System.String,System.String)">
-            <summary>
-            设置指定类型中指定属性的显示名称。
-            </summary>
-            <typeparam name="T">属性所属的类型。</typeparam>
-            <param name="propertyName">要设置显示名称的属性的名称。</param>
-            <param name="newDisplayName">要设置的新显示名称。</param>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.SetDescription``1(System.String,System.String)">
-            <summary>
-            设置指定类型中指定属性的描述。
-            </summary>
-            <typeparam name="T">属性所属的类型。</typeparam>
-            <param name="propertyName">要设置描述的属性的名称。</param>
-            <param name="newDesc">要设置的新描述。</param>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.SetBrowsable``1(System.String,System.Boolean)">
-            <summary>
-            设置指定类型中指定属性的是否可见。
-            </summary>
-            <typeparam name="T">属性所属的类型。</typeparam>
-            <param name="propertyName">要设置是否可见的属性的名称。</param>
-            <param name="isBrowsable">设置是否可见。</param>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.SetCategory``1(System.String,System.String)">
-            <summary>
-            设置指定类型中指定属性的类别。
-            </summary>
-            <typeparam name="T">属性所属的类型。</typeparam>
-            <param name="propertyName">要设置类别的属性的名称。</param>
-            <param name="newCate">要设置的新类别。</param>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.GetFieldValue``2(``0,System.String)">
-            <summary>
-            获取指定实例的指定字段的值。
-            </summary>
-            <typeparam name="TInstance">实例的类型。</typeparam>
-            <typeparam name="TResult">字段的值的类型。</typeparam>
-            <param name="t">要获取字段值的实例。</param>
-            <param name="name">要获取的字段的名称。</param>
-            <returns>字段的值，如果字段存在并且可以转换为指定类型，则返回字段的值；否则，返回默认值。</returns>
-            <exception cref="T:System.ArgumentNullException">当<paramref name="t"/>为null时引发。</exception>
-            <exception cref="T:System.ArgumentException">当指定的字段在类型中不存在时引发。</exception>
-        </member>
-        <member name="M:SharpBoxes.Reflection.ClassHelper.GetPropertyValue``2(``0,System.String)">
-            <summary>
-            获取指定实例的指定属性的值。
-            </summary>
-            <typeparam name="TInstance">实例的类型。</typeparam>
-            <typeparam name="TResult">属性值的类型。</typeparam>
-            <param name="t">要获取属性值的实例。</param>
-            <param name="name">要获取的属性的名称。</param>
-            <returns>指定属性的值，如果属性不存在或值无法转换为指定类型，则返回默认值。</returns>
-            <exception cref="T:System.ArgumentNullException">当<paramref name="t"/>为null时引发。</exception>
-            <exception cref="T:System.ArgumentException">当指定的属性在类型<typeparamref name="TInstance"/>中找不到时引发。</exception>
-        </member>
-        <member name="T:SharpBoxes.Reflection.EventHelper">
-            <summary>
-            提供事件的辅助方法
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Reflection.EventHelper.GetEventHandlerRaiseMethods``1(``0,System.String,System.Type)">
-             <summary>
-             获取指定实例中指定事件的所有处理程序的调用方法。
-             <list type="number">
-             <item>获取实例的所有字段，包括非公开的和实例的字段。</item>
-             <item>从这些字段中筛选出类型为指定处理程序类型的字段。</item>
-             <item>对于每个筛选出的字段，如果字段的名称包含指定的事件名称，那么获取该字段的值。</item>
-             <item>如果字段的值不为空，那么获取该值的类型的"Invoke"方法。</item>
-             <item>如果"Invoke"方法存在，那么将该方法和字段的值作为一个元组添加到结果列表中。</item>
-             </list>
-             <example>
-             <strong>以下代码演示了如何使用<see cref="M:SharpBoxes.Reflection.EventHelper.GetEventHandlerRaiseMethods``1(``0,System.String,System.Type)"/>方法。</strong>
-             <code>
-             public interface INotifyValueChanged
-             {
-                 event EventHandler&lt;NotifyValueChangedEventArgs&gt; OnNotifyValueChanged;
-             }
-             var invokeMethod = instance.GetEventHandlerRaiseMethods("OnNotifyValueChanged", typeof(EventHandler&lt;NotifyValueChangedEventArgs&gt;)).FirstOrDefault();
-            
-             //invokeMethod.Invoke(this, new object[] { null, myEventArgs });
-             invokeMethod.Method?.Invoke(
-             invokeMethod.FieldValue,
-             [
-                 null,
-                 new NotifyValueChangedEventArgs()
-              ]
-             );
-             </code>
-             </example>
-             </summary>
-             <typeparam name="TInstance">实例的类型。</typeparam>
-             <param name="instance">要获取事件处理程序的实例。</param>
-             <param name="eventName">要获取的事件的名称。</param>
-             <param name="handlerType">事件处理程序的类型。</param>
-             <returns>包含调用方法和字段值的元组的列表。</returns>
-        </member>
-        <member name="T:SharpBoxes.Validation.FormatValidationHelper">
-            <summary>
-            FormatValidationHelper 是一个静态类，提供了一系列的格式验证方法。
-            这些方法可以用于验证字符串是否满足特定的格式，例如是否为电子邮件，是否为URL，是否为日期等。
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsEmail(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的电子邮件地址。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串是有效的电子邮件地址，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.HasEmail(System.String)">
-            <summary>
-            检查给定的字符串中是否包含有效的电子邮件地址。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串中包含有效的电子邮件地址，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsUrl(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的URL。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串是有效的URL，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.HasUrl(System.String)">
-            <summary>
-            检查给定的字符串中是否包含有效的URL。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串中包含有效的URL，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsDateTime(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的日期时间格式。
-            使用 DateTime.TryParse 方法进行验证。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串是有效的日期时间格式，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsMobile(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的手机号码。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串是有效的手机号码，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.HasMobile(System.String)">
-            <summary>
-            检查给定的字符串中是否包含有效的手机号码。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串中包含有效的手机号码，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsIP(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的IP地址。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串是有效的IP地址，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.HasIP(System.String)">
-            <summary>
-            检查给定的字符串中是否包含有效的IP地址。
-            使用正则表达式进行匹配。
-            </summary>
-            <param name="source">要检查的字符串。</param>
-            <returns>如果字符串中包含有效的IP地址，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsIp(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的IP地址。
-            使用字符串分割和转换方法进行验证。
-            </summary>
-            <param name="ip">要检查的字符串。</param>
-            <returns>如果字符串是有效的IP地址，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsIDCard(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的身份证号码。
-            使用正则表达式和数学计算进行验证。
-            </summary>
-            <param name="Id">要检查的字符串。</param>
-            <returns>如果字符串是有效的身份证号码，则为 true；否则为 false。</returns>
-        </member>
-        <member name="M:SharpBoxes.Validation.FormatValidationHelper.IsIDCard18(System.String)">
-            <summary>
-            检查给定的字符串是否为有效的18位身份证号码。
-            使用正则表达式和数学计算进行验证。
-            </summary>
-            <param name="Id">要检查的字符串。</param>
-            <returns>如果字符串是有效的18位身份证号码，则为 true；否则为 false。</returns>
-            <exception cref="T:System.ArgumentException">如果身份证号码不符合规则，将抛出此异常。</exception>
-        </member>
-        <member name="T:SharpBoxes.Validation.ValidationHelper">
-            <summary>
-            <para>ValidationHelper是一个静态类，提供了一系列的验证方法。</para>
-            <para>这些方法可以用于验证参数的值是否满足特定的条件，例如是否为null，是否在指定的范围内，是否满足特定的格式等。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.Assert(System.Boolean,System.String,System.String)">
-            <summary>
-            <para>如果条件为false，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
-            <para>这个方法主要用于在方法的开始处检查参数的值是否满足预期的条件。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.MustLessThan``1(``0,``0,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否小于指定的限制。</para>
-            <para>如果参数的值不小于限制，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.MustLessThan``1(``0,``0,System.String@,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否小于指定的限制，并返回一个消息。</para>
-            <para>如果参数的值不小于限制，则返回false和一个描述错误的消息。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.MustMoreThan``1(``0,``0,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否大于指定的限制。</para>
-            <para>如果参数的值不大于限制，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.MustMoreThan``1(``0,``0,System.String@,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否大于指定的限制，并返回一个消息。</para>
-            <para>如果参数的值不大于限制，则返回false和一个描述错误的消息。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.InRange``1(``0,``0,``0,System.String,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否在指定的范围内。</para>
-            <para>如果参数的值不在指定的范围内，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.InRange``1(``0,``0,``0,System.String@,System.String,System.String,System.String)">
-            <summary>
-            <para>检查参数的值是否在指定的范围内，并返回一个消息。</para>
-            <para>如果参数的值不在指定的范围内，则返回false和一个描述错误的消息。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.ThrowIfNull``1(``0,System.String)">
-            <summary>
-            <para>检查参数是否为null。</para>
-            <para>如果参数为null，则抛出<see cref="T:System.ArgumentNullException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.IsNull``1(``0,System.String@,System.String)">
-            <summary>
-            <para>检查参数是否为null，并返回一个消息。</para>
-            <para>如果参数为null，则返回true和一个描述错误的消息。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.ArrayLengthNotEqualZero``1(``0[],System.String)">
-            <summary>
-            <para>检查数组的长度是否为0。</para>
-            <para>如果数组的长度为0，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.ArrayLengthNotEqualZero``1(``0[],System.String@,System.String)">
-            <summary>
-            <para>检查数组的长度是否为0，并返回一个消息。</para>
-            <para>如果数组的长度为0，则返回false和一个描述错误的消息。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.CollectionCountNotEqualZero``1(System.Collections.Generic.ICollection{``0},System.String)">
-            <summary>
-            <para>检查集合的元素数量是否为0。</para>
-            <para>如果集合的元素数量为0，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
-            </summary>
-        </member>
-        <member name="M:SharpBoxes.Validation.ValidationHelper.CollectionCountNotEqualZero``1(System.Collections.Generic.ICollection{``0},System.String@,System.String)">
-            <summary>
-            <para>检查集合的元素数量是否为0，并返回一个消息。</para>
-            <para>如果集合的元素数量为0，则返回false和一个描述错误的消息。</para>
-            </summary>
         </member>
         <member name="T:SharpBoxesCore.Helpers.HTTPHelper">
             <summary>
@@ -1156,6 +1064,359 @@
             <param name="SectionName"></param>
             <param name="iniFilename"></param>
             <returns></returns>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.ZipHelper.PackFiles(System.String,System.String)">
+            <summary>
+            压缩
+            </summary>
+            <param name="outputFileName"> 压缩后的文件名(包含物理路径)</param>
+            <param name="dirBePacked">待压缩的文件夹(包含物理路径)</param>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.ZipHelper.UnpackFiles(System.String,System.String)">
+            <summary>
+            解压缩
+            </summary>
+            <param name="fileBeUnpacked">待解压文件名(包含物理路径)</param>
+            <param name="outputDir"> 解压到哪个目录中(包含物理路径)</param>
+        </member>
+        <member name="T:SharpBoxesCore.Reflection.ClassHelper">
+            <summary>
+            提供类的辅助方法，包括设置属性的 Display Name 和 Description...
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.SetDisplayName``1(System.String,System.String)">
+            <summary>
+            设置指定类型中指定属性的显示名称。
+            </summary>
+            <typeparam name="T">属性所属的类型。</typeparam>
+            <param name="propertyName">要设置显示名称的属性的名称。</param>
+            <param name="newDisplayName">要设置的新显示名称。</param>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.SetDescription``1(System.String,System.String)">
+            <summary>
+            设置指定类型中指定属性的描述。
+            </summary>
+            <typeparam name="T">属性所属的类型。</typeparam>
+            <param name="propertyName">要设置描述的属性的名称。</param>
+            <param name="newDesc">要设置的新描述。</param>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.SetBrowsable``1(System.String,System.Boolean)">
+            <summary>
+            设置指定类型中指定属性的是否可见。
+            </summary>
+            <typeparam name="T">属性所属的类型。</typeparam>
+            <param name="propertyName">要设置是否可见的属性的名称。</param>
+            <param name="isBrowsable">设置是否可见。</param>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.SetCategory``1(System.String,System.String)">
+            <summary>
+            设置指定类型中指定属性的类别。
+            </summary>
+            <typeparam name="T">属性所属的类型。</typeparam>
+            <param name="propertyName">要设置类别的属性的名称。</param>
+            <param name="newCate">要设置的新类别。</param>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.GetFieldValue``2(``0,System.String)">
+            <summary>
+            获取指定实例的指定字段的值。
+            </summary>
+            <typeparam name="TInstance">实例的类型。</typeparam>
+            <typeparam name="TResult">字段的值的类型。</typeparam>
+            <param name="t">要获取字段值的实例。</param>
+            <param name="name">要获取的字段的名称。</param>
+            <returns>字段的值，如果字段存在并且可以转换为指定类型，则返回字段的值；否则，返回默认值。</returns>
+            <exception cref="T:System.ArgumentNullException">当<paramref name="t"/>为null时引发。</exception>
+            <exception cref="T:System.ArgumentException">当指定的字段在类型中不存在时引发。</exception>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.ClassHelper.GetPropertyValue``2(``0,System.String)">
+            <summary>
+            获取指定实例的指定属性的值。
+            </summary>
+            <typeparam name="TInstance">实例的类型。</typeparam>
+            <typeparam name="TResult">属性值的类型。</typeparam>
+            <param name="t">要获取属性值的实例。</param>
+            <param name="name">要获取的属性的名称。</param>
+            <returns>指定属性的值，如果属性不存在或值无法转换为指定类型，则返回默认值。</returns>
+            <exception cref="T:System.ArgumentNullException">当<paramref name="t"/>为null时引发。</exception>
+            <exception cref="T:System.ArgumentException">当指定的属性在类型<typeparamref name="TInstance"/>中找不到时引发。</exception>
+        </member>
+        <member name="T:SharpBoxesCore.Reflection.EventHelper">
+            <summary>
+            提供事件的辅助方法
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Reflection.EventHelper.GetEventHandlerRaiseMethods``1(``0,System.String,System.Type)">
+             <summary>
+             获取指定实例中指定事件的所有处理程序的调用方法。
+             <list type="number">
+             <item>获取实例的所有字段，包括非公开的和实例的字段。</item>
+             <item>从这些字段中筛选出类型为指定处理程序类型的字段。</item>
+             <item>对于每个筛选出的字段，如果字段的名称包含指定的事件名称，那么获取该字段的值。</item>
+             <item>如果字段的值不为空，那么获取该值的类型的"Invoke"方法。</item>
+             <item>如果"Invoke"方法存在，那么将该方法和字段的值作为一个元组添加到结果列表中。</item>
+             </list>
+             <example>
+             <strong>以下代码演示了如何使用<see cref="M:SharpBoxesCore.Reflection.EventHelper.GetEventHandlerRaiseMethods``1(``0,System.String,System.Type)"/>方法。</strong>
+             <code>
+             public interface INotifyValueChanged
+             {
+                 event EventHandler&lt;NotifyValueChangedEventArgs&gt; OnNotifyValueChanged;
+             }
+             var invokeMethod = instance.GetEventHandlerRaiseMethods("OnNotifyValueChanged", typeof(EventHandler&lt;NotifyValueChangedEventArgs&gt;)).FirstOrDefault();
+            
+             //invokeMethod.Invoke(this, new object[] { null, myEventArgs });
+             invokeMethod.Method?.Invoke(
+             invokeMethod.FieldValue,
+             [
+                 null,
+                 new NotifyValueChangedEventArgs()
+              ]
+             );
+             </code>
+             </example>
+             </summary>
+             <typeparam name="TInstance">实例的类型。</typeparam>
+             <param name="instance">要获取事件处理程序的实例。</param>
+             <param name="eventName">要获取的事件的名称。</param>
+             <param name="handlerType">事件处理程序的类型。</param>
+             <returns>包含调用方法和字段值的元组的列表。</returns>
+        </member>
+        <member name="T:SharpBoxesCore.Validation.FormatValidationHelper">
+            <summary>
+            FormatValidationHelper 是一个静态类，提供了一系列的格式验证方法。
+            这些方法可以用于验证字符串是否满足特定的格式，例如是否为电子邮件，是否为URL，是否为日期等。
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsEmail(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的电子邮件地址。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串是有效的电子邮件地址，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.HasEmail(System.String)">
+            <summary>
+            检查给定的字符串中是否包含有效的电子邮件地址。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串中包含有效的电子邮件地址，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsUrl(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的URL。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串是有效的URL，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.HasUrl(System.String)">
+            <summary>
+            检查给定的字符串中是否包含有效的URL。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串中包含有效的URL，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsDateTime(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的日期时间格式。
+            使用 DateTime.TryParse 方法进行验证。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串是有效的日期时间格式，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsMobile(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的手机号码。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串是有效的手机号码，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.HasMobile(System.String)">
+            <summary>
+            检查给定的字符串中是否包含有效的手机号码。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串中包含有效的手机号码，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsIP(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的IP地址。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串是有效的IP地址，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.HasIP(System.String)">
+            <summary>
+            检查给定的字符串中是否包含有效的IP地址。
+            使用正则表达式进行匹配。
+            </summary>
+            <param name="source">要检查的字符串。</param>
+            <returns>如果字符串中包含有效的IP地址，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsIp(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的IP地址。
+            使用字符串分割和转换方法进行验证。
+            </summary>
+            <param name="ip">要检查的字符串。</param>
+            <returns>如果字符串是有效的IP地址，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsIDCard(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的身份证号码。
+            使用正则表达式和数学计算进行验证。
+            </summary>
+            <param name="Id">要检查的字符串。</param>
+            <returns>如果字符串是有效的身份证号码，则为 true；否则为 false。</returns>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.FormatValidationHelper.IsIDCard18(System.String)">
+            <summary>
+            检查给定的字符串是否为有效的18位身份证号码。
+            使用正则表达式和数学计算进行验证。
+            </summary>
+            <param name="Id">要检查的字符串。</param>
+            <returns>如果字符串是有效的18位身份证号码，则为 true；否则为 false。</returns>
+            <exception cref="T:System.ArgumentException">如果身份证号码不符合规则，将抛出此异常。</exception>
+        </member>
+        <member name="T:SharpBoxesCore.Validation.ValidationHelper">
+            <summary>
+            <para>ValidationHelper是一个静态类，提供了一系列的验证方法。</para>
+            <para>这些方法可以用于验证参数的值是否满足特定的条件，例如是否为null，是否在指定的范围内，是否满足特定的格式等。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.Assert(System.Boolean,System.String,System.String)">
+            <summary>
+            <para>如果条件为false，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
+            <para>这个方法主要用于在方法的开始处检查参数的值是否满足预期的条件。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.MustLessThan``1(``0,``0,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否小于指定的限制。</para>
+            <para>如果参数的值不小于限制，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.MustLessThan``1(``0,``0,System.String@,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否小于指定的限制，并返回一个消息。</para>
+            <para>如果参数的值不小于限制，则返回false和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.MustMoreThan``1(``0,``0,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否大于指定的限制。</para>
+            <para>如果参数的值不大于限制，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.MustMoreThan``1(``0,``0,System.String@,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否大于指定的限制，并返回一个消息。</para>
+            <para>如果参数的值不大于限制，则返回false和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.InRange``1(``0,``0,``0,System.String,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否在指定的范围内。</para>
+            <para>如果参数的值不在指定的范围内，则抛出<see cref="T:System.ArgumentOutOfRangeException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.InRange``1(``0,``0,``0,System.String@,System.String,System.String,System.String)">
+            <summary>
+            <para>检查参数的值是否在指定的范围内，并返回一个消息。</para>
+            <para>如果参数的值不在指定的范围内，则返回false和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.ThrowIfNull``1(``0,System.String)">
+            <summary>
+            <para>检查参数是否为null。</para>
+            <para>如果参数为null，则抛出<see cref="T:System.ArgumentNullException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.IsNull``1(``0,System.String@,System.String)">
+            <summary>
+            <para>检查参数是否为null，并返回一个消息。</para>
+            <para>如果参数为null，则返回true和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.ArrayLengthNotEqualZero``1(``0[],System.String)">
+            <summary>
+            <para>检查数组的长度是否为0。</para>
+            <para>如果数组的长度为0，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.ArrayLengthNotEqualZero``1(``0[],System.String@,System.String)">
+            <summary>
+            <para>检查数组的长度是否为0，并返回一个消息。</para>
+            <para>如果数组的长度为0，则返回false和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.CollectionCountNotEqualZero``1(System.Collections.Generic.ICollection{``0},System.String)">
+            <summary>
+            <para>检查集合的元素数量是否为0。</para>
+            <para>如果集合的元素数量为0，则抛出<see cref="T:System.ArgumentException"/>异常。</para>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Validation.ValidationHelper.CollectionCountNotEqualZero``1(System.Collections.Generic.ICollection{``0},System.String@,System.String)">
+            <summary>
+            <para>检查集合的元素数量是否为0，并返回一个消息。</para>
+            <para>如果集合的元素数量为0，则返回false和一个描述错误的消息。</para>
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Top">
+            <summary>
+            获取旋转后的顶部点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawTop">
+            <summary>
+            获取未旋转的顶部点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Bottom">
+            <summary>
+            获取旋转后的底部点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawBottom">
+            <summary>
+            获取未旋转的底部点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Left">
+            <summary>
+            获取旋转后的左侧点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawLeft">
+            <summary>
+            获取未旋转的左侧点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Right">
+            <summary>
+            获取旋转后的右侧点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawRight">
+            <summary>
+            获取未旋转的右侧点
+            </summary>
+        </member>
+        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Center">
+            <summary>
+            获取中心点
+            </summary>
+        </member>
+        <member name="P:SocketClientHelper.ReconnectInterval">
+            <summary>
+            重连间隔，默认为 5 秒
+            </summary>
         </member>
         <member name="T:System.Runtime.CompilerServices.IsExternalInit">
             <summary>

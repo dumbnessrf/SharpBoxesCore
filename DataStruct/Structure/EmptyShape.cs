@@ -1,4 +1,4 @@
-﻿using SharpBoxes.DataStruct.Structure;
+﻿using SharpBoxesCore.DataStruct.Structure;
 
 
 namespace SharpCanvas.Shapes.Structure;

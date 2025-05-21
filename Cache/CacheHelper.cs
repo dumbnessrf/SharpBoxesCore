@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 
-namespace SharpBoxes.Cache
+namespace SharpBoxesCore.Cache
 {
     /// <summary>
     /// WPF的<see cref="System.Windows.Media"/>及其子类如<see cref="System.Windows.Media.Imaging.BitmapSource"/>等对象在使用完毕后，由于没有实现<see cref="IDisposable"/>接口，具体待定

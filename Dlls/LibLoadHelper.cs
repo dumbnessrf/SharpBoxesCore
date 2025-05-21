@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace SharpBoxes.Dlls
+namespace SharpBoxesCore.Dlls
 {
     /// <summary>
     /// <para>提供库加载帮助的静态类。</para>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBoxes.Helpers;
+namespace SharpBoxesCore.Helpers;
 
 /// <summary>
 /// 提供比原生DateTime.Now更快的Now属性，避免每次调用时都进行TimeZone转换。

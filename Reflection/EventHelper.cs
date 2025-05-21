@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SharpBoxes.Reflection;
+namespace SharpBoxesCore.Reflection;
 
 /// <summary>
 /// 提供事件的辅助方法
