@@ -504,7 +504,7 @@ public static class ClassHelper
         return method;
     }
 
-    public static MethodInfo GetInstanceMethod<TInstance>( this TInstance instance, string name)
+    public static MethodInfo GetInstanceMethod<TInstance>(  string name)
     {
         var method = typeof(TInstance).GetMethod(
             name,
@@ -521,6 +521,136 @@ public static class ClassHelper
         }
 
         return method;
+    }
+
+    public static FieldInfo GetStaticField<TClass>( string name)
+    {
+        var field = typeof(TClass).GetField(
+            name,
+            BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );  
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return field;
+    }
+
+    public static FieldInfo GetInstanceField<TInstance>( string name)
+    {
+        var field = typeof(TInstance).GetField(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return field;
+    }
+
+    public static PropertyInfo GetStaticProperty<TClass>( string name)
+    {
+        var property = typeof(TClass).GetProperty(
+            name,
+            BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return property;
+    }
+
+    public static PropertyInfo GetInstanceProperty<TInstance>(  string name)
+    {
+        var property = typeof(TInstance).GetProperty(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        return property;
+    }
+
+    public static IEnumerable<PropertyInfo> GetStaticProperties<TClass>()
+    {
+        return typeof(TClass).GetProperties(
+            BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+    }
+
+    public static IEnumerable<PropertyInfo> GetInstanceProperties<TInstance>( )
+    {
+        return typeof(TInstance).GetProperties(
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
+    }
+
+    public static IEnumerable<FieldInfo> GetStaticFields<TClass>()
+    {
+        return typeof(TClass).GetFields(
+            BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+    }
+
+    public static IEnumerable<FieldInfo> GetInstanceFields<TInstance>( )
+    {
+        return typeof(TInstance).GetFields(
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
+    }
+
+    public static IEnumerable<MethodInfo> GetStaticMethods<TClass>()
+    {
+        return typeof(TClass).GetMethods(
+            BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+    }
+
+    public static IEnumerable<MethodInfo> GetInstanceMethods<TInstance>( )
+    {
+        return typeof(TInstance).GetMethods(
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
+        );
     }
 
 }
