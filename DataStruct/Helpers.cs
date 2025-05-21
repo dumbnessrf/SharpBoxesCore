@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using SharpBoxes.Helpers;
 
 namespace SharpBoxes.DataStruct;
 
@@ -217,5 +218,55 @@ public static class Helpers
     public static string ToStr(this IEnumerable<double> arr, string separator)
     {
         return string.Join(separator, arr);
+    }
+
+    public static float ToFloat(this string str)
+    {
+        return float.Parse(str);
+    }
+
+    public static double ToDouble(this string str)
+    {
+        return double.Parse(str);
+    }
+
+    public static int ToInt(this string str)
+    {
+        return int.Parse(str);
+    }
+
+    public static bool ToBool(this string str)
+    {
+        return bool.Parse(str);
+    }
+
+    public static float ToFloat(this double d)
+    {
+        return (float)d;
+    }
+
+    public static int ToInt(this double d)
+    {
+        return (int)d;
+    }
+
+    public static float ToFloat(this int i)
+    {
+        return (float)i;
+    }
+
+    public static double ToDouble(this int i)
+    {
+        return (double)i;
+    }
+
+    public static int ToInt(this float f)
+    {
+        return (int)f;
+    }
+
+    public static double ToDouble(this float f)
+    {
+        return (double)f;
     }
 }

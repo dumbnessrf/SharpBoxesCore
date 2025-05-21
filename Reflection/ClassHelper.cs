@@ -185,4 +185,317 @@ public static class ClassHelper
 
         return default;
     }
+
+    public static TResult GetInstanceFieldValue<TInstance, TResult>(
+        this TInstance instance,
+        string name
+    )
+    {
+        var field = typeof(TInstance).GetField(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var value = field.GetValue(instance);
+        if (value is TResult result)
+        {
+            return result;
+        }
+
+        return default;
+    }
+
+    public static void SetInstanceFieldValue<TInstance, TValue>(
+        this TInstance instance,
+        string name,
+        TValue value
+    )
+    {
+        var field = typeof(TInstance).GetField(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        field.SetValue(instance, value);
+    }
+
+    public static TResult GetInstancePropertyValue<TInstance, TResult>(
+        this TInstance instance,
+        string name
+    )
+    {
+        var property = typeof(TInstance).GetProperty(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var value = property.GetValue(instance);
+        if (value is TResult result)
+        {
+            return result;
+        }
+
+        return default;
+    }
+
+    public static void SetInstancePropertyValue<TInstance, TValue>(
+        this TInstance instance,
+        string name,
+        TValue value
+    )
+    {
+        var property = typeof(TInstance).GetProperty(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        property.SetValue(instance, value);
+    }
+
+    public static TResult GetStaticFieldValue<TClass, TResult>(this TClass @class, string name)
+    {
+        var field = typeof(TClass).GetField(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var value = field.GetValue(null);
+        if (value is TResult result)
+        {
+            return result;
+        }
+
+        return default;
+    }
+
+    public static void SetStaticFieldValue<TClass, TValue>(
+        this TClass @class,
+        string name,
+        TValue value
+    )
+    {
+        var field = typeof(TClass).GetField(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (field == null)
+        {
+            throw new ArgumentException(
+                $"字段'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+        field.SetValue(null, value);
+    }
+
+    public static TResult GetStaticPropertyValue<TClass, TResult>(this TClass @class, string name)
+    {
+        var property = typeof(TClass).GetProperty(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var value = property.GetValue(null);
+        if (value is TResult result)
+        {
+            return result;
+        }
+
+        return default;
+    }
+
+    public static void SetStaticPropertyValue<TClass, TValue>(
+        this TClass @class,
+        string name,
+        TValue value
+    )
+    {
+        var property = typeof(TClass).GetProperty(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (property == null)
+        {
+            throw new ArgumentException(
+                $"属性'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        property.SetValue(null, value);
+    }
+
+    public static TResult InvokeStaticMethod<TClass, TResult>(
+        this TClass @class,
+        string name,
+        params object[] args
+    )
+    {
+        var method = typeof(TClass).GetMethod(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var result = method.Invoke(null, args);
+        if (result is TResult resultValue)
+        {
+            return resultValue;
+        }
+
+        return default;
+    }
+
+    public static void InvokeStaticVoidMethod<TClass>(
+        this TClass @class,
+        string name,
+        params object[] args
+    )
+    {
+        var method = typeof(TClass).GetMethod(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TClass).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        method.Invoke(null, args);
+    }
+
+    public static TResult InvokeInstanceMethod<TInstance, TResult>(
+        this TInstance instance,
+        string name,
+        params object[] args
+    )
+    {
+        var method = typeof(TInstance).GetMethod(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        var result = method.Invoke(instance, args);
+        if (result is TResult resultValue)
+        {
+            return resultValue;
+        }
+
+        return default;
+    }
+
+    public static void InvokeInstanceVoidMethod<TInstance>(
+        this TInstance instance,
+        string name,
+        params object[] args
+    )
+    {
+        var method = typeof(TInstance).GetMethod(
+            name,
+            BindingFlags.Instance
+                | BindingFlags.Public
+                | BindingFlags.Static
+                | BindingFlags.NonPublic
+        );
+        if (method == null)
+        {
+            throw new ArgumentException(
+                $"方法'{name}'在类型'{typeof(TInstance).FullName}'中找不到。",
+                nameof(name)
+            );
+        }
+
+        method.Invoke(instance, args);
+    }
 }
