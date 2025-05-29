@@ -28,6 +28,32 @@ public static class ConfigFileHelper
     /// </summary>
     public static string UserConfigFileName = "user.json";
 
+    /// <summary>
+    /// 获取当前exe所在目录AppDomain.CurrentDomain.BaseDirectory
+    /// </summary>
+    public static string ExeFolder = AppDomain.CurrentDomain.BaseDirectory;
+    public static string ConfigFolder = System.IO.Path.Combine(ExeFolder, "Config");
+    public static string LogFolder = System.IO.Path.Combine(ExeFolder, "Log");
+    public static string LogsFolder = System.IO.Path.Combine(ExeFolder, "Logs");
+    public static string DataFolder = System.IO.Path.Combine(ExeFolder, "Data");
+    public static string TempFolder = System.IO.Path.Combine(ExeFolder, "Temp");
+    public static string CacheFolder = System.IO.Path.Combine(ExeFolder, "Cache");
+    public static string ImageFolder = System.IO.Path.Combine(ExeFolder, "Image");
+    public static string ImagesFolder = System.IO.Path.Combine(ExeFolder, "Images");
+    public static string ProgramFolder = System.IO.Path.Combine(ExeFolder, "Program");
+    public static string SystemFolder = System.IO.Path.Combine(ExeFolder, "System");
+    public static string HelpFolder = System.IO.Path.Combine(ExeFolder, "Help");
+    public static string LicenseFolder = System.IO.Path.Combine(ExeFolder, "License");
+    public static string LicensesFolder = System.IO.Path.Combine(ExeFolder, "Licenses");
+    public static string ToolsFolder = System.IO.Path.Combine(ExeFolder, "Tools");
+
+    public static string GetFolder(string folderName)
+    {
+        var folder = System.IO.Path.Combine(ExeFolder, folderName);
+        Directory.CreateDirectory(folder);
+        return folder;
+    }
+
     public static string GetNormalConfigFilePathByExePath()
     {
         var exePath = AppDomain.CurrentDomain.BaseDirectory;

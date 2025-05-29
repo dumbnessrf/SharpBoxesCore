@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata>
+    <id>SharpBoxesCore</id>
+    <version>1.0.0.6</version>
+    <title>SharpBoxesCore</title>
+    <authors>zheng</authors>
+    <owners>zheng</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/dumbnessrf/SharpBoxesCore?tab=Apache-2.0-1-ov-file</licenseUrl>
+    <icon>lib\Icon.png</icon>
+    <readme>lib\readme.md</readme>
+    <projectUrl>https://github.com/dumbnessrf/SharpBoxesCore</projectUrl>
+    <description>该库作为SharpBoxesCore[https://github.com/dumbnessrf/SharpBoxesCore/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</description>
+    <releaseNotes>Enhance ClassHelper with member retrieval methods
+Expanded the `ClassHelper` class in `ClassHelper.cs` to include new methods for retrieving static and instance members (methods, properties, and fields) of specified types. Added error handling that throws an `ArgumentException` if a member is not found. Updated method names for clarity and added new methods: `GetStaticProperties`, `GetInstanceProperties`, `GetStaticFields`, `GetInstanceFields`, `GetStaticMethods`, and `GetInstanceMethods`. Localized error messages to Chinese for improved user feedback.</releaseNotes>
+    <copyright>Copyright（C）Zheng</copyright>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="13.0.3" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IO.Compression" targetFramework="net48" />
+      <frameworkAssembly assemblyName="System.IO.Compression.FileSystem" targetFramework="net48" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net48" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="lib\**" target="lib" />
+  </files>
+</package>
