@@ -781,6 +781,11 @@
             user.json
             </summary>
         </member>
+        <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.ExeFolder">
+            <summary>
+            获取当前exe所在目录AppDomain.CurrentDomain.BaseDirectory
+            </summary>
+        </member>
         <member name="T:SharpBoxesCore.Helpers.FastDateTime">
             <summary>
             提供比原生DateTime.Now更快的Now属性，避免每次调用时都进行TimeZone转换。
