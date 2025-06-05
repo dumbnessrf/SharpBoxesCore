@@ -7,10 +7,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Xml.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
-using HalconDotNet;
 
 namespace SharpBoxesCore.DataStruct;
 
@@ -92,4 +89,26 @@ public class Result
     public static Result NotInitializedFail => new(false, "未初始化", 500);
 
     public static Result NotSupportedFail => new(false, "不支持", 500);
+}
+
+
+public class Result<T>: Result
+{
+    public T Data { get; set; }
+
+    public Result(bool success, T data, string message = "", int code = 0) : base(success, message, code)
+    {
+        Data = data;
+    }
+
+    public static Result<T> ReturnSuccess(T data, string message = "", int code = 0)
+    {
+        return new Result<T>(true, data, message, code);
+    }
+
+    public static Result<T> ReturnFail(T data, string message = "", int code = 0)
+    {
+        return new Result<T>(false, data, message, code);
+    }
+
 }

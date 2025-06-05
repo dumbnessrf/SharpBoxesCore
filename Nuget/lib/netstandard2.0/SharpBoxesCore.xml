@@ -548,6 +548,60 @@
             <param name="p">新点</param>
             <returns>插入索引</returns>
         </member>
+        <member name="T:SharpBoxesCore.DataStruct.Result">
+            <summary>
+            通用结果类
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Result.IsSuccess">
+            <summary>
+            获取或设置操作是否成功的标志
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Result.Message">
+            <summary>
+            获取或设置操作结果的消息
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Result.Code">
+            <summary>
+            获取或设置操作结果的代码
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Result.#ctor(System.Boolean,System.String,System.Int32)">
+            <summary>
+            初始化 Result 类的新实例
+            </summary>
+            <param name="success">操作是否成功的标志</param>
+            <param name="message">操作结果的消息，默认为空字符串</param>
+            <param name="code">操作结果的代码，默认为 0</param>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Result.ReturnSuccess(System.String,System.Int32)">
+            <summary>
+            创建一个表示操作成功的 Result 实例
+            </summary>
+            <param name="message">操作结果的消息，默认为空字符串</param>
+            <param name="code">操作结果的代码，默认为 0</param>
+            <returns>表示操作成功的 Result 实例</returns>
+        </member>
+        <member name="M:SharpBoxesCore.DataStruct.Result.ReturnFail(System.String,System.Int32)">
+            <summary>
+            创建一个表示操作失败的 Result 实例
+            </summary>
+            <param name="message">操作结果的消息，默认为空字符串</param>
+            <param name="code">操作结果的代码，默认为 0</param>
+            <returns>表示操作失败的 Result 实例</returns>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Result.Success">
+            <summary>
+            表示操作成功状态的静态实例
+            </summary>
+        </member>
+        <member name="P:SharpBoxesCore.DataStruct.Result.Fail">
+            <summary>
+            表示操作失败状态的静态实例
+            </summary>
+        </member>
         <member name="F:SharpBoxesCore.DataStruct.Structure.Circle.Radius">
             <summary>
             圆的半径。
