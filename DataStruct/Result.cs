@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Security.Permissions;
@@ -91,12 +92,12 @@ public class Result
     public static Result NotSupportedFail => new(false, "不支持", 500);
 }
 
-
-public class Result<T>: Result
+public class Result<T> : Result
 {
     public T Data { get; set; }
 
-    public Result(bool success, T data, string message = "", int code = 0) : base(success, message, code)
+    public Result(bool success, T data, string message = "", int code = 0)
+        : base(success, message, code)
     {
         Data = data;
     }
@@ -110,5 +111,4 @@ public class Result<T>: Result
     {
         return new Result<T>(false, data, message, code);
     }
-
 }
