@@ -332,7 +332,37 @@ public static class ClassHelper
         }
         field.SetValue(null, value);
     }
+    /// <summary>
+    /// 判断一个类似是否是是指定泛型版本
+    /// <example>
+    /// <code>
+    /// if (item.IsInstanceOfGenericType(typeof(PostUnit&lt;,&gt;)))
+    /// </code>
+    /// <code>
+    /// if (item.IsInstanceOfGenericType(typeof(GetUnit&lt;&gt;)))
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <param name="genericType"></param>
+    /// <returns></returns>
+    public static bool IsInstanceOfGenericType<T>(this T obj, Type genericType)
+    {
+        if (obj == null) return false;
+        Type type = obj.GetType();
 
+        while (type != null)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
+            {
+                return true;
+            }
+            type = type.BaseType;
+        }
+
+        return false;
+    }
     public static TResult GetStaticPropertyValue<TClass, TResult>( string name)
     {
         var property = typeof(TClass).GetProperty(

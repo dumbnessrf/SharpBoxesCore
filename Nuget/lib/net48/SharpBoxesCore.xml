@@ -815,6 +815,64 @@
             <param name="attr">Attribute类型</param>
             <returns>找到的方法列表</returns>
         </member>
+        <member name="T:SharpBoxesCore.Helpers.AdvancedStopWatch">
+            <summary>
+            高级计时器，可以记录多个时间点，并计算各时间点之间的耗时
+            <example>
+            <code>
+            var stopWatch = AdvancedStopWatch.StartNew();
+            
+            // 设置一个超时回调（5秒后触发）
+            stopWatch.SetTimeout(TimeSpan.FromSeconds(5), () =>
+            {
+            	Console.WriteLine("[超时回调] 已经过了 5 秒！");
+            });
+            
+            // 模拟第一个操作
+            await Task.Delay(1000); // 等待1秒
+            stopWatch.Lap("第一段操作");
+            
+            // 模拟第二个操作
+            await Task.Delay(2000);
+            stopWatch.Lap("第二段操作");
+            
+            // 模拟第三个操作
+            await Task.Delay(1500);
+            stopWatch.Lap("第三段操作");
+            
+            // 停止计时器
+            stopWatch.Stop();
+            
+            // 输出所有 lap 时间
+            Console.WriteLine("\n=== 分段时间记录 ===");
+            foreach (var lap in stopWatch.GetLaps())
+            {
+                Console.WriteLine($"{lap.Key}: {lap.Value}");
+            }
+            
+            Console.WriteLine($"\n总耗时: {stopWatch.Elapsed}");
+            </code></example>
+            <example>
+            以上代码的输出结果为：
+            <code>
+            === 分段时间记录 ===
+            第一段操作: 00:00:00.9999363
+            第二段操作: 00:00:02.0000858
+            第三段操作: 00:00:01.5007894
+            
+            总耗时: 00:00:00.0001788
+            
+            [超时回调] 已经过了 5 秒！
+            </code>
+            </example>
+            </summary>
+        </member>
+        <member name="M:SharpBoxesCore.Helpers.AdvancedStopWatch.Lap(System.String)">
+            <summary>
+            记录当前耗时，并重新计时
+            </summary>
+            <param name="name"></param>
+        </member>
         <member name="F:SharpBoxesCore.Helpers.ConfigFileHelper.NormalConfigFileName">
             <summary>
             config.json
