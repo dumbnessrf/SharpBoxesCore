@@ -515,7 +515,7 @@
             <param name="separator">分隔符，默认为逗号</param>
             <returns>字符串</returns>
         </member>
-        <member name="M:SharpBoxesCore.DataStruct.Extensions.Scale(SharpCanvas.Shapes.Structure.Rectangle2D,System.Int32)">
+        <member name="M:SharpBoxesCore.DataStruct.Extensions.Scale(SharpBoxesCore.DataStruct.Structure.Rectangle2D,System.Int32)">
             <summary>
             根据矩形中心扩大或缩小矩形
             </summary>
@@ -1485,47 +1485,47 @@
             <para>如果集合的元素数量为0，则返回false和一个描述错误的消息。</para>
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Top">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.Top">
             <summary>
             获取旋转后的顶部点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawTop">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.RawTop">
             <summary>
             获取未旋转的顶部点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Bottom">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.Bottom">
             <summary>
             获取旋转后的底部点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawBottom">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.RawBottom">
             <summary>
             获取未旋转的底部点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Left">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.Left">
             <summary>
             获取旋转后的左侧点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawLeft">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.RawLeft">
             <summary>
             获取未旋转的左侧点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Right">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.Right">
             <summary>
             获取旋转后的右侧点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.RawRight">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.RawRight">
             <summary>
             获取未旋转的右侧点
             </summary>
         </member>
-        <member name="P:SharpCanvas.Shapes.Structure.Ellipse.Center">
+        <member name="P:SharpBoxesCore.DataStruct.Structure.Ellipse.Center">
             <summary>
             获取中心点
             </summary>

@@ -1,7 +1,7 @@
 ﻿using SharpBoxesCore.DataStruct.Structure;
 
 
-namespace SharpCanvas.Shapes.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 public record EmptyShape : IShapeStructure { }

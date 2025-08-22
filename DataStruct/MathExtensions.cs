@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using SharpBoxesCore.DataStruct.Structure;
-using SharpCanvas.Shapes.Structure;
+using SharpBoxesCore.DataStruct.Structure;
 
 namespace SharpBoxesCore.DataStruct;
 
@@ -226,7 +226,7 @@ public static class Extensions
         double distance
     )
     {
-        var radians = angle.DegreesToRadians();
+        var radians = (angle).DegreesToRadians();
         var x = p.X + distance * Math.Cos(radians);
         var y = p.Y + distance * Math.Sin(radians);
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
@@ -247,7 +247,7 @@ public static class Extensions
         SharpBoxesCore.DataStruct.Structure.Point center
     )
     {
-        var radians = degree.DegreesToRadians();
+        var radians = (-degree).DegreesToRadians();
         var cos = Math.Cos(radians);
         var sin = Math.Sin(radians);
         var x = (p.X - center.X) * cos - (p.Y - center.Y) * sin + center.X;
@@ -275,7 +275,7 @@ public static class Extensions
         SharpBoxesCore.DataStruct.Structure.Point center
     )
     {
-        var radians = degree.DegreesToRadians();
+        var radians = (-degree).DegreesToRadians();
         var cos = Math.Cos(radians);
         var sin = Math.Sin(radians);
         var p = new SharpBoxesCore.DataStruct.Structure.Point(rect.CenterX, rect.CenterY).Rotate(

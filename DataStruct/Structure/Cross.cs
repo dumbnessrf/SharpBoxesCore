@@ -1,8 +1,6 @@
-﻿
+﻿using SharpBoxesCore.DataStruct.Structure;
 
-using SharpBoxesCore.DataStruct.Structure;
-
-namespace SharpCanvas.Shapes.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 public record Cross : IShapeStructure
@@ -18,4 +16,11 @@ public record Cross : IShapeStructure
     public SharpBoxesCore.DataStruct.Structure.Point Center;
 
     public double AngleDegree;
+
+    public Cross() { }
+
+    public override string ToString()
+    {
+        return $"Cross: Center: {Center:F2}, Angle: {AngleDegree:F2}, Size: {Size:F2}";
+    }
 }

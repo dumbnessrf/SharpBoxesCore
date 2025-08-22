@@ -2,7 +2,7 @@
 using SharpBoxesCore.DataStruct.Structure;
 
 
-namespace SharpCanvas.Shapes.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 public record Ellipse : IShapeStructure
@@ -27,35 +27,43 @@ public record Ellipse : IShapeStructure
         this.CenterY = centerY;
         this.RotationDegree = rotationDegree;
     }
-
+    public Ellipse()
+    {
+        
+    }
     public override string ToString()
     {
-        return $"Rectangle2D(RadiusX={RadiusX}, RadiusY={RadiusY}, CenterX={CenterX}, CenterY={CenterY}, RotationDegree={RotationDegree})";
+        return $"Rectangle2D(RadiusX={RadiusX:F2}, RadiusY={RadiusY:F2}, CenterX={CenterX:F2}, CenterY={CenterY:F2}, RotationDegree={RotationDegree:F2})";
     }
 
     /// <summary>
     /// 获取旋转后的顶部点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Top => RawTop.Rotate(RotationDegree, new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY)).Round();
 
     /// <summary>
     /// 获取未旋转的顶部点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point RawTop => new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY - RadiusY);
 
     /// <summary>
     /// 获取旋转后的底部点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Bottom => RawBottom.Rotate(RotationDegree, new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY)).Round();
 
     /// <summary>
     /// 获取未旋转的底部点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point RawBottom => new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY + RadiusY);
 
     /// <summary>
     /// 获取旋转后的左侧点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Left => RawLeft.Rotate(RotationDegree, new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY)).Round();
 
     /// <summary>
@@ -66,15 +74,18 @@ public record Ellipse : IShapeStructure
     /// <summary>
     /// 获取旋转后的右侧点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Right => RawRight.Rotate(RotationDegree, new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY)).Round();
 
     /// <summary>
     /// 获取未旋转的右侧点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point RawRight => new SharpBoxesCore.DataStruct.Structure.Point(CenterX + RadiusX, CenterY);
 
     /// <summary>
     /// 获取中心点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Center => new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY);
 }

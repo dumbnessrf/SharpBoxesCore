@@ -1,28 +1,85 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static SharpBoxesCore.Helpers.TCP.SocketServerHelper;
 
-public class SocketServerHelper
+namespace SharpBoxesCore.Helpers.TCP;
+
+public class MessageReceivedEventArgs : EventArgs
 {
+    public ClientInfo Client { get; set; }
+    public string Message { get; set; }
+}
+
+public class SocketServerHelper : INotifyPropertyChanged
+{
+    protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    public event EventHandler<MessageReceivedEventArgs> MessageReceived;
+    public event EventHandler<ClientInfo> ClientConnected;
+    public event EventHandler<ClientInfo> ClientDisconnected;
+
     private TcpListener _listener;
     private List<ClientInfo> _clients = new List<ClientInfo>();
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
     private readonly object _lock = new object();
     public Encoding Encoding { get; set; } = Encoding.UTF8; // 默认使用 UTF-8 编码
     public int ReconnectInterval { get; set; } = 5000; // 重连间隔，默认为 5 秒
+    public string IP { get; private set; }
+    public int Port { get; private set; }
 
-    public class ClientInfo
+    public class ClientInfo : INotifyPropertyChanged
     {
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private string iP;
+        private int port;
+        private bool isConnected = false;
+
         public TcpClient Client { get; set; }
-        public string IP { get; set; }
-        public int Port { get; set; }
+        public string IP
+        {
+            get { return iP; }
+            set
+            {
+                iP = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int Port
+        {
+            get { return port; }
+            set
+            {
+                port = value;
+                RaisePropertyChanged();
+            }
+        }
         public DateTime ConnectionTime { get; set; }
         public List<string> ReceivedMessages { get; set; } = new List<string>();
-        public bool IsConnected { get; set; } = false;
+        public bool IsConnected
+        {
+            get { return isConnected; }
+            set
+            {
+                isConnected = value;
+                RaisePropertyChanged();
+            }
+        }
         public Thread ReconnectThread { get; set; }
     }
 
@@ -32,6 +89,8 @@ public class SocketServerHelper
         _listener = new TcpListener(ipAddress, port); // 绑定指定 IP 和端口
         _listener.Start(); // 启动监听
         await AcceptClientsAsync(_cancellationTokenSource.Token); // 异步接受客户端连接
+        IP = ip;
+        Port = port;
     }
 
     public void Open(string ip, int port)
@@ -40,6 +99,8 @@ public class SocketServerHelper
         _listener = new TcpListener(ipAddress, port); // 绑定指定 IP 和端口
         _listener.Start(); // 同步启动监听
         _ = AcceptClientsAsync(_cancellationTokenSource.Token); // 启动异步接受客户端连接
+        IP = ip;
+        Port = port;
     }
 
     private async Task AcceptClientsAsync(CancellationToken cancellationToken)
@@ -57,6 +118,7 @@ public class SocketServerHelper
                     ConnectionTime = DateTime.Now,
                     IsConnected = true,
                 };
+                ClientConnected?.Invoke(this, clientInfo);
                 lock (_lock)
                 {
                     _clients.Add(clientInfo);
@@ -81,8 +143,15 @@ public class SocketServerHelper
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
                 if (bytesRead > 0)
                 {
-       
                     string receivedString = Encoding.GetString(buffer, 0, bytesRead);
+                    MessageReceived?.Invoke(
+                        this,
+                        new MessageReceivedEventArgs
+                        {
+                            Client = clientInfo,
+                            Message = receivedString,
+                        }
+                    );
                     Console.WriteLine(
                         $"Received message from {clientInfo.IP}:{clientInfo.Port}: {receivedString}"
                     );
@@ -97,6 +166,7 @@ public class SocketServerHelper
             {
                 Console.WriteLine($"Handle client failed: {ex.Message}");
                 clientInfo.IsConnected = false;
+                ClientDisconnected?.Invoke(this, clientInfo);
                 StartReconnectThread(clientInfo); // 启动重连线程
                 break;
             }
@@ -147,6 +217,7 @@ public class SocketServerHelper
             {
                 clientInfo.Client.Close();
                 clientInfo.IsConnected = false;
+                ClientDisconnected?.Invoke(this, clientInfo);
             }
             _clients.Clear();
         }

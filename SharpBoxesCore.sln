@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBoxesCore", "SharpBoxe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "..\SharpBoxesCoreSample\Sample.csproj", "{22AEAA7C-668B-441E-B573-52A8688EE5F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\SharpBoxesCoreSample\Winform\WindowsFormsApp1\WindowsFormsApp1.csproj", "{9034421E-8FD0-4AE1-ABA5-FE1E893D48F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{22AEAA7C-668B-441E-B573-52A8688EE5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22AEAA7C-668B-441E-B573-52A8688EE5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22AEAA7C-668B-441E-B573-52A8688EE5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9034421E-8FD0-4AE1-ABA5-FE1E893D48F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9034421E-8FD0-4AE1-ABA5-FE1E893D48F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9034421E-8FD0-4AE1-ABA5-FE1E893D48F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9034421E-8FD0-4AE1-ABA5-FE1E893D48F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {896E7570-1DF8-4F2F-9BDC-B4123F0078E7}
 	EndGlobalSection
 EndGlobal

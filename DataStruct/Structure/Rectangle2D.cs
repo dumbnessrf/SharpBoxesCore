@@ -1,9 +1,8 @@
-﻿using SharpBoxesCore.DataStruct;
+﻿using System.Diagnostics;
+using SharpBoxesCore.DataStruct;
 using SharpBoxesCore.DataStruct.Structure;
 
-using System.Diagnostics;
-
-namespace SharpCanvas.Shapes.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 public record Rectangle2D : IShapeStructure
@@ -29,7 +28,14 @@ public record Rectangle2D : IShapeStructure
         AngleDegree = angleDegree;
     }
 
-    public Rectangle2D(SharpBoxesCore.DataStruct.Structure.Point pTopLeft, SharpBoxesCore.DataStruct.Structure.Point pTopRight, SharpBoxesCore.DataStruct.Structure.Point pBottomLeft, SharpBoxesCore.DataStruct.Structure.Point pBottomRight)
+    public Rectangle2D() { }
+
+    public Rectangle2D(
+        SharpBoxesCore.DataStruct.Structure.Point pTopLeft,
+        SharpBoxesCore.DataStruct.Structure.Point pTopRight,
+        SharpBoxesCore.DataStruct.Structure.Point pBottomLeft,
+        SharpBoxesCore.DataStruct.Structure.Point pBottomRight
+    )
     {
         CenterX = (pTopLeft.X + pBottomRight.X) / 2;
         CenterY = (pTopLeft.Y + pBottomRight.Y) / 2;
@@ -38,7 +44,11 @@ public record Rectangle2D : IShapeStructure
         AngleDegree = pTopRight.Angle(pTopLeft).RadiansToDegrees();
     }
 
-    public Rectangle2D(SharpBoxesCore.DataStruct.Structure.Point topLeftPoint, SharpBoxesCore.DataStruct.Structure.Point bottomRightPoint, double angleDegree)
+    public Rectangle2D(
+        SharpBoxesCore.DataStruct.Structure.Point topLeftPoint,
+        SharpBoxesCore.DataStruct.Structure.Point bottomRightPoint,
+        double angleDegree
+    )
     {
         CenterX = (topLeftPoint.X + bottomRightPoint.X) / 2;
         CenterY = (topLeftPoint.Y + bottomRightPoint.Y) / 2;
@@ -56,7 +66,12 @@ public record Rectangle2D : IShapeStructure
         AngleDegree = angleDegree;
     }
 
-    public Rectangle2D(SharpBoxesCore.DataStruct.Structure.Point centerPoint, double halfWidth, double halfHeight, double angleDegree)
+    public Rectangle2D(
+        SharpBoxesCore.DataStruct.Structure.Point centerPoint,
+        double halfWidth,
+        double halfHeight,
+        double angleDegree
+    )
     {
         CenterX = centerPoint.X;
         CenterY = centerPoint.Y;
@@ -65,6 +80,7 @@ public record Rectangle2D : IShapeStructure
         AngleDegree = angleDegree;
     }
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point CenterPoint
     {
         get { return new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY).Round(); }
@@ -75,56 +91,100 @@ public record Rectangle2D : IShapeStructure
         }
     }
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point TopLeft =>
         new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY - HalfHeight)
-            .Rotate(AngleDegree, CenterPoint)
-            .Round();
+            .Rotate(AngleDegree, CenterPoint);
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point TopRight =>
         new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY - HalfHeight)
-            .Rotate(AngleDegree, CenterPoint)
-            .Round();
+            .Rotate(AngleDegree, CenterPoint);
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point BottomLeft =>
         new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY + HalfHeight)
-            .Rotate(AngleDegree, CenterPoint)
-            .Round();
+            .Rotate(AngleDegree, CenterPoint);
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point BottomRight =>
         new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY + HalfHeight)
+            .Rotate(AngleDegree, CenterPoint);
+
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point TopCenter =>
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY - HalfHeight)
             .Rotate(AngleDegree, CenterPoint)
             .Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point TopCenter =>
-        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY - HalfHeight).Rotate(AngleDegree, CenterPoint).Round();
-
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point BottomCenter =>
-        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY + HalfHeight).Rotate(AngleDegree, CenterPoint).Round();
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY + HalfHeight)
+            .Rotate(AngleDegree, CenterPoint)
+            .Round();
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point LeftCenter =>
-        new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY).Rotate(AngleDegree, CenterPoint).Round();
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY)
+            .Rotate(AngleDegree, CenterPoint)
+            .Round();
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point RightCenter =>
-        new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY).Rotate(AngleDegree, CenterPoint).Round();
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY)
+            .Rotate(AngleDegree, CenterPoint)
+            .Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawTopLeft => new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY - HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawTopLeft =>
+        new SharpBoxesCore.DataStruct.Structure.Point(
+            CenterX - HalfWidth,
+            CenterY - HalfHeight
+        ).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawTopRight => new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY - HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawTopRight =>
+        new SharpBoxesCore.DataStruct.Structure.Point(
+            CenterX + HalfWidth,
+            CenterY - HalfHeight
+        ).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawBottomLeft => new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY + HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawBottomLeft =>
+        new SharpBoxesCore.DataStruct.Structure.Point(
+            CenterX - HalfWidth,
+            CenterY + HalfHeight
+        ).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawBottomRight => new SharpBoxesCore.DataStruct.Structure.Point(CenterX + HalfWidth, CenterY + HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawBottomRight =>
+        new SharpBoxesCore.DataStruct.Structure.Point(
+            CenterX + HalfWidth,
+            CenterY + HalfHeight
+        ).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawTopCenter => new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY - HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawTopCenter =>
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY - HalfHeight).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawBottomCenter => new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY + HalfHeight).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawBottomCenter =>
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX, CenterY + HalfHeight).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawLeftCenter => new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawLeftCenter =>
+        new SharpBoxesCore.DataStruct.Structure.Point(CenterX - HalfWidth, CenterY).Round();
 
-    public SharpBoxesCore.DataStruct.Structure.Point RawRightCenter => new SharpBoxesCore.DataStruct.Structure.Point((CenterX + HalfWidth).ToFloat(), (CenterY).ToFloat()).Round();
+    [JsonIgnore]
+    public SharpBoxesCore.DataStruct.Structure.Point RawRightCenter =>
+        new SharpBoxesCore.DataStruct.Structure.Point(
+            (CenterX + HalfWidth).ToFloat(),
+            (CenterY).ToFloat()
+        ).Round();
 
-    public double Radian => AngleDegree.DegreesToRadians().Round();
+    [JsonIgnore]
+    public double Radian => (-AngleDegree).DegreesToRadians().Round();
 
     public override string ToString() =>
-        $"Rectangle2D(CenterX={CenterX}, CenterY={CenterY}, HalfWidth={HalfWidth}, HalfHeight={HalfHeight}, AngleDegree={AngleDegree})";
+        $"Rectangle2D(CenterX={CenterX:F2}, CenterY={CenterY:F2}, HalfWidth={HalfWidth:F2}, HalfHeight={HalfHeight:F2}, AngleDegree={AngleDegree:F2})";
 }

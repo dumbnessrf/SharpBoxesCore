@@ -21,7 +21,7 @@ public class Point
 
     public override string ToString()
     {
-        return $"({X}, {Y})";
+        return $"({X:F2}, {Y:F2})";
     }
 
     public static Point operator +(Point p1, Point p2)

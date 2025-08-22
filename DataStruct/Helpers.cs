@@ -25,6 +25,30 @@ public static class Helpers
         return JsonConvert.SerializeObject(dict);
     }
 
+    public static void AddOrUpdate<TKey, TValue>(
+        this Dictionary<TKey, TValue> dict,
+        TKey key,
+        TValue value
+    )
+    {
+        if (dict.ContainsKey(key))
+        {
+            dict[key] = value;
+        }
+        else
+        {
+            dict.Add(key, value);
+        }
+    }
+
+    public static void TryRemove<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
+    {
+        if (dict.ContainsKey(key))
+        {
+            dict.Remove(key);
+        }
+    }
+
     /// <summary>
     /// 将Json字符串转换为字典
     /// </summary>
@@ -268,5 +292,54 @@ public static class Helpers
     public static double ToDouble(this float f)
     {
         return (double)f;
+    }
+
+    public static bool InRange(this double value, double min, double max)
+    {
+        return value >= min && value <= max;
+    }
+
+    public static bool InRange(this int value, int min, int max)
+    {
+        return value >= min && value <= max;
+    }
+
+    public static bool InRange(this float value, float min, float max)
+    {
+        return value >= min && value <= max;
+    }
+
+    public static bool IsEmpty<T>(this IEnumerable<T> enumerable)
+    {
+        return enumerable == null || !enumerable.Any();
+    }
+
+    public static bool IsEmpty(this string str)
+    {
+        return string.IsNullOrEmpty(str);
+    }
+
+    public static bool IsNotEmpty(this string str)
+    {
+        return !string.IsNullOrEmpty(str);
+    }
+}
+
+public static class ConcurrentExtensions
+{
+    public static void Clear<T>(this ConcurrentQueue<T> queue)
+    {
+        while (queue.TryDequeue(out _)) { }
+    }
+
+    public static void Clear<T>(this ConcurrentStack<T> stack)
+    {
+        while (stack.TryPop(out _)) { }
+    }
+
+    public static void Clear<T>(this ConcurrentBag<T> bag)
+    {
+        T item;
+        while (bag.TryTake(out item)) { }
     }
 }

@@ -1,20 +1,65 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net48;net5.0;netstandard2.0</TargetFrameworks>
-	  <LangVersion>preview</LangVersion>
-	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	  <NoWarn>CS1591</NoWarn>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net48;net5.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>preview</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>CS1591</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<PropertyGroup>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageTags>csv;excel;async;tasks;reflection;validation;shapes;cache;orientied-object;http-helper;xml-helper;zip-helper;ini-helper;advanced-stopwatchl;oriented-object socket;dynamic-load-and-analyze-dll</PackageTags>
+		<!-- 关键：构建时生成NuGet包 -->
+		<Version>1.1.2.3</Version>
+		<PackageIcon>Icon.png</PackageIcon>
+		<IncludeReadmeFile>true</IncludeReadmeFile>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<Summary>
+			集成了一些常用的方法； 如通用的缓存静态操作类、通用的反射加载dll类LibLoadHelper、HTTPHelper、IniHelper、XMLHelper、ZipHelper、CSVHelper、Preview Features Import、ClassHelper、EventHelper、ValidationHelper其他是一些通用的扩展方法类
+		</Summary>
+		<!-- 版本号 -->
+		<Authors>zheng</Authors>
+		<Company>Dumbnessrf</Company>
+		<Description>该库作为SharpBoxesCore[https://github.com/dumbnessrf/SharpBoxesCore/tree/main]的迁移库，用于支持.NET Framework 4.0及.NET Core版本。</Description>
+		<PackageId>SharpBoxesCore</PackageId>
+		<!-- 包ID -->
+		<Title>SharpBoxesCore</Title>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<licenseUrl>https://github.com/dumbnessrf/SharpBoxesCore?tab=Apache-2.0-1-ov-file</licenseUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/dumbnessrf/SharpBoxesCore</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/dumbnessrf/SharpBoxesCore</RepositoryUrl>
+		<releaseNotes>
+			Refactor CSV handling and enhance task management
+			This commit introduces significant refactoring and enhancements across the codebase, focusing on CSV handling and task management. Key changes include:
+			- New namespace `SharpBoxesCore.Office.CSV` for better organization of CSV-related classes.
+			- Added `ExcelExporter` and `IExcelExporter` for Excel file operations using the `MiniExcel` library.
+			- Implemented `BackgroundTaskManager` for managing background tasks with cancellation and timeout support.
+			- Introduced `DataCenter` for generic data storage with lifecycle management and event notifications.
+			- Added extension methods for `Dictionary{TKey, TValue=""}` to simplify adding or updating entries.
+			- Introduced `PathHelper` for improved file path manipulation.
+			- Added logging capabilities via `ILogger` interface and `ConsoleLogger` implementation.
+			- Improved error handling, logging, and overall code organization for better maintainability and usability.
+		</releaseNotes>
+		<copyright>Copyright（C）Zheng</copyright>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="System.IO.Compression" Condition="'$(TargetFramework)'=='net48'" />
-    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)'=='net48'" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="MiniExcel" Version="1.41.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.IO.Compression" Condition="'$(TargetFramework)'=='net48'" />
+		<Reference Include="System.Net.Http" Condition="'$(TargetFramework)'=='net48'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include=".\Nuget\lib\Icon.png" Pack="true" PackagePath="\" />
+		<None Include=".\Nuget\lib\readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 </Project>

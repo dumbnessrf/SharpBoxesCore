@@ -31,39 +31,49 @@ public record Circle : IShapeStructure
         this.CenterX = centerX;
         this.CenterY = centerY;
     }
+    public Circle()
+    {
+        
+    }
 
     public override string ToString()
     {
-        return $"Circle(Radius={Radius}, CenterX={CenterX}, CenterY={CenterY})";
+        return $"Circle(Radius={Radius:F2}, CenterX={CenterX:F2}, CenterY={CenterY:F2})";
     }
 
     /// <summary>
     /// 获取圆的直径，并进行四舍五入。
     /// </summary>
+    [JsonIgnore]
     public double Diameter => (2 * Radius).Round();
 
     /// <summary>
     /// 获取圆的中心点。
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Center => new(CenterX, CenterY);
 
     /// <summary>
     /// 获取圆的上方顶点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Top => new(CenterX, CenterY - Radius);
 
     /// <summary>
     /// 获取圆的下方顶点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Bottom => new(CenterX, CenterY + Radius);
 
     /// <summary>
     /// 获取圆的左侧顶点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Left => new(CenterX - Radius, CenterY);
 
     /// <summary>
     /// 获取圆的右侧顶点
     /// </summary>
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Right => new(CenterX + Radius, CenterY);
 }

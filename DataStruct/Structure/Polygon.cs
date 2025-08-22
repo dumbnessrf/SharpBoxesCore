@@ -1,8 +1,7 @@
 ﻿using SharpBoxesCore.DataStruct;
 using SharpBoxesCore.DataStruct.Structure;
 
-
-namespace SharpCanvas.Shapes.Structure;
+namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
 public record Polygon : IShapeStructure
@@ -16,10 +15,13 @@ public record Polygon : IShapeStructure
         this.IsClosed = isClosed;
     }
 
+    public Polygon() { }
+
     public override string ToString()
     {
         return $"Length: {Points.Count}, IsClosed: {IsClosed} ";
     }
 
+    [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Centroid => Points.Centroid();
 }

@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class SocketClientHelper
+namespace SharpBoxesCore.Helpers.TCP;
+
+public class SocketClientHelper : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     public Encoding Encoding { get; set; } = Encoding.UTF8; // 默认使用 UTF-8 编码
     private string _serverIp;
     private int _serverPort;
@@ -22,17 +33,59 @@ public class SocketClientHelper
     private Thread _reconnectThread;
     private readonly object _lock = new object();
 
+
     /// <summary>
     /// 重连间隔，默认为 5 秒
     /// </summary>
     public int ReconnectInterval { get; set; } = 5000;
-
-    public SocketClientHelper(string serverIp, int serverPort, string localIp = null, int localPort = 0)
+    public string ServerIp
     {
-        _serverIp = serverIp;
-        _serverPort = serverPort;
-        _localIp = localIp;
-        _localPort = localPort;
+        get => _serverIp;
+        set
+        {
+            _serverIp = value;
+            RaisePropertyChanged();
+        }
+    }
+    public int ServerPort
+    {
+        get => _serverPort;
+        set
+        {
+            _serverPort = value;
+            RaisePropertyChanged();
+        }
+    }
+    public string LocalIp
+    {
+        get => _localIp;
+        set
+        {
+            _localIp = value;
+            RaisePropertyChanged();
+        }
+    }
+    public int LocalPort
+    {
+        get => _localPort;
+        set
+        {
+            _localPort = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    public SocketClientHelper(
+        string serverIp,
+        int serverPort,
+        string localIp = null,
+        int localPort = 0
+    )
+    {
+        ServerIp = serverIp;
+        ServerPort = serverPort;
+        LocalIp = localIp;
+        LocalPort = localPort;
     }
 
     public void SetReConnectEnable(bool enable)
@@ -56,15 +109,15 @@ public class SocketClientHelper
         _client = new TcpClient();
 
         // 绑定到指定的本地 IP 和端口
-        if (!string.IsNullOrEmpty(_localIp) && _localPort > 0)
+        if (!string.IsNullOrEmpty(LocalIp) && LocalPort > 0)
         {
-            IPAddress localAddress = IPAddress.Parse(_localIp);
-            _client.Client.Bind(new IPEndPoint(localAddress, _localPort));
+            IPAddress localAddress = IPAddress.Parse(LocalIp);
+            _client.Client.Bind(new IPEndPoint(localAddress, LocalPort));
         }
 
         try
         {
-            _client.Connect(_serverIp, _serverPort); // 同步连接
+            _client.Connect(ServerIp, ServerPort); // 同步连接
             _stream = _client.GetStream();
             _isConnected = true;
             _ = ReceiveDataAsync(_cancellationTokenSource.Token); // 启动异步接收数据
@@ -79,6 +132,7 @@ public class SocketClientHelper
             }
         }
     }
+
     public async Task ConnectAsync()
     {
         if (_isConnected)
@@ -89,15 +143,15 @@ public class SocketClientHelper
         _client = new TcpClient();
 
         // 绑定到指定的本地 IP 和端口
-        if (!string.IsNullOrEmpty(_localIp) && _localPort > 0)
+        if (!string.IsNullOrEmpty(LocalIp) && LocalPort > 0)
         {
-            IPAddress localAddress = IPAddress.Parse(_localIp);
-            _client.Client.Bind(new IPEndPoint(localAddress, _localPort));
+            IPAddress localAddress = IPAddress.Parse(LocalIp);
+            _client.Client.Bind(new IPEndPoint(localAddress, LocalPort));
         }
 
         try
         {
-            await _client.ConnectAsync(_serverIp, _serverPort); // 异步连接
+            await _client.ConnectAsync(ServerIp, ServerPort); // 异步连接
             _stream = _client.GetStream();
             _isConnected = true;
             _ = ReceiveDataAsync(_cancellationTokenSource.Token); // 启动异步接收数据
@@ -112,6 +166,7 @@ public class SocketClientHelper
             }
         }
     }
+
     private void ReconnectPolling()
     {
         while (_reconnectEnabled)
@@ -122,7 +177,7 @@ public class SocketClientHelper
                 {
                     Console.WriteLine("Attempting to reconnect...");
                     _client = new TcpClient();
-                    _client.ConnectAsync(_serverIp, _serverPort).Wait();
+                    _client.ConnectAsync(ServerIp, ServerPort).Wait();
                     _stream = _client.GetStream();
                     _isConnected = true;
                     _ = ReceiveDataAsync(_cancellationTokenSource.Token);
@@ -153,7 +208,12 @@ public class SocketClientHelper
         {
             try
             {
-                int bytesRead = await _stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                int bytesRead = await _stream.ReadAsync(
+                    buffer,
+                    0,
+                    buffer.Length,
+                    cancellationToken
+                );
                 if (bytesRead > 0)
                 {
                     string receivedString = Encoding.GetString(buffer, 0, bytesRead);
@@ -219,6 +279,4 @@ public class SocketClientHelper
         Console.WriteLine($"Sending: {message}");
         _stream.Write(data, 0, data.Length);
     }
-
-   
 }
