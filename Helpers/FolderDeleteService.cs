@@ -159,7 +159,7 @@ public static class FolderDeleteService
     /// </summary>
     /// <param name="list">directory info be deleted</param>
     /// <param name="deleteDays">if directory last write time is less than <paramref name="deleteDays"/>, it would be delete</param>
-    private static async Task DeleteAllDirectoriesAsync(
+    public static async Task DeleteAllDirectoriesAsync(
         List<DirectoryInfo> list,
         int deleteDays = 7
     )

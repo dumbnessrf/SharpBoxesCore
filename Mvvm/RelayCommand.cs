@@ -15,8 +15,6 @@ public class RelayCommand : ICommand
     public RelayCommand(Action execute)
         : this(execute, null) { }
 
-
-
     public RelayCommand(Action execute, Func<bool> canExecute)
     {
         _execute = execute;
@@ -77,6 +75,83 @@ public class RelayCommand<T> : ICommand
         if (parameter is T t)
         {
             _execute(t);
+        }
+    }
+
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    }
+}
+
+public class AsyncRelayCommand : ICommand
+{
+    private readonly Func<Task> _execute;
+    private readonly Func<bool> _canExecute;
+
+    public AsyncRelayCommand(Func<Task> execute)
+        : this(execute, null) { }
+
+    public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute)
+    {
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    public event EventHandler CanExecuteChanged;
+
+    public bool CanExecute(object parameter)
+    {
+        return _canExecute == null || _canExecute();
+    }
+
+    public async void Execute(object parameter)
+    {
+        await _execute();
+    }
+
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    }
+}
+
+public class AsyncRelayCommand<T> : ICommand
+{
+    private readonly Func<T, Task> _execute;
+    private readonly Func<T, bool> _canExecute;
+
+    public AsyncRelayCommand(Func<T, Task> execute)
+        : this(execute, null) { }
+
+    public AsyncRelayCommand(Func<T, Task> execute, Func<T, bool> canExecute)
+    {
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    public event EventHandler CanExecuteChanged;
+
+    public bool CanExecute(object parameter)
+    {
+        if (_canExecute == null)
+        {
+            return true;
+        }
+
+        if (parameter is T t)
+        {
+            return _canExecute(t);
+        }
+
+        return false;
+    }
+
+    public async void Execute(object parameter)
+    {
+        if (parameter is T t)
+        {
+            await _execute(t);
         }
     }
 

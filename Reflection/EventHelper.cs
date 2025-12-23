@@ -92,4 +92,46 @@ public static class EventHelper
         }
         return listOfInvoke;
     }
+
+    public static List<(
+        MethodInfo Method,
+        object FieldValue
+    )> GetEventHandlerRaiseMethods<TInstance>(this TInstance instance, string eventName)
+    {
+        List<FieldInfo> eventFields = new();
+        if (
+            _classEventFieldsCache.ContainsKey(typeof(TInstance))
+            && _classEventFieldsCache[typeof(TInstance)].Count != 0
+        )
+        {
+            eventFields = _classEventFieldsCache[typeof(TInstance)];
+        }
+        else
+        {
+            eventFields = typeof(TInstance)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .ToList();
+            _classEventFieldsCache[typeof(TInstance)] = eventFields.ToList();
+        }
+
+        var listOfEvent = eventFields.ToList();
+
+        var listOfInvoke = new List<(MethodInfo Method, object FieldValue)>();
+        foreach (var fi in listOfEvent)
+        {
+            if (!fi.Name.Contains(eventName))
+                continue;
+            var tempV = fi.GetValue(instance);
+            if (tempV is null)
+            {
+                continue;
+            }
+            var invokeMethod = tempV.GetType().GetMethod("Invoke");
+            if (invokeMethod != null)
+            {
+                listOfInvoke.Add((invokeMethod, tempV));
+            }
+        }
+        return listOfInvoke;
+    }
 }

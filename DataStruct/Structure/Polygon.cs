@@ -24,4 +24,9 @@ public record Polygon : IShapeStructure
 
     [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point Centroid => Points.Centroid();
+
+    public bool Contains(Point point)
+    {
+        return Points.Contains(point);
+    }
 }

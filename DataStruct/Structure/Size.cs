@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SharpBoxesCore.DataStruct.Structure;
+
 public class Size
 {
     public double Width { get; set; }
@@ -37,6 +38,4 @@ public class Size
     {
         return new Size(Math.Round(Width, 2), Math.Round(Height, 2));
     }
-
-   
 }

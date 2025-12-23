@@ -21,7 +21,9 @@ public class Result
     /// 获取或设置操作是否成功的标志
     /// </summary>
     public bool IsSuccess { get; set; }
-
+    public int LineNumber { get; set; }
+    public string MemberName { get; set; }
+    public string FilePath { get; set; }
     public bool IsFail => !IsSuccess;
 
     /// <summary>
@@ -40,11 +42,22 @@ public class Result
     /// <param name="success">操作是否成功的标志</param>
     /// <param name="message">操作结果的消息，默认为空字符串</param>
     /// <param name="code">操作结果的代码，默认为 0</param>
-    public Result(bool success, string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public Result(
+        bool success,
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
     {
         IsSuccess = success;
         Message = message;
         Code = code;
+        LineNumber = line;
+        MemberName = member;
+        FilePath = file;
     }
 
     /// <summary>
@@ -53,9 +66,21 @@ public class Result
     /// <param name="message">操作结果的消息，默认为空字符串</param>
     /// <param name="code">操作结果的代码，默认为 0</param>
     /// <returns>表示操作成功的 Result 实例</returns>
-    public static Result ReturnSuccess(string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public static Result ReturnSuccess(
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
     {
-        return new Result(true);
+        return new Result(true, message, code)
+        {
+            LineNumber = line,
+            MemberName = member,
+            FilePath = file,
+        };
     }
 
     /// <summary>
@@ -64,9 +89,21 @@ public class Result
     /// <param name="message">操作结果的消息，默认为空字符串</param>
     /// <param name="code">操作结果的代码，默认为 0</param>
     /// <returns>表示操作失败的 Result 实例</returns>
-    public static Result ReturnFail(string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public static Result ReturnFail(
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
     {
-        return new Result(false, message, code);
+        return new Result(false, message, code)
+        {
+            LineNumber = line,
+            MemberName = member,
+            FilePath = file,
+        };
     }
 
     /// <summary>
@@ -87,28 +124,63 @@ public class Result
 
     public static Result ParameterErrorFail => new(false, "参数错误", 400);
 
-    public static Result NotInitializedFail => new(false, "未初始化", 500);
+    public static Result NotInitializedFail => new(false, "未初始化", 550);
 
-    public static Result NotSupportedFail => new(false, "不支持", 500);
+    public static Result NotSupportedFail => new(false, "不支持", 551);
 }
 
 public class Result<T> : Result
 {
     public T Data { get; set; }
-
-    public Result(bool success, T data, string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public Result(
+        bool success,
+        T data,
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
         : base(success, message, code)
     {
+        LineNumber = line;
+        MemberName = member;
+        FilePath = file;
         Data = data;
     }
-
-    public static Result<T> ReturnSuccess(T data, string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public static Result<T> ReturnSuccess(
+        T data,
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
     {
-        return new Result<T>(true, data, message, code);
+        return new Result<T>(true, data, message, code)
+        {
+            LineNumber = line,
+            MemberName = member,
+            FilePath = file,
+        };
     }
-
-    public static Result<T> ReturnFail(T data, string message = "", int code = 0)
+    [DebuggerStepThrough]
+    public static Result<T> ReturnFail(
+        T data,
+        string message = "",
+        int code = 0,
+        [CallerLineNumber] int line = 0,
+        [CallerMemberName] string member = "",
+        [CallerFilePath] string file = ""
+    )
     {
-        return new Result<T>(false, data, message, code);
+        return new Result<T>(false, data, message, code)
+        {
+            LineNumber = line,
+            MemberName = member,
+            FilePath = file,
+        };
     }
 }

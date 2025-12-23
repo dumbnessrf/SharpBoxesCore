@@ -62,5 +62,8 @@ public class VMBase : INotifyPropertyChanged, INotifyPropertyChanging
         return true;
     }
 
-
+    public void RaiseOwnPropertyChanged(string propertyName)
+    {
+        OnPropertyChanged(propertyName);
+    }
 }

@@ -34,8 +34,20 @@ public class Point
         return new Point(p1.X - p2.X, p1.Y - p2.Y);
     }
 
-    public  Point Round()
+    public Point Round()
     {
         return new Point(Math.Round(X, 2), Math.Round(Y, 2));
+    }
+
+    public Line ToLine(Point endPoint)
+    {
+        return new Line(this, endPoint);
+    }
+
+    public double DistanceTo(Point other)
+    {
+        double dx = X - other.X;
+        double dy = Y - other.Y;
+        return Math.Sqrt(dx * dx + dy * dy);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime;
 using SharpBoxesCore.DataStruct;
 using SharpBoxesCore.DataStruct.Structure;
 
@@ -39,8 +40,8 @@ public record Rectangle2D : IShapeStructure
     {
         CenterX = (pTopLeft.X + pBottomRight.X) / 2;
         CenterY = (pTopLeft.Y + pBottomRight.Y) / 2;
-        HalfWidth = pTopRight.Distance(pTopLeft) / 2;
-        HalfHeight = pBottomLeft.Distance(pTopLeft) / 2;
+        HalfWidth = pTopRight.DistanceTo(pTopLeft) / 2;
+        HalfHeight = pBottomLeft.DistanceTo(pTopLeft) / 2;
         AngleDegree = pTopRight.Angle(pTopLeft).RadiansToDegrees();
     }
 
@@ -187,4 +188,11 @@ public record Rectangle2D : IShapeStructure
 
     public override string ToString() =>
         $"Rectangle2D(CenterX={CenterX:F2}, CenterY={CenterY:F2}, HalfWidth={HalfWidth:F2}, HalfHeight={HalfHeight:F2}, AngleDegree={AngleDegree:F2})";
+
+    public bool Contains(SharpBoxesCore.DataStruct.Structure.Point point)
+    {
+        var rotatedPoint = point.Rotate(-AngleDegree, CenterPoint);
+        return (rotatedPoint.X >= -HalfWidth) && (rotatedPoint.X <= HalfWidth) &&
+               (rotatedPoint.Y >= -HalfHeight) && (rotatedPoint.Y <= HalfHeight);
+    }
 }

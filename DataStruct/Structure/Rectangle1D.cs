@@ -91,4 +91,9 @@ public record Rectangle1D : IShapeStructure
     {
         return $"Rectangle1D(Width={Width:F2}, Height={Height:F2}, X={X:F2}, Y={Y:F2})";
     }
+
+    public bool Contains(SharpBoxesCore.DataStruct.Structure.Point point)
+    {
+        return point.X >= X && point.X <= X + Width && point.Y >= Y && point.Y <= Y + Height;
+    }
 }

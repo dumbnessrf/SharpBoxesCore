@@ -13,21 +13,22 @@ namespace SharpBoxesCore.DataStruct;
 
 public static class Extensions
 {
+    [DebuggerStepThrough]
     public static double Round(this double d, int digits = 5)
     {
         return Math.Round(d, digits);
     }
-
+    [DebuggerStepThrough]
     public static decimal Round(this decimal d, int digits = 5)
     {
         return Math.Round(d, digits);
     }
-
+    [DebuggerStepThrough]
     public static float Round(this float d, int digits = 5)
     {
         return (float)Math.Round(d, digits);
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point Round(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         int digits = 5
@@ -35,14 +36,14 @@ public static class Extensions
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X.Round(digits), p.Y.Round(digits));
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point ToPointF(
         this SharpBoxesCore.DataStruct.Structure.Point p
     )
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X.ToFloat(), p.Y.ToFloat());
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Size Round(
         this SharpBoxesCore.DataStruct.Structure.Size s,
         int digits = 5
@@ -53,7 +54,7 @@ public static class Extensions
             s.Height.Round(digits)
         );
     }
-
+    [DebuggerStepThrough]
     public static Rectangle2D Round(this Rectangle2D r, int digits = 5)
     {
         return new Rectangle2D(
@@ -71,6 +72,7 @@ public static class Extensions
     /// <param name="r"></param>
     /// <param name="size"></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static Rectangle2D Scale(this Rectangle2D r, int size)
     {
         //var center = r.Center();
@@ -86,12 +88,12 @@ public static class Extensions
             0
         );
     }
-
+    [DebuggerStepThrough]
     public static Rectangle1D ToRectangle1D(this Rectangle2D r)
     {
         return new Rectangle1D(r.HalfWidth * 2, r.HalfHeight * 2, r.TopLeft.X, r.TopLeft.Y);
     }
-
+    [DebuggerStepThrough]
     public static Rectangle2D ToRectangle2D(this Rectangle1D r)
     {
         return new Rectangle2D(
@@ -101,7 +103,7 @@ public static class Extensions
             0
         );
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point Center(this Rectangle2D r)
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(
@@ -116,6 +118,7 @@ public static class Extensions
     /// <param name="p1"></param>
     /// <param name="p2"></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static double Angle(
         this SharpBoxesCore.DataStruct.Structure.Point p1,
         SharpBoxesCore.DataStruct.Structure.Point p2
@@ -126,16 +129,6 @@ public static class Extensions
         return Math.Atan2(dy, dx);
     }
 
-    public static double Distance(
-        this SharpBoxesCore.DataStruct.Structure.Point p1,
-        SharpBoxesCore.DataStruct.Structure.Point p2
-    )
-    {
-        var dx = p2.X - p1.X;
-        var dy = p2.Y - p1.Y;
-        return Math.Sqrt(dx * dx + dy * dy);
-    }
-
     /// <summary>
     /// 计算点p到线段(ps, pe)的距离
     /// </summary>
@@ -143,6 +136,7 @@ public static class Extensions
     /// <param name="ps">线段的起点</param>
     /// <param name="pe">线段的终点</param>
     /// <returns>点p到线段(ps, pe)的距离</returns>
+    [DebuggerStepThrough]
     public static double DistanceToLine(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         SharpBoxesCore.DataStruct.Structure.Point ps,
@@ -200,17 +194,17 @@ public static class Extensions
         // 返回点 p 到线段的垂直距离
         return Math.Sqrt(dx * dx + dy * dy);
     }
-
+    [DebuggerStepThrough]
     public static double RadiansToDegrees(this double radians)
     {
         return radians * 180 / Math.PI;
     }
-
+    [DebuggerStepThrough]
     public static double DegreesToRadians(this double degrees)
     {
         return degrees * Math.PI / 180;
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point Translate(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         double dx,
@@ -219,7 +213,18 @@ public static class Extensions
     {
         return new SharpBoxesCore.DataStruct.Structure.Point(p.X + dx, p.Y + dy);
     }
-
+    [DebuggerStepThrough]
+    public static SharpBoxesCore.DataStruct.Structure.Line ExtendLine(
+        this SharpBoxesCore.DataStruct.Structure.Line line,
+        double distanceFromStart,
+        double distanceFromEnd
+    )
+    {
+        var start = line.StartPoint.TranslateWithAngle(line.Degree, distanceFromStart);
+        var end = line.EndPoint.TranslateWithAngle(line.Degree, distanceFromEnd);
+        return new SharpBoxesCore.DataStruct.Structure.Line(start, end);
+    }
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point TranslateWithAngle(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         double angle,
@@ -231,7 +236,7 @@ public static class Extensions
         var y = p.Y + distance * Math.Sin(radians);
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
     }
-
+    [DebuggerStepThrough]
     public static List<SharpBoxesCore.DataStruct.Structure.Point> Translate(
         this List<SharpBoxesCore.DataStruct.Structure.Point> points,
         double dx,
@@ -240,7 +245,7 @@ public static class Extensions
     {
         return points.Select(p => p.Translate(dx, dy)).ToList();
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point Rotate(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         double degree,
@@ -254,7 +259,7 @@ public static class Extensions
         var y = (p.X - center.X) * sin + (p.Y - center.Y) * cos + center.Y;
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point ProjectionOfLine(
         this SharpBoxesCore.DataStruct.Structure.Point p,
         SharpBoxesCore.DataStruct.Structure.Point ps,
@@ -268,7 +273,7 @@ public static class Extensions
         double projectionY = ps.Y + t * dy;
         return new SharpBoxesCore.DataStruct.Structure.Point(projectionX, projectionY);
     }
-
+    [DebuggerStepThrough]
     public static Rectangle2D Rotate(
         this Rectangle2D rect,
         double degree,
@@ -286,7 +291,7 @@ public static class Extensions
         var height = rect.HalfWidth * 2 * sin + rect.HalfHeight * 2 * cos;
         return new Rectangle2D(width, height, p.X, p.Y, 0);
     }
-
+    [DebuggerStepThrough]
     public static SharpBoxesCore.DataStruct.Structure.Point Centroid(
         this List<SharpBoxesCore.DataStruct.Structure.Point> points
     )
@@ -299,7 +304,7 @@ public static class Extensions
         var y = points.Sum(p => p.Y) / points.Count;
         return new SharpBoxesCore.DataStruct.Structure.Point(x, y);
     }
-
+    [DebuggerStepThrough]
     public static Rectangle2D ToRect(
         SharpBoxesCore.DataStruct.Structure.Point center,
         double width,
@@ -329,6 +334,7 @@ public static class Extensions
     /// <param name="ps">点集</param>
     /// <param name="p">新点</param>
     /// <returns>插入索引</returns>
+    [DebuggerStepThrough]
     public static int GetIndexInPoints(
         this List<SharpBoxesCore.DataStruct.Structure.Point> ps,
         SharpBoxesCore.DataStruct.Structure.Point p
@@ -343,5 +349,49 @@ public static class Extensions
         var minDistanceLast = distances.Min();
         var index1 = distances.IndexOf(minDistanceLast);
         return index1;
+    }
+    [DebuggerStepThrough]
+    public static Line ToLine(
+        this SharpBoxesCore.DataStruct.Structure.Point start,
+        SharpBoxesCore.DataStruct.Structure.Point end
+    )
+    {
+        return new Line(start, end);
+    }
+    [DebuggerStepThrough]
+    public static Line ToLine(
+        this SharpBoxesCore.DataStruct.Structure.Point p1,
+        double angle,
+        double length
+    )
+    {
+        var p2 = p1.TranslateWithAngle(angle, length);
+        return new Line(p1, p2);
+    }
+    [DebuggerStepThrough]
+    public static bool IsIntersect(this Line line1, Line line2)
+    {
+        var x1 = line1.StartPoint.X;
+        var y1 = line1.StartPoint.Y;
+        var x2 = line1.EndPoint.X;
+        var y2 = line1.EndPoint.Y;
+        var x3 = line2.StartPoint.X;
+        var y3 = line2.StartPoint.Y;
+        var x4 = line2.EndPoint.X;
+        var y4 = line2.EndPoint.Y;
+        var denominator = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+        if (denominator == 0)
+        {
+            return false;
+        }
+        var ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator;
+        var ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator;
+        return ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1;
+    }
+
+    [DebuggerStepThrough]
+    public static Task<List<T>> ToListAsync<T>(this IEnumerable<T> query)
+    {
+        return Task.Run(() => query.ToList());
     }
 }

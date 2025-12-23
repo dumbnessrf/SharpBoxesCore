@@ -1,4 +1,11 @@
 ﻿namespace SharpBoxesCore.TaskHelper;
+
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 /// <summary>
 /// 使用案例见<see cref="ProgramBackgroundTaskTest"/>
 /// </summary>
@@ -6,39 +13,53 @@
 public class BackgroundTaskManager<TTaskId>
     where TTaskId : IEquatable<TTaskId>
 {
-    // 存储所有注册的任务及其 Task 对象
     private readonly ConcurrentDictionary<TTaskId, Task> _tasks = new();
-
-    // 存储每个任务对应的 CTS（用于单独取消）
     private readonly ConcurrentDictionary<TTaskId, CancellationTokenSource> _taskCtsMap = new();
-
-    // 任务队列，包含任务定义
     private readonly ConcurrentQueue<TaskDefinition<TTaskId>> _taskQueue = new();
-
-    // 日志记录器
     private readonly ILogger _logger;
 
+    // 👇 改为 volatile，支持动态替换
+    private volatile SemaphoreSlim _semaphore;
+    private int _maxDegreeOfParallelism;
+
     /// <summary>
-    /// 构造函数，接受一个日志记录器
+    /// 构造函数，接受一个日志记录器和最大并发数
     /// </summary>
     /// <param name="logger">日志记录器</param>
-    public BackgroundTaskManager(ILogger logger)
+    /// <param name="maxDegreeOfParallelism">最大并发任务数（默认为 Environment.ProcessorCount）</param>
+    public BackgroundTaskManager(ILogger logger, int maxDegreeOfParallelism = -1)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        SetMaxDegreeOfParallelism(maxDegreeOfParallelism); // 👈 初始化信号量
     }
 
     /// <summary>
-    /// 注册一个后台任务
+    /// 动态设置最大并发任务数（线程安全）
     /// </summary>
-    /// <param name="definition">任务定义对象</param>
+    /// <param name="newMax">新的最大并发数（<=0 表示使用默认值）</param>
+    public void SetMaxDegreeOfParallelism(int newMax)
+    {
+        newMax = newMax <= 0 ? Environment.ProcessorCount : Math.Max(1, newMax);
+
+        var oldSemaphore = Interlocked.Exchange(ref _semaphore, new SemaphoreSlim(newMax, newMax));
+
+        oldSemaphore?.Dispose(); // 释放旧资源
+
+        _logger.LogInfo($"最大并发数已调整为: {newMax}");
+        _maxDegreeOfParallelism = newMax;
+    }
+
     public void RegisterTask(TaskDefinition<TTaskId> definition)
     {
         _taskQueue.Enqueue(definition);
     }
 
-    /// <summary>
-    /// 启动所有已注册的后台任务，并处理超时和进度回调
-    /// </summary>
+    public void RegisterAndRunTask(TaskDefinition<TTaskId> definition)
+    {
+        RegisterTask(definition);
+        _ = RunSingle(definition); // 启动任务，不等待
+    }
+
     public async Task StartAllAsync()
     {
         if (_taskQueue.IsEmpty)
@@ -47,36 +68,61 @@ public class BackgroundTaskManager<TTaskId>
             return;
         }
 
+        var runningTasks = new List<Task>();
+
         while (_taskQueue.TryDequeue(out var definition))
         {
-            var taskId = definition.TaskId;
-            //_logger.LogInfo($"注册任务 ID: {taskId}");
+            var task = RunSingle(definition);
+            runningTasks.Add(task);
+        }
 
-            var progress = new Progress<ProgressInfo>(info =>
+        await Task.WhenAll(runningTasks);
+        _logger.LogInfo("所有任务已完成。");
+    }
+
+    private async Task SafeFireAndForget(Func<Task> func)
+    {
+        try
+        {
+            await func();
+        }
+        catch { }
+    }
+
+    private Task RunSingle(TaskDefinition<TTaskId> definition)
+    {
+        var taskId = definition.TaskId;
+        var progress = new Progress<ProgressInfo>(info =>
+        {
+            _logger.LogInfo($"任务 {taskId} 进度: {info}");
+        });
+
+        var taskCts = new CancellationTokenSource();
+        _taskCtsMap[taskId] = taskCts;
+
+        var taskWithId = Task.Run(
+            async () =>
             {
-                _logger.LogInfo($"任务 {taskId} 进度: {info}");
-            });
+                var currentSemaphore = _semaphore; // 👈 获取当前信号量（支持动态替换）
+                await currentSemaphore.WaitAsync(taskCts.Token);
 
-            // 为每个任务创建独立的 CTS
-            var taskCts = new CancellationTokenSource();
-            _taskCtsMap[taskId] = taskCts;
-
-            var taskWithId = Task.Run(async () =>
-            {
                 try
                 {
-                    _logger.LogInfo($"任务 {taskId} 开始执行。");
+                    _logger.LogInfo(
+                        $"任务 {taskId} 开始执行（当前并发: {_maxDegreeOfParallelism - currentSemaphore.CurrentCount} / 最大: {_maxDegreeOfParallelism}）。"
+                    );
 
                     var startTime = DateTime.Now;
-
-                    // 是否设置了超时
                     bool hasTimeout = definition.Timeout.HasValue;
 
-                    // 创建超时任务（如果有的话）
-                    var timeoutTask = hasTimeout ? Task.Delay(definition.Timeout.Value) : Task.CompletedTask;
+                    var timeoutTask = hasTimeout
+                        ? Task.Delay(definition.Timeout.Value, taskCts.Token) // 👈 传递 token 使超时可取消
+                        : Task.CompletedTask;
 
-                    // 等待任务完成或超时
-                    var resultTask = Task.Run(() => definition.Action(taskId, taskCts.Token, progress), taskCts.Token);
+                    var resultTask = Task.Run(
+                        () => definition.Action(taskId, taskCts.Token, progress),
+                        taskCts.Token
+                    );
 
                     var completedTask = await Task.WhenAny(resultTask, timeoutTask);
 
@@ -84,42 +130,48 @@ public class BackgroundTaskManager<TTaskId>
                     {
                         var endTime = DateTime.Now;
                         var elapsedTime = endTime - startTime;
+                        _logger.LogError(
+                            $"任务 {taskId} 超时，已运行 {elapsedTime.TotalMilliseconds:F2} 毫秒。"
+                        );
+                        if (definition.OnTimeout != null)
+                        {
+                            SafeFireAndForget(() => definition.OnTimeout(taskId));
+                        }
 
-                        _logger.LogError($"任务 {taskId} 超时，已运行 {elapsedTime.TotalMilliseconds:F2} 毫秒。");
-
-                        // 调用用户的超时回调
-                        definition.OnTimeout?.Invoke(taskId);
-
-                        // 取消该任务的CTS
                         taskCts.Cancel();
-
                         throw new TimeoutException($"任务 {taskId} 超时。");
                     }
 
-                    //_logger.LogInfo($"任务 {taskId} 正常完成。");
+                    await resultTask; // 👈 确保抛出内部异常
+                    if (definition.OnTaskCompleted != null)
+                    {
+                        await SafeFireAndForget(
+                            () => definition.OnTaskCompleted.Invoke(definition.TaskId)
+                        );
+                    }
                 }
                 catch (OperationCanceledException)
                 {
                     _logger.LogWarning($"任务 {taskId} 被取消。");
-                    //throw;
                 }
                 catch (TimeoutException ex)
                 {
                     _logger.LogError($"任务 {taskId} 超时异常: {ex.Message}");
-                    //throw;
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError($"任务 {taskId} 发生异常: {ex.Message}");
-                    //throw;
                 }
-            });
+                finally
+                {
+                    currentSemaphore.Release(); // 👈 释放获取时的信号量实例
+                }
+            },
+            taskCts.Token
+        );
 
-            _tasks[taskId] = taskWithId;
-        }
-
-        await Task.WhenAll(_tasks.Values);
-        _logger.LogInfo("所有任务已完成。");
+        _tasks[taskId] = taskWithId;
+        return taskWithId;
     }
 
     /// <summary>
@@ -160,14 +212,7 @@ public class BackgroundTaskManager<TTaskId>
     /// <returns>任务ID与状态的元组列表</returns>
     public List<(TTaskId Id, TaskStatus Status)> GetAllTaskStatuses()
     {
-        var statuses = new List<(TTaskId Id, TaskStatus Status)>();
-
-        foreach (var kvp in _tasks)
-        {
-            statuses.Add((kvp.Key, kvp.Value.Status));
-        }
-
-        return statuses;
+        return _tasks.Select(kvp => (kvp.Key, kvp.Value.Status)).ToList();
     }
 
     /// <summary>
@@ -181,10 +226,9 @@ public class BackgroundTaskManager<TTaskId>
         {
             cts.Cancel();
         }
-        //_logger.LogInfo("请求取消所有任务。");
-        await Task.WhenAll(_tasks.Values);
 
-        //_logger.LogInfo("所有任务已取消。");
+        await Task.WhenAll(_tasks.Values);
+        _logger.LogInfo("所有任务已取消或完成。");
     }
 
     public bool ContainsTask(TTaskId taskId)

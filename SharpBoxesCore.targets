@@ -1,0 +1,35 @@
+<Project>
+	<PropertyGroup>
+		<!-- 计算 native 文件所在目录 -->
+		<_NativeSourceDir>$(MSBuildThisFileDirectory)..\runtimes\any\native\</_NativeSourceDir>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- 仅当文件存在时才包含，避免 .NET Framework 构建失败 -->
+		<_EverythingFiles Include="$(_NativeSourceDir)Everything.dll" Condition="Exists('$(_NativeSourceDir)Everything.dll')" />
+		<_EverythingFiles Include="$(_NativeSourceDir)Everything.exe" Condition="Exists('$(_NativeSourceDir)Everything.exe')" />
+		<_EverythingFiles Include="$(_NativeSourceDir)Everything32.dll" Condition="Exists('$(_NativeSourceDir)Everything32.dll')" />
+		<_EverythingFiles Include="$(_NativeSourceDir)Everything64.dll" Condition="Exists('$(_NativeSourceDir)Everything64.dll')" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="@(_EverythingFiles)">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Visible>false</Visible>
+			<Link>%(Filename)%(Extension)</Link>
+		</None>
+	</ItemGroup>
+
+	<!-- ============= Native Assets & Build Integration ============= -->
+	<ItemGroup>
+		<!-- Native binaries -->
+		<None Include="Everything\Lib\Everything.dll" Pack="true" PackagePath="runtimes\any\native\" />
+		<None Include="Everything\Lib\Everything.exe" Pack="true" PackagePath="runtimes\any\native\" />
+		<None Include="Everything\Lib\Everything32.dll" Pack="true" PackagePath="runtimes\any\native\" />
+		<None Include="Everything\Lib\Everything64.dll" Pack="true" PackagePath="runtimes\any\native\" />
+
+		<!-- Build targets for auto-copy -->
+		<None Include="build\SharpBoxesCore.targets" Pack="true" PackagePath="build\" />
+		<None Include="build\SharpBoxesCore.targets" Pack="true" PackagePath="buildTransitive\" />
+	</ItemGroup>
+</Project>

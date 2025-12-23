@@ -34,7 +34,7 @@ public class DataCenterEventArgs : EventArgs
 /// </summary>
 public class DataCenter : IDisposable
 {
-    public static DataCenter Default { get; } = new DataCenter();
+    public static DataCenter Default { get; } = new DataCenter(TimeSpan.FromMinutes(5));
 
     internal readonly ConcurrentDictionary<string, DataEntry> _dataStore =
         new ConcurrentDictionary<string, DataEntry>();
@@ -46,6 +46,7 @@ public class DataCenter : IDisposable
     // 事件定义
     public event EventHandler<DataCenterEventArgs> OnItemRemoved;
     public event EventHandler<DataCenterEventArgs> OnItemExpired;
+    public event EventHandler<DataCenterEventArgs> OnItemUpdated;
 
     /// <summary>
     /// 构造函数
@@ -57,7 +58,9 @@ public class DataCenter : IDisposable
 
         if (isCleanupEnabled)
         {
-            var interval = cleanupInterval.HasValue ? cleanupInterval.Value.TotalMilliseconds : 0;
+            var interval = cleanupInterval.HasValue
+                ? cleanupInterval.Value.TotalMilliseconds
+                : TimeSpan.FromSeconds(30).TotalMilliseconds;
             if (interval < 100)
                 interval = 100; // 最小 100ms
             _cleanupTimer = new Timer(
@@ -66,6 +69,17 @@ public class DataCenter : IDisposable
                 TimeSpan.Zero, // 立即开始第一次
                 TimeSpan.FromMilliseconds(interval)
             );
+        }
+    }
+
+    public void SetScanInterval(TimeSpan interval)
+    {
+        if (isCleanupEnabled)
+        {
+            lock (_cleanupLock)
+            {
+                _cleanupTimer.Change(TimeSpan.Zero, interval);
+            }
         }
     }
 
@@ -122,6 +136,20 @@ public class DataCenter : IDisposable
         return null;
     }
 
+    public IEnumerable<KeyValuePair<string, object>> Where(
+        Predicate<KeyValuePair<string, object>> predicate
+    )
+    {
+        foreach (var kvp in _dataStore)
+        {
+            KeyValuePair<string, object> obj = new(kvp.Key, kvp.Value.Value);
+            if (predicate(obj))
+            {
+                yield return obj;
+            }
+        }
+    }
+
     /// <summary>
     /// 获取指定键的值并尝试转换为指定类型。
     /// </summary>
@@ -154,6 +182,148 @@ public class DataCenter : IDisposable
 
         return _dataStore.TryRemove(key, out var entry)
             && TryRemoveEntry(key, entry, isExpired: false);
+    }
+
+    public int CountBy(Predicate<string> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        int count = 0;
+        foreach (var kvp in _dataStore)
+        {
+            if (predicate(kvp.Key))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public bool Any(Predicate<string> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.Any(kvp => predicate(kvp.Key));
+    }
+
+    public bool Any(Predicate<(string, Type)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.Any(kvp => predicate((kvp.Key, kvp.Value.Value?.GetType())));
+    }
+
+    public bool Any(Predicate<(string, object)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.Any(kvp => predicate((kvp.Key, kvp.Value.Value)));
+    }
+
+    public bool All(Predicate<string> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.All(kvp => predicate(kvp.Key));
+    }
+
+    public bool All(Predicate<(string, Type)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.All(kvp => predicate((kvp.Key, kvp.Value.Value?.GetType())));
+    }
+
+    public bool All(Predicate<(string, object)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        return _dataStore.All(kvp => predicate((kvp.Key, kvp.Value.Value)));
+    }
+
+    public bool RemoveAll(Predicate<string> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        var keysToRemove = new List<string>();
+        foreach (var kvp in _dataStore)
+        {
+            if (predicate(kvp.Key))
+            {
+                keysToRemove.Add(kvp.Key);
+            }
+        }
+
+        bool success = true;
+        foreach (var key in keysToRemove)
+        {
+            if (_dataStore.TryRemove(key, out var entry))
+            {
+                success &= TryRemoveEntry(key, entry, isExpired: false);
+            }
+        }
+
+        return success;
+    }
+
+    public bool RemoveAll(Predicate<(string, Type)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        var keysToRemove = new List<string>();
+        foreach (var kvp in _dataStore)
+        {
+            if (predicate((kvp.Key, kvp.Value.Value?.GetType())))
+            {
+                keysToRemove.Add(kvp.Key);
+            }
+        }
+
+        bool success = true;
+        foreach (var key in keysToRemove)
+        {
+            if (_dataStore.TryRemove(key, out var entry))
+            {
+                success &= TryRemoveEntry(key, entry, isExpired: false);
+            }
+        }
+
+        return success;
+    }
+
+    public bool RemoveAll(Predicate<(string, object)> predicate)
+    {
+        if (predicate == null)
+            throw new ArgumentNullException(nameof(predicate));
+
+        var keysToRemove = new List<string>();
+        foreach (var kvp in _dataStore)
+        {
+            if (predicate((kvp.Key, kvp.Value.Value)))
+            {
+                keysToRemove.Add(kvp.Key);
+            }
+        }
+
+        bool success = true;
+        foreach (var key in keysToRemove)
+        {
+            if (_dataStore.TryRemove(key, out var entry))
+            {
+                success &= TryRemoveEntry(key, entry, isExpired: false);
+            }
+        }
+
+        return success;
     }
 
     /// <summary>
@@ -198,6 +368,7 @@ public class DataCenter : IDisposable
             entry,
             (k, oldEntry) =>
             {
+                OnItemUpdated?.Invoke(this, new DataCenterEventArgs(key, value));
                 TryDisposeEntry(oldEntry);
                 return entry;
             }
