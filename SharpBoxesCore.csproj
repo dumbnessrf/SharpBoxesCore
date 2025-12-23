@@ -6,13 +6,14 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<NoWarn>CS1591</NoWarn>
+		<FileVersion>1.1.4.3</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageTags>csv;excel;async;tasks;reflection;validation;shapes;cache;orientied-object;http-helper;xml-helper;zip-helper;ini-helper;advanced-stopwatchl;oriented-object socket;dynamic-load-and-analyze-dll</PackageTags>
 		<!-- 关键：构建时生成NuGet包 -->
-		<Version>1.1.4.1</Version>
+		<Version>1.1.4.3</Version>
 		<PackageIcon>Icon.png</PackageIcon>
 		<IncludeReadmeFile>true</IncludeReadmeFile>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>

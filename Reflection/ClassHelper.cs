@@ -299,7 +299,7 @@ public static class ClassHelper
 
     public static void SetAttributeValue<TAttribute>(
         Type type,
-        string propertyName,
+        string propertyName, string attributePropertyName,
         string newValue
     )
         where TAttribute : Attribute
@@ -307,13 +307,13 @@ public static class ClassHelper
         PropertyDescriptor propertyDescriptor = TypeDescriptor.GetProperties(type)[propertyName];
         TAttribute attr = propertyDescriptor.Attributes[typeof(TAttribute)] as TAttribute;
         PropertyInfo propInfo = (
-            attr?.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public)
+            attr?.GetType().GetProperty(attributePropertyName, BindingFlags.Instance | BindingFlags.Public)
         );
 
         propInfo?.SetValue(attr, newValue);
     }
 
-    public static void SetAttributeValue<TAttribute, TClass>(string propertyName, string newValue)
+    public static void SetAttributeValue<TAttribute, TClass>(string propertyName,string attributePropertyName, string newValue)
         where TAttribute : Attribute
         where TClass : class
     {
@@ -322,7 +322,7 @@ public static class ClassHelper
         ];
         TAttribute attr = propertyDescriptor.Attributes[typeof(TAttribute)] as TAttribute;
         PropertyInfo propInfo = (
-            attr?.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public)
+            attr?.GetType().GetProperty(attributePropertyName, BindingFlags.Instance | BindingFlags.Public)
         );
 
         propInfo?.SetValue(attr, newValue);
