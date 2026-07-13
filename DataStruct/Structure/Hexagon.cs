@@ -16,7 +16,7 @@ public record Hexagon : IShapeStructure
     public Point P4 { get; init; }
     public Point P5 { get; init; }
     public Point P6 { get; init; }
-
+    public Brush UsedBrush { get; set; }
     /// <summary>
     /// 创建任意六边形
     /// </summary>

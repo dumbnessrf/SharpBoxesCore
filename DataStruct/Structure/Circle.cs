@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Drawing;
+using System.Diagnostics; 
 
 namespace SharpBoxesCore.DataStruct.Structure;
 
@@ -24,14 +23,14 @@ public record Circle : IShapeStructure
     /// 圆心的Y坐标。
     /// </summary>
     public double CenterY;
-
+    public Brush UsedBrush { get; set; }
     public Circle(double radius, double centerX, double centerY)
     {
         this.Radius = radius;
         this.CenterX = centerX;
         this.CenterY = centerY;
     }
-
+ 
     public Circle() { }
 
     public override string ToString()

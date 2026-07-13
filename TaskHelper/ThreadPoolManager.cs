@@ -193,17 +193,17 @@ public class ThreadPoolManager<TTaskId, TResult>
         }
         catch (OperationCanceledException ex)
         {
-            _logger.LogWarning($"任务 {taskId} 被取消。{ex.Message}");
+            _logger.LogWarning($"任务 {taskId} 被取消。{ex.ToString()}");
             return CreateTaskResult(ETaskResultStatus.Cancelled, "任务被取消", ex);
         }
         catch (TimeoutException ex)
         {
-            _logger.LogError($"任务 {taskId} 超时异常: {ex.Message}");
+            _logger.LogError($"任务 {taskId} 超时异常: {ex.ToString()}");
             return CreateTaskResult(ETaskResultStatus.Timeout, "任务超时异常", ex);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"任务 {taskId} 发生异常: {ex.Message}");
+            _logger.LogError($"任务 {taskId} 发生异常: {ex.ToString()}");
             return CreateTaskResult(ETaskResultStatus.Failed, "任务发生异常", ex);
         }
     }
@@ -219,7 +219,14 @@ public class ThreadPoolManager<TTaskId, TResult>
             return;
         }
 
-        cts.Cancel();
+        try
+        {
+            cts.Cancel();
+        }
+        catch (Exception ex)
+        {
+             
+        }
         _logger.LogInfo($"请求取消任务 {taskId}。");
     }
 
@@ -317,7 +324,15 @@ public class ThreadPoolManager<TTaskId, TResult>
     {
         foreach (var cts in _taskCtsMap.Values)
         {
-            cts.Cancel();
+            try
+            {
+                cts.Cancel();
+                cts.Dispose();
+            }
+            catch (Exception ex)
+            {
+                 
+            }
         }
 
         await Task.WhenAll(Tasks.Values);

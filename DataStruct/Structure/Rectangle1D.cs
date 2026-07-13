@@ -1,4 +1,5 @@
 ﻿using SharpBoxesCore.DataStruct.Structure;
+using System.Windows.Media;
 
 namespace SharpBoxesCore.DataStruct.Structure;
 
@@ -86,7 +87,7 @@ public record Rectangle1D : IShapeStructure
     [JsonIgnore]
     public SharpBoxesCore.DataStruct.Structure.Point RightCenter =>
         new SharpBoxesCore.DataStruct.Structure.Point(X + Width, Y + Height / 2).Round();
-
+       public Brush UsedBrush { get; set; }
     public override string ToString()
     {
         return $"Rectangle1D(Width={Width:F2}, Height={Height:F2}, X={X:F2}, Y={Y:F2})";

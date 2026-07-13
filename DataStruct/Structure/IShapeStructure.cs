@@ -1,3 +1,8 @@
-﻿namespace SharpBoxesCore.DataStruct.Structure;
+﻿
+using System.Windows.Media;
 
-public interface IShapeStructure { }
+namespace SharpBoxesCore.DataStruct.Structure;
+
+public interface IShapeStructure {
+    public Brush UsedBrush{ get; set; }
+}

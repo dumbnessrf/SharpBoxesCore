@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime;
+using System.Windows.Media;
 using SharpBoxesCore.DataStruct;
 using SharpBoxesCore.DataStruct.Structure;
 
@@ -13,7 +14,7 @@ public record Rectangle2D : IShapeStructure
     public double CenterX;
     public double CenterY;
     public double AngleDegree;
-
+    public Brush UsedBrush { get; set; }
     public Rectangle2D(
         double halfWidth,
         double halfHeight,
@@ -185,6 +186,8 @@ public record Rectangle2D : IShapeStructure
 
     [JsonIgnore]
     public double Radian => (-AngleDegree).DegreesToRadians().Round();
+
+ 
 
     public override string ToString() =>
         $"Rectangle2D(CenterX={CenterX:F2}, CenterY={CenterY:F2}, HalfWidth={HalfWidth:F2}, HalfHeight={HalfHeight:F2}, AngleDegree={AngleDegree:F2})";

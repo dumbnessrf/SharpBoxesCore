@@ -156,11 +156,11 @@ public class BackgroundTaskManager<TTaskId>
                 }
                 catch (TimeoutException ex)
                 {
-                    _logger.LogError($"任务 {taskId} 超时异常: {ex.Message}");
+                    _logger.LogError($"任务 {taskId} 超时异常: {ex.ToString()}");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"任务 {taskId} 发生异常: {ex.Message}");
+                    _logger.LogError($"任务 {taskId} 发生异常: {ex.ToString()}");
                 }
                 finally
                 {
@@ -186,7 +186,14 @@ public class BackgroundTaskManager<TTaskId>
             return;
         }
 
-        cts.Cancel();
+        try
+        {
+            cts.Cancel();
+        }
+        catch (Exception ex)
+        {
+             
+        }
         _logger.LogInfo($"请求取消任务 {taskId}。");
     }
 
@@ -224,7 +231,15 @@ public class BackgroundTaskManager<TTaskId>
     {
         foreach (var cts in _taskCtsMap.Values)
         {
-            cts.Cancel();
+            try
+            {
+                cts.Cancel();
+                cts.Dispose();
+            }
+            catch (Exception ex)
+            {
+                 
+            }
         }
 
         await Task.WhenAll(_tasks.Values);

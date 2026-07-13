@@ -38,4 +38,17 @@ public class Size
     {
         return new Size(Math.Round(Width, 2), Math.Round(Height, 2));
     }
+
+    // 隐式转换：从你的 Point → System.Windows.Point
+    public static implicit operator System.Windows.Size(Size p)
+    {
+        if (p == null) return new System.Windows.Size(0, 0); // 或抛出异常，根据需求
+        return new System.Windows.Size(p.Width, p.Height);
+    }
+
+    // 隐式转换：从 System.Windows.Point → 你的 Point
+    public static implicit operator Size(System.Windows.Size p)
+    {
+        return new Size(p.Width, p.Height);
+    }
 }

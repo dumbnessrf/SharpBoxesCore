@@ -14,7 +14,7 @@ public record Polygon : IShapeStructure
         this.Points = points;
         this.IsClosed = isClosed;
     }
-
+    public Brush UsedBrush { get; set; }
     public Polygon() { }
 
     public override string ToString()

@@ -4,4 +4,4 @@
 namespace SharpBoxesCore.DataStruct.Structure;
 
 [DebuggerStepThrough]
-public record EmptyShape : IShapeStructure { }
+public record EmptyShape : IShapeStructure { public Brush UsedBrush { get; set; } }

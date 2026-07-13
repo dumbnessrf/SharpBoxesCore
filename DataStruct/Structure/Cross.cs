@@ -14,7 +14,7 @@ public record Cross : IShapeStructure
 
     public double Size;
     public SharpBoxesCore.DataStruct.Structure.Point Center;
-
+    public Brush UsedBrush { get; set; }
     public double AngleDegree;
 
     public Cross() { }

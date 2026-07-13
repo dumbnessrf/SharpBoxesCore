@@ -9,7 +9,7 @@ public record Line : IShapeStructure
     public double Y1;
     public double X2;
     public double Y2;
-
+    public Brush UsedBrush { get; set; }
     [DebuggerStepThrough]
     public Line(double x1, double y1, double x2, double y2)
     {
@@ -304,4 +304,6 @@ public record Line : IShapeStructure
         var y = (a2 * c1 - a1 * c2) / d;
         return Contains(new Point(x, y));
     }
+
+  
 }

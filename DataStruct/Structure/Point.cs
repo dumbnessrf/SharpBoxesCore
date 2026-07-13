@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SysPoint = global::System.Windows.Point;
 namespace SharpBoxesCore.DataStruct.Structure;
 
 public class Point
 {
     public double X { get; set; }
     public double Y { get; set; }
-
+    public Brush UsedBrush { get; set; }
     public Point(double x, double y)
     {
         X = x;
@@ -49,5 +49,18 @@ public class Point
         double dx = X - other.X;
         double dy = Y - other.Y;
         return Math.Sqrt(dx * dx + dy * dy);
+    }
+
+    // 隐式转换：从你的 Point → System.Windows.Point
+    public static implicit operator SysPoint(Point p)
+    {
+        if (p == null) return new SysPoint(0, 0); // 或抛出异常，根据需求
+        return new SysPoint(p.X, p.Y);
+    }
+
+    // 隐式转换：从 System.Windows.Point → 你的 Point
+    public static implicit operator Point(SysPoint p)
+    {
+        return new Point(p.X, p.Y);
     }
 }

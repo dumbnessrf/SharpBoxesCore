@@ -11,3 +11,4 @@ global using System.Diagnostics;
 global using Newtonsoft.Json;
 global using EverythingNet.Core;
 global using EverythingNet.Interfaces;
+global using System.Windows.Media;

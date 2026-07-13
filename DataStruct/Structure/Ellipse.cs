@@ -11,7 +11,7 @@ public record Ellipse : IShapeStructure
     public double CenterX;
     public double CenterY;
     public double RotationDegree;
-
+    public Brush UsedBrush { get; set; }
     public Ellipse(
         double radiusX,
         double radiusY,

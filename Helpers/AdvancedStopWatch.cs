@@ -5,35 +5,35 @@
 /// <example>
 /// <code>
 /// var stopWatch = AdvancedStopWatch.StartNew();
-/// 
+///
 /// // 设置一个超时回调（5秒后触发）
 /// stopWatch.SetTimeout(TimeSpan.FromSeconds(5), () =>
 /// {
 /// 	Console.WriteLine("[超时回调] 已经过了 5 秒！");
 /// });
-/// 
+///
 /// // 模拟第一个操作
 /// await Task.Delay(1000); // 等待1秒
 /// stopWatch.Lap("第一段操作");
-/// 
+///
 /// // 模拟第二个操作
 /// await Task.Delay(2000);
 /// stopWatch.Lap("第二段操作");
-/// 
+///
 /// // 模拟第三个操作
 /// await Task.Delay(1500);
 /// stopWatch.Lap("第三段操作");
-/// 
+///
 /// // 停止计时器
 /// stopWatch.Stop();
-/// 
+///
 /// // 输出所有 lap 时间
 /// Console.WriteLine("\n=== 分段时间记录 ===");
 /// foreach (var lap in stopWatch.GetLaps())
 /// {
 ///     Console.WriteLine($"{lap.Key}: {lap.Value}");
 /// }
-/// 
+///
 /// Console.WriteLine($"\n总耗时: {stopWatch.Elapsed}");
 /// </code></example>
 /// <example>
@@ -43,9 +43,9 @@
 /// 第一段操作: 00:00:00.9999363
 /// 第二段操作: 00:00:02.0000858
 /// 第三段操作: 00:00:01.5007894
-/// 
+///
 /// 总耗时: 00:00:00.0001788
-/// 
+///
 /// [超时回调] 已经过了 5 秒！
 /// </code>
 /// </example>
@@ -56,10 +56,12 @@ public class AdvancedStopWatch
 
     private Dictionary<string, TimeSpan> Laps = new Dictionary<string, TimeSpan>();
     private Stopwatch _stopwatch = new Stopwatch();
+    private Stopwatch _stopwatch2 = new Stopwatch();
 
     public AdvancedStopWatch()
     {
         _stopwatch.Start();
+        _stopwatch2.Start();
     }
 
     public void SetTimeout(TimeSpan timeout, Action onTimeout)
@@ -72,7 +74,11 @@ public class AdvancedStopWatch
             });
     }
 
-    public void Stop() => _stopwatch.Stop();
+    public void Stop()
+    {
+        _stopwatch.Stop();
+        _stopwatch2.Stop();
+    }
 
     public TimeSpan Elapsed => _stopwatch.Elapsed;
 
@@ -82,7 +88,14 @@ public class AdvancedStopWatch
     /// <param name="name"></param>
     public void Lap(string name)
     {
-        Laps[name] = StopAndGetElapsed;
+        if (Laps.ContainsKey(name))
+        {
+            Laps.Add(name, Elapsed);
+        }
+        else
+        {
+            Laps[name] = Elapsed;
+        }
         _stopwatch.Restart();
     }
 
@@ -91,11 +104,12 @@ public class AdvancedStopWatch
         get
         {
             _stopwatch.Stop();
-            return _stopwatch.Elapsed;
+            _stopwatch2.Stop();
+            return _stopwatch2.Elapsed;
         }
     }
 
-    public Dictionary<string,TimeSpan> GetLaps()
+    public Dictionary<string, TimeSpan> GetLaps()
     {
         return Laps;
     }

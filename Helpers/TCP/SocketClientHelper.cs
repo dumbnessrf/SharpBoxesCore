@@ -195,7 +195,14 @@ public class SocketClientHelper : INotifyPropertyChanged
     public void Disconnect()
     {
         _reconnectEnabled = false;
-        _cancellationTokenSource.Cancel();
+        try
+        {
+            _cancellationTokenSource.Cancel();
+        }
+        catch (Exception ex)
+        {
+             
+        }
         _stream?.Close();
         _client?.Close();
         _isConnected = false;

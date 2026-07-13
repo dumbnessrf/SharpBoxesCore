@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using SharpBoxesCore.Helpers;
 
@@ -25,6 +27,7 @@ public static class Helpers
     {
         return JsonConvert.SerializeObject(dict);
     }
+
     [DebuggerStepThrough]
     public static void AddOrUpdate<TKey, TValue>(
         this Dictionary<TKey, TValue> dict,
@@ -41,6 +44,7 @@ public static class Helpers
             dict.Add(key, value);
         }
     }
+
     [DebuggerStepThrough]
     public static TValue GetOrAdd<TKey, TValue>(
         this Dictionary<TKey, TValue> dict,
@@ -59,6 +63,7 @@ public static class Helpers
             return value;
         }
     }
+
     [DebuggerStepThrough]
     public static void GetValueOrDefault<TKey, TValue>(
         this Dictionary<TKey, TValue> dict,
@@ -76,6 +81,7 @@ public static class Helpers
             value = defaultValue;
         }
     }
+
     [DebuggerStepThrough]
     public static void TryRemove<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
     {
@@ -123,6 +129,7 @@ public static class Helpers
             }
         );
     }
+
     [DebuggerStepThrough]
     public static DataTable ListToDataTable<T>(List<T> datas, bool isUseDisplayName = false)
     {
@@ -162,6 +169,7 @@ public static class Helpers
         }
         return dt;
     }
+
     [DebuggerStepThrough]
     public static List<T> DataTableToList<T>(this DataTable dt, bool isUseDisplayName = false)
     {
@@ -303,252 +311,107 @@ public static class Helpers
     {
         return string.Join(separator, arr);
     }
+
     [DebuggerStepThrough]
     public static float ToFloat(this string str)
     {
         return float.Parse(str);
     }
+
     [DebuggerStepThrough]
     public static double ToDouble(this string str)
     {
         return double.Parse(str);
     }
-    
+
     [DebuggerStepThrough]
     public static int ToInt(this string str)
     {
         return int.Parse(str);
     }
+
     [DebuggerStepThrough]
     public static bool ToBool(this string str)
     {
         return bool.Parse(str);
     }
+
     [DebuggerStepThrough]
     public static float ToFloat(this double d)
     {
         return (float)d;
     }
+
     [DebuggerStepThrough]
     public static int ToInt(this double d)
     {
         return (int)d;
     }
+
     [DebuggerStepThrough]
     public static float ToFloat(this int i)
     {
         return (float)i;
     }
+
     [DebuggerStepThrough]
     public static double ToDouble(this int i)
     {
         return (double)i;
     }
+
     [DebuggerStepThrough]
     public static int ToInt(this float f)
     {
         return (int)f;
     }
+
     [DebuggerStepThrough]
     public static double ToDouble(this float f)
     {
         return (double)f;
     }
+
     [DebuggerStepThrough]
     public static bool InRange(this double value, double min, double max)
     {
         return value >= min && value <= max;
     }
+
     [DebuggerStepThrough]
     public static bool InRange(this int value, int min, int max)
     {
         return value >= min && value <= max;
     }
+
     [DebuggerStepThrough]
     public static bool InRange(this float value, float min, float max)
     {
         return value >= min && value <= max;
     }
+
     [DebuggerStepThrough]
     public static bool IsEmpty<T>(this IEnumerable<T> enumerable)
     {
         return enumerable == null || !enumerable.Any();
     }
+
     [DebuggerStepThrough]
     public static bool IsEmpty(this string str)
     {
         return string.IsNullOrEmpty(str);
     }
+
     [DebuggerStepThrough]
     public static bool IsNotEmpty(this string str)
     {
         return !string.IsNullOrEmpty(str);
     }
+
     [DebuggerStepThrough]
     public static bool ValidIndex<T>(this List<T> values, int index)
     {
         return index >= 0 && index < values.Count;
-    }
-
-    /// <summary>
-    /// 获取形状的外接矩形
-    /// </summary>
-    /// <param name="shape">形状</param>
-    /// <returns>外接矩形</returns>
-    [DebuggerStepThrough]
-    public static SharpBoxesCore.DataStruct.Structure.Rectangle1D GetBoundingRectangle(
-        this SharpBoxesCore.DataStruct.Structure.IShapeStructure shape
-    )
-    {
-        if (shape == null)
-        {
-            throw new ArgumentNullException(nameof(shape));
-        }
-
-        if (shape is SharpBoxesCore.DataStruct.Structure.Circle circle)
-        {
-            // 圆的外接矩形
-            double x = circle.CenterX - circle.Radius;
-            double y = circle.CenterY - circle.Radius;
-            double width = circle.Radius * 2;
-            double height = circle.Radius * 2;
-            return new SharpBoxesCore.DataStruct.Structure.Rectangle1D(width, height, x, y);
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Rectangle1D rectangle1D)
-        {
-            // Rectangle1D本身就是矩形，直接返回
-            return rectangle1D;
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Rectangle2D rectangle2D)
-        {
-            // 带角度矩形的外接矩形
-            double x = rectangle2D.CenterPoint.X - rectangle2D.HalfWidth;
-            double y = rectangle2D.CenterPoint.Y - rectangle2D.HalfHeight;
-            double width = rectangle2D.HalfWidth * 2;
-            double height = rectangle2D.HalfHeight * 2;
-            double angle = rectangle2D.AngleDegree;
-            double cos = Math.Cos(angle * Math.PI / 180);
-            double sin = Math.Sin(angle * Math.PI / 180);
-            double x1 = x + width * cos;
-            double y1 = y + height * sin;
-            double x2 = x - width * cos;
-            double y2 = y - height * sin;
-            double minX = Math.Min(x1, x2);
-            double minY = Math.Min(y1, y2);
-            double maxX = Math.Max(x1, x2);
-            double maxY = Math.Max(y1, y2);
-            double width2 = maxX - minX;
-            double height2 = maxY - minY;
-            return new SharpBoxesCore.DataStruct.Structure.Rectangle1D(width2, height2, minX, minY);
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Line line)
-        {
-            // 线段的外接矩形
-            double minX = Math.Min(line.X1, line.X2);
-            double minY = Math.Min(line.Y1, line.Y2);
-            double maxX = Math.Max(line.X1, line.X2);
-            double maxY = Math.Max(line.Y1, line.Y2);
-            double width = maxX - minX;
-            double height = maxY - minY;
-            return new SharpBoxesCore.DataStruct.Structure.Rectangle1D(width, height, minX, minY);
-        }
-        else if (
-            shape is SharpBoxesCore.DataStruct.Structure.Polygon polygon
-            && polygon.Points != null
-            && polygon.Points.Count > 0
-        )
-        {
-            // 多边形的外接矩形
-            double minX = polygon.Points.Min(p => p.X);
-            double minY = polygon.Points.Min(p => p.Y);
-            double maxX = polygon.Points.Max(p => p.X);
-            double maxY = polygon.Points.Max(p => p.Y);
-            double width = maxX - minX;
-            double height = maxY - minY;
-            return new SharpBoxesCore.DataStruct.Structure.Rectangle1D(width, height, minX, minY);
-        }
-        else
-        {
-            throw new NotSupportedException($"不支持的形状类型: {shape.GetType().Name}");
-        }
-    }
-
-    /// <summary>
-    /// 获取形状的外接圆
-    /// </summary>
-    /// <param name="shape">形状</param>
-    /// <returns>外接圆</returns>
-    [DebuggerStepThrough]
-    public static SharpBoxesCore.DataStruct.Structure.Circle GetBoundingCircle(
-        this SharpBoxesCore.DataStruct.Structure.IShapeStructure shape
-    )
-    {
-        if (shape == null)
-        {
-            throw new ArgumentNullException(nameof(shape));
-        }
-
-        if (shape is SharpBoxesCore.DataStruct.Structure.Circle circle)
-        {
-            // 圆的外接圆就是自己
-            return circle;
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Rectangle1D rectangle1D)
-        {
-            // 矩形的外接圆
-            double centerX = rectangle1D.CenterPoint.X;
-            double centerY = rectangle1D.CenterPoint.Y;
-            double radius = Math.Sqrt(
-                Math.Pow(rectangle1D.Width / 2, 2) + Math.Pow(rectangle1D.Height / 2, 2)
-            );
-            return new SharpBoxesCore.DataStruct.Structure.Circle(radius, centerX, centerY);
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Rectangle2D rectangle2D)
-        {
-            // 带角度矩形的外接圆
-            double centerX = rectangle2D.CenterPoint.X;
-            double centerY = rectangle2D.CenterPoint.Y;
-            double radius = Math.Sqrt(
-                Math.Pow(rectangle2D.HalfWidth, 2) + Math.Pow(rectangle2D.HalfHeight, 2)
-            );
-            return new SharpBoxesCore.DataStruct.Structure.Circle(radius, centerX, centerY);
-        }
-        else if (shape is SharpBoxesCore.DataStruct.Structure.Line line)
-        {
-            // 线段的外接圆
-            double centerX = (line.X1 + line.X2) / 2;
-            double centerY = (line.Y1 + line.Y2) / 2;
-            double radius =
-                Math.Sqrt(Math.Pow(line.X2 - line.X1, 2) + Math.Pow(line.Y2 - line.Y1, 2)) / 2;
-            return new SharpBoxesCore.DataStruct.Structure.Circle(radius, centerX, centerY);
-        }
-        else if (
-            shape is SharpBoxesCore.DataStruct.Structure.Polygon polygon
-            && polygon.Points != null
-            && polygon.Points.Count > 0
-        )
-        {
-            // 多边形的外接圆（简化版，实际应该计算最小外接圆，这里使用中心点和最远点距离作为半径）
-            SharpBoxesCore.DataStruct.Structure.Point centroid = polygon.Centroid;
-            double maxDistance = 0;
-            foreach (var point in polygon.Points)
-            {
-                double distance = point.DistanceTo(centroid);
-                if (distance > maxDistance)
-                {
-                    maxDistance = distance;
-                }
-            }
-            return new SharpBoxesCore.DataStruct.Structure.Circle(
-                maxDistance,
-                centroid.X,
-                centroid.Y
-            );
-        }
-        else
-        {
-            throw new NotSupportedException($"不支持的形状类型: {shape.GetType().Name}");
-        }
     }
 }
 
@@ -627,5 +490,115 @@ public static class ConcurrentExtensions
                 disposable.Dispose();
             }
         }
+    }
+}
+
+public static class StringExtensions
+{
+    // 匹配大写字母开头、小写字母序列、数字序列，或者常见的分隔符
+    // 这个正则会忽略分隔符，只提取单词部分
+    private static readonly Regex SplitRegex = new Regex(
+        @"[A-Z]?[a-z]+|[A-Z]+(?=[A-Z][a-z]|\d|\W|$)|\d+",
+        RegexOptions.Compiled
+    );
+
+    /// <summary>
+    /// 智能转换为帕斯卡命名法 (PascalCase)
+    /// 支持: "user_name", "user-name", "userName", "USER_NAME", "xml parser"
+    /// 结果: "UserName", "UserName", "UserName", "UserName", "XmlParser"
+    /// </summary>
+    public static string ToPascalCaseSmart(this string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return input;
+
+        var matches = SplitRegex.Matches(input);
+        if (matches.Count == 0)
+            return input;
+
+        var cultureInfo = CultureInfo.CurrentCulture;
+
+        var parts = matches
+            .Cast<Match>()
+            .Select(m => m.Value.ToLower(CultureInfo.InvariantCulture)) // 先全部转小写
+            .Select(s => cultureInfo.TextInfo.ToTitleCase(s)) // 再首字母大写
+            .ToList();
+
+        return string.Concat(parts);
+    }
+
+    /// <summary>
+    /// 智能转换为驼峰命名法 (camelCase)
+    /// </summary>
+    public static string ToCamelCaseSmart(this string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return input;
+
+        var pascal = input.ToPascalCaseSmart();
+        if (pascal.Length <= 1)
+            return pascal.ToLower(CultureInfo.InvariantCulture);
+
+        return char.ToLowerInvariant(pascal[0]) + pascal.Substring(1);
+    }
+
+    /// <summary>
+    /// 将字符串转换为“标题格式” (Title Case)。
+    /// 规则：
+    /// 1. 识别单词（支持空格、下划线、连字符、驼峰分割）。
+    /// 2. 每个单词的首字母大写。
+    /// 3. 单词中剩余的所有字符（包括字母和数字混合部分）强制转为小写。
+    ///
+    /// 示例:
+    /// "hello WORLD" -> "Hello World"
+    /// "user_NAME_123" -> "User Name 123"
+    /// "XMLParser2Go" -> "Xml Parser2 Go" (注意：数字后的字母也被小写了)
+    /// "OCR-model" -> "Ocr Model"
+    /// </summary>
+    public static string ToTitleCaseWords(this string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return input;
+
+        // 复用之前的正则逻辑来提取单词，确保能处理各种分隔符和驼峰
+        // 正则说明：匹配大写字母开头的小写序列，或连续大写字母（直到遇到小写/数字/结尾），或数字
+        var matches = SplitRegex.Matches(input);
+        if (matches.Count == 0)
+            return input.Trim();
+
+        var cultureInfo = CultureInfo.InvariantCulture;
+        var textInfo = cultureInfo.TextInfo;
+
+        var result = new StringBuilder();
+        bool isFirstWord = true;
+
+        foreach (Match match in matches)
+        {
+            string word = match.Value;
+            if (string.IsNullOrEmpty(word))
+                continue;
+
+            // 如果不是第一个单词，且原字符串中单词之间主要是靠分隔符连接的（非纯驼峰紧凑连接），
+            // 这里为了通用性，我们统一加一个空格分隔单词。
+            // 如果你希望保留原有的分隔符逻辑会比较复杂，通常“标题格式”都意味着用空格分隔单词。
+            if (!isFirstWord)
+            {
+                result.Append(' ');
+            }
+            isFirstWord = false;
+
+            // 核心逻辑：
+            // 1. 将整个单词转为小写
+            // 2. 将首字母转为大写
+            string lowerWord = word.ToLower(cultureInfo);
+
+            if (lowerWord.Length > 0)
+            {
+                string titleWord = textInfo.ToTitleCase(lowerWord);
+                result.Append(titleWord);
+            }
+        }
+
+        return result.ToString();
     }
 }
