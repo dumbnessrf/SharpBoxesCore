@@ -25,6 +25,27 @@ public class HtmlSerializerOptions
     public uint? MaxCollectionSerializeLength { get; set; }
 
     /// <summary>
+    /// If true, public instance properties will be serialized. (Default: true)
+    /// </summary>
+    public bool SerializePublicProperties { get; set; } = true;
+
+    /// <summary>
+    /// If true, non-public (private/protected/internal) instance properties with a readable getter will be serialized. (Default: false)
+    /// </summary>
+    public bool SerializeNonPublicProperties { get; set; }
+
+    /// <summary>
+    /// If true, public instance fields will be serialized. (Default: false)
+    /// </summary>
+    public bool SerializePublicFields { get; set; }
+
+    /// <summary>
+    /// If true, non-public (private/protected/internal) instance fields will be serialized.
+    /// Compiler-generated fields (e.g. auto-property backing fields) are always excluded. (Default: false)
+    /// </summary>
+    public bool SerializeNonPublicFields { get; set; }
+
+    /// <summary>
     /// The max serialization depth. (Default: 64)
     /// </summary>
     public uint MaxDepth

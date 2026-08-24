@@ -72,18 +72,27 @@ public class CollectionHtmlConverter : HtmlConverter
             enumerable,
             type,
             enumerationResult.ItemsProcessed,
-            enumerationResult.CollectionLengthExceedsMax);
+            enumerationResult.CollectionLengthExceedsMax,
+            htmlSerializer.SerializerOptions);
 
         if (HtmlSerializer.GetTypeCategory(elementType) == TypeCategory.SingleObject)
         {
-            var properties = HtmlSerializer.GetReadableProperties(elementType);
+            var properties = HtmlSerializer.GetReadableProperties(elementType, htmlSerializer.SerializerOptions);
+            var fields = HtmlSerializer.GetSerializableFields(elementType, htmlSerializer.SerializerOptions);
 
-            if (properties.Any())
+            if (properties.Any() || fields.Any())
             {
                 foreach (var property in properties)
                 {
                     table.Head
                         .AddAndGetHeading(property.Name, property.PropertyType.GetReadableName(true))
+                        .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyName);
+                }
+
+                foreach (var field in fields)
+                {
+                    table.Head
+                        .AddAndGetHeading(field.Name, field.FieldType.GetReadableName(true))
                         .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyName);
                 }
 
@@ -96,7 +105,7 @@ public class CollectionHtmlConverter : HtmlConverter
                 .AddClass(htmlSerializer.SerializerOptions.CssClasses.TableInfoHeader)
                 .SetTitle(type.GetReadableName(true))
                 .AddAndGetElement("th")
-                .SetAttribute("colspan", properties.Length.ToString())
+                .SetAttribute("colspan", (properties.Length + fields.Length).ToString())
                 .AddEscapedText(headerRowText);
         }
         else
@@ -113,6 +122,16 @@ public class CollectionHtmlConverter : HtmlConverter
         Type collectionType,
         int collectionLength,
         bool collectionHasMoreElementsThanMax)
+    {
+        return GetHeaderRowText(collection, collectionType, collectionLength, collectionHasMoreElementsThanMax, options: null);
+    }
+
+    protected string GetHeaderRowText(
+        IEnumerable collection,
+        Type collectionType,
+        int collectionLength,
+        bool collectionHasMoreElementsThanMax,
+        HtmlSerializerOptions? options)
     {
         string headerRowText = "";
 
@@ -145,7 +164,7 @@ public class CollectionHtmlConverter : HtmlConverter
                     }
                     else if (typeCategory == TypeCategory.SingleObject)
                     {
-                        var properties = HtmlSerializer.GetReadableProperties(keyValueType);
+                        var properties = HtmlSerializer.GetReadableProperties(keyValueType, options);
                         keyValueStr += "{";
                         for (var iProp = 0; iProp < properties.Length; iProp++)
                         {

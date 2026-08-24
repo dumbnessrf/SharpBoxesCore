@@ -42,4 +42,11 @@ public class FileSystemInfoHtmlConverter : ObjectHtmlConverter
             .Where(p => _serializableProperties.Contains(p.Name))
             .ToArray();
     }
+
+    protected override FieldInfo[] GetSerializableFields(HtmlSerializer htmlSerializer, Type type)
+    {
+        // FileSystemInfo (e.g. FileInfo/DirectoryInfo) private fields are internal implementation
+        // details (such as the Win32 file data); never surface them even when non-public fields are enabled.
+        return Array.Empty<FieldInfo>();
+    }
 }

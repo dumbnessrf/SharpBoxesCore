@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 using O2Html.Converters;
@@ -13,6 +14,19 @@ using O2Html.Dom.Elements;
 namespace O2Html;
 
 /// <summary>
+/// Flags describing which kinds of instance members should be serialized for single objects.
+/// </summary>
+[Flags]
+internal enum MemberSelectionFlags
+{
+    None = 0,
+    PublicProperties = 1 << 0,
+    NonPublicProperties = 1 << 1,
+    PublicFields = 1 << 2,
+    NonPublicFields = 1 << 3,
+}
+
+/// <summary>
 /// Provides methods for converting .NET objects or value types to HTML.
 /// </summary>
 public sealed class HtmlSerializer
@@ -20,7 +34,8 @@ public sealed class HtmlSerializer
     private static readonly HtmlSerializerOptions _defaultHtmlSerializerOptions = new();
     private static readonly ConcurrentDictionary<Type, HtmlConverter?> _typeConverterCache = new();
     private static readonly ConcurrentDictionary<Type, TypeCategory> _typeCategoryCache = new();
-    private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _typePropertyCache = new();
+    private static readonly ConcurrentDictionary<(Type Type, MemberSelectionFlags Flags), PropertyInfo[]> _typePropertyCache = new();
+    private static readonly ConcurrentDictionary<(Type Type, MemberSelectionFlags Flags), FieldInfo[]> _typeFieldCache = new();
     private static readonly ConcurrentDictionary<Type, Type?> _collectionElementTypeCache = new();
 
     // First converter in list that can convert type will be selected.
@@ -227,21 +242,100 @@ public sealed class HtmlSerializer
         return shortCircuitValue != null;
     }
 
-    internal static PropertyInfo[] GetReadableProperties(Type type)
+    /// <summary>
+    /// Gets the readable properties of a type that should be serialized, according to the specified options.
+    /// When <paramref name="options"/> is null, the default options (public properties only) are used.
+    /// </summary>
+    internal static PropertyInfo[] GetReadableProperties(Type type, HtmlSerializerOptions? options = null)
     {
-        if (_typePropertyCache.TryGetValue(type, out var propertyInfos))
+        var flags = GetMemberSelectionFlags(options ?? _defaultHtmlSerializerOptions);
+        var key = (type, flags);
+
+        if (_typePropertyCache.TryGetValue(key, out var propertyInfos))
             return propertyInfos;
 
-        propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            // Only include readable properties, and exclude indexer properties
-            .Where(p => p.CanRead && p.GetIndexParameters().Length == 0)
+        var properties = new List<PropertyInfo>();
+
+        if (flags.HasFlag(MemberSelectionFlags.PublicProperties))
+        {
+            properties.AddRange(
+                type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    // Only include readable properties, and exclude indexer properties
+                    .Where(p => p.CanRead && p.GetIndexParameters().Length == 0));
+        }
+
+        if (flags.HasFlag(MemberSelectionFlags.NonPublicProperties))
+        {
+            properties.AddRange(
+                type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                    // Only include properties that have a getter which is not public,
+                    // so public properties (e.g. with a private setter) are not duplicated
+                    .Where(p => p.GetIndexParameters().Length == 0)
+                    .Where(p => p.GetGetMethod(true) != null)
+                    .Where(p => p.GetGetMethod() == null));
+        }
+
+        propertyInfos = properties
             // Exclude properties that exist in base types and are hidden by properties in derived types
             .GroupBy(p => p.Name)
             .Select(g => g.OrderBy(p => p.DeclaringType == type).First())
             .ToArray();
 
-        _typePropertyCache.TryAdd(type, propertyInfos);
+        _typePropertyCache.TryAdd(key, propertyInfos);
         return propertyInfos;
+    }
+
+    /// <summary>
+    /// Gets the fields of a type that should be serialized, according to the specified options.
+    /// When <paramref name="options"/> is null, the default options (public properties only) are used.
+    /// Compiler-generated fields (e.g. auto-property backing fields) are always excluded.
+    /// </summary>
+    internal static FieldInfo[] GetSerializableFields(Type type, HtmlSerializerOptions? options = null)
+    {
+        var flags = GetMemberSelectionFlags(options ?? _defaultHtmlSerializerOptions);
+        var key = (type, flags);
+
+        if (_typeFieldCache.TryGetValue(key, out var fieldInfos))
+            return fieldInfos;
+
+        var fields = new List<FieldInfo>();
+
+        if (flags.HasFlag(MemberSelectionFlags.PublicFields))
+        {
+            fields.AddRange(
+                type.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(f => !f.IsDefined(typeof(CompilerGeneratedAttribute), false)));
+        }
+
+        if (flags.HasFlag(MemberSelectionFlags.NonPublicFields))
+        {
+            fields.AddRange(
+                type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                    // Exclude compiler-generated fields: auto-property backing fields (<X>k__BackingField),
+                    // closure fields, etc.
+                    .Where(f => !f.IsDefined(typeof(CompilerGeneratedAttribute), false)));
+        }
+
+        fieldInfos = fields
+            // Exclude fields that exist in base types and are hidden by fields in derived types
+            .GroupBy(f => f.Name)
+            .Select(g => g.OrderBy(f => f.DeclaringType == type).First())
+            .ToArray();
+
+        _typeFieldCache.TryAdd(key, fieldInfos);
+        return fieldInfos;
+    }
+
+    private static MemberSelectionFlags GetMemberSelectionFlags(HtmlSerializerOptions options)
+    {
+        var flags = MemberSelectionFlags.None;
+
+        if (options.SerializePublicProperties) flags |= MemberSelectionFlags.PublicProperties;
+        if (options.SerializeNonPublicProperties) flags |= MemberSelectionFlags.NonPublicProperties;
+        if (options.SerializePublicFields) flags |= MemberSelectionFlags.PublicFields;
+        if (options.SerializeNonPublicFields) flags |= MemberSelectionFlags.NonPublicFields;
+
+        return flags;
     }
 
     public static Type? GetCollectionElementType(Type collectionType)

@@ -23,27 +23,17 @@ public class ObjectHtmlConverter : HtmlConverter
             .AddEscapedText(type.GetReadableName())
             .SetTitle(type.GetReadableName(true));
 
-        PropertyInfo[] properties = GetReadableProperties(htmlSerializer, type);
+        var properties = GetReadableProperties(htmlSerializer, type);
+        var fields = GetSerializableFields(htmlSerializer, type);
 
         foreach (var property in properties)
         {
-            var name = property.Name;
-            object? value = GetPropertyValue(property, ref obj!);
+            AddMemberRow(table, property.Name, GetPropertyValue(property, ref obj!), property.PropertyType, serializationScope, htmlSerializer);
+        }
 
-            var propertyType = value?.GetType() ?? property.PropertyType;
-
-            var tr = table.Body.AddAndGetRow();
-
-            // Add property name
-            tr.AddAndGetElement("th")
-                .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyName)
-                .SetTitle($"[{propertyType.GetReadableName(true)}] {name}")
-                .AddText(name);
-
-            // Add property value
-            tr.AddAndGetElement("td")
-                .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyValue)
-                .AddChild(htmlSerializer.Serialize(value, propertyType, serializationScope));
+        foreach (var field in fields)
+        {
+            AddMemberRow(table, field.Name, GetFieldValue(field, obj!), field.FieldType, serializationScope, htmlSerializer);
         }
 
         return table;
@@ -51,22 +41,56 @@ public class ObjectHtmlConverter : HtmlConverter
 
     public override void WriteHtmlWithinTableRow<T>(Element tr, T obj, Type type, SerializationScope serializationScope, HtmlSerializer htmlSerializer)
     {
-        var properties = HtmlSerializer.GetReadableProperties(type);
+        var properties = GetReadableProperties(htmlSerializer, type);
 
         foreach (var property in properties)
         {
-            object? value = GetPropertyValue(property, ref obj!);
-            var propertyType = value?.GetType() ?? property.PropertyType;
+            AddMemberValueCell(tr, GetPropertyValue(property, ref obj!), property.PropertyType, serializationScope, htmlSerializer);
+        }
 
-            tr.AddAndGetElement("td")
-                .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyValue)
-                .AddChild(htmlSerializer.Serialize(value, propertyType, serializationScope));
+        var fields = GetSerializableFields(htmlSerializer, type);
+
+        foreach (var field in fields)
+        {
+            AddMemberValueCell(tr, GetFieldValue(field, obj!), field.FieldType, serializationScope, htmlSerializer);
         }
     }
 
     protected virtual PropertyInfo[] GetReadableProperties(HtmlSerializer htmlSerializer, Type type)
     {
-        return HtmlSerializer.GetReadableProperties(type);
+        return HtmlSerializer.GetReadableProperties(type, htmlSerializer.SerializerOptions);
+    }
+
+    protected virtual FieldInfo[] GetSerializableFields(HtmlSerializer htmlSerializer, Type type)
+    {
+        return HtmlSerializer.GetSerializableFields(type, htmlSerializer.SerializerOptions);
+    }
+
+    private void AddMemberRow(Table table, string name, object? value, Type memberType, SerializationScope serializationScope, HtmlSerializer htmlSerializer)
+    {
+        var memberTypeOrValueType = value?.GetType() ?? memberType;
+
+        var tr = table.Body.AddAndGetRow();
+
+        // Add member name
+        tr.AddAndGetElement("th")
+            .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyName)
+            .SetTitle($"[{memberTypeOrValueType.GetReadableName(true)}] {name}")
+            .AddText(name);
+
+        // Add member value
+        tr.AddAndGetElement("td")
+            .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyValue)
+            .AddChild(htmlSerializer.Serialize(value, memberTypeOrValueType, serializationScope));
+    }
+
+    private void AddMemberValueCell(Element tr, object? value, Type memberType, SerializationScope serializationScope, HtmlSerializer htmlSerializer)
+    {
+        var memberTypeOrValueType = value?.GetType() ?? memberType;
+
+        tr.AddAndGetElement("td")
+            .AddClass(htmlSerializer.SerializerOptions.CssClasses.PropertyValue)
+            .AddChild(htmlSerializer.Serialize(value, memberTypeOrValueType, serializationScope));
     }
 
     private object? GetPropertyValue<T>(PropertyInfo property, ref T? obj)
@@ -74,6 +98,18 @@ public class ObjectHtmlConverter : HtmlConverter
         try
         {
             return property.GetValue(obj);
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+    }
+
+    private object? GetFieldValue(FieldInfo field, object obj)
+    {
+        try
+        {
+            return field.GetValue(obj);
         }
         catch (Exception)
         {

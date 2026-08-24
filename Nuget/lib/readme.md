@@ -1,24 +1,21 @@
 # SharpBoxesCore
-[![](https://img.shields.io/github/issues/dumbnessrf/SharpBoxesCore.svg)](https://github.com/zhouie/markdown-emoji/issues)
-[![](https://img.shields.io/github/forks/dumbnessrf/SharpBoxesCore.svg)](https://github.com/zhouie/markdown-emoji/network)
+[![](https://img.shields.io/github/issues/dumbnessrf/SharpBoxesCore.svg)](https://github.com/dumbnessrf/SharpBoxesCore/issues)
+[![](https://img.shields.io/github/forks/dumbnessrf/SharpBoxesCore.svg)](https://github.com/dumbnessrf/SharpBoxesCore/network)
 
-集成了一些常用的方法；如通用的缓存静态操作类、通用的反射加载dll类`DynamicLoadHelper`、`HTTPHelper`、`IniHelper`、`XMLHelper`、`ZipHelper`、`CSVHelper`、`Preview Features Import`、`ClassHelper`、`EventHelper`、`ValidationHelper`其他是一些通用的扩展方法类
+集成常用 .NET 工具方法：O2Html（对象→HTML 序列化）、反射与动态加载 DLL、HTTP/INI/XML/ZIP 文件操作、CSV/Excel 数据处理、汉字拼音与繁简转换、几何形状数据结构与计算扩展、数据验证、MVVM 基础（RelayCommand/VMBase）、后台任务与线程池管理、TCP 通信、高级计时器等。
 
-:bowtie:
+A .NET utility library integrating common tools: O2Html (object-to-HTML serialization), reflection & dynamic DLL loading, HTTP/INI/XML/ZIP file operations, CSV/Excel data processing, Chinese Pinyin & character conversion, geometric shape structures with math extensions, data validation, MVVM basics (RelayCommand/VMBase), background task & thread pool management, TCP communication, advanced stopwatch, and more.
 
-It integrates some commonly used methods.
-Such as the general cache static operation class, the general reflection loading dll class'DynamicLoadHelper','HTTPHelper','IniHelper','XMLHelper','ZipHelper','CSVHelper','Preview Features Import','ClassHelper','EventHelper','ValidationHelper', and others are some general extension method classes
-
-Orignal Source:
+Original Source:
 [SharpBoxesCore](https://github.com/dumbnessrf/SharpBoxesCore)
 
 其他相关工具、扩展
 Other Toolkit:
 [SharpBoxesCore.Cuts](https://marketplace.visualstudio.com/items?itemName=dumbnessrf.SharpBoxesCore)
 
-其中提供了许多cSharp、xaml有用的代码片段，如`OnPropertyChanged`的完整属性语句，`Task.Run（）=>{}`）的自动环绕；…
+其中提供了许多 C#、XAML 有用的代码片段，如 `OnPropertyChanged` 的完整属性语句，`Task.Run(()=>{ })` 的自动环绕等。
 
-which provided lots of csharp、xaml useful code snippets Like full property statement with `OnPropertyChanged`, auto surround with `Task.Run(()=>{ }`);...
+Which provided lots of C#、XAML useful code snippets like full property statement with `OnPropertyChanged`, auto surround with `Task.Run(()=>{ }`);...
 
 ## Table of Contents
 - [Installation](#install)
@@ -37,6 +34,12 @@ which provided lots of csharp、xaml useful code snippets Like full property sta
     - [SmartFileWriter](#smartfilewriter)
     - [EventManager](#eventmanager)
     - [TCP Helpers](#tcp-helpers)
+  - [ChineseSpell](#chinesespell)
+    - [PinYin](#pinyin)
+    - [EcanConvertToCh](#ecanconverttoch)
+  - [O2Html](#o2html)
+    - [HtmlSerializer](#htmlserializer)
+    - [HtmlConverter](#htmlconverter)
   - [Office](#office)
     - [CSV](#csv)
     - [Excel](#excel)
@@ -49,16 +52,15 @@ which provided lots of csharp、xaml useful code snippets Like full property sta
   - [DynamicLoad](#dynamicload)
     - [DynamicLoadHelper](#dynamicloadhelper)
   - [DataStruct](#datastruct)
-    - [Data Structures](#data-structures)
-    - [Math Extensions](#math-extensions)
-  - [Everything](#everything)
-    - [Everything Search Integration](#everything-search-integration)
+    - [Shape Structures](#shape-structures)
+    - [Math & Shape Extensions](#math--shape-extensions)
   - [Mvvm](#mvvm)
     - [RelayCommand](#relaycommand)
     - [VMBase](#vmbase)
   - [TaskHelper](#taskhelper)
     - [BackgroundTaskManager](#backgroundtaskmanager)
     - [ThreadPoolManager](#threadpoolmanager)
+    - [AsyncManualResetEvent](#asyncmanualresetevent)
 
 # Install
 ```shell
@@ -186,7 +188,16 @@ ConfigFileHelper.Load(configPath, out MyConfig loadedConfig);
 XML文件操作类（具体功能需查看源代码）。
 
 ### AdvancedStopWatch
-高级计时器类（具体功能需查看源代码）。
+高级计时器类，支持毫秒级精度计时、暂停/恢复、多圈计时等功能。
+
+**Example:**
+```csharp
+var sw = new AdvancedStopWatch();
+sw.Start();
+// ... 执行操作 ...
+sw.Stop();
+Console.WriteLine($"Elapsed: {sw.ElapsedMilliseconds}ms");
+```
 
 ### FastDateTime
 快速日期时间操作类（具体功能需查看源代码）。
@@ -201,7 +212,78 @@ XML文件操作类（具体功能需查看源代码）。
 事件管理器（具体功能需查看源代码）。
 
 ### TCP Helpers
-位于 [Helpers/TCP](file:///F:/software/Nuget%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/SharpBoxesCore/Helpers/TCP) 目录下的Socket客户端和服务器帮助类。
+位于 `Helpers/TCP` 目录下的 Socket 客户端和服务器帮助类。
+
+## ChineseSpell
+
+### PinYin
+汉字拼音转换类，提供获取汉字拼音首字母的功能。
+
+**Methods:**
+- `GetFirstLetter(string hz)` - 获取汉字字符串的首字母缩写
+
+**Example:**
+```csharp
+string result = PinYin.GetFirstLetter("中国");
+// result: "ZG"
+```
+
+### EcanConvertToCh
+繁简体汉字转换类。
+
+**Methods:**
+- `ToTraditionalChinese(string str)` - 简体转繁体
+- `ToSimplifiedChinese(string str)` - 繁体转简体
+
+**Example:**
+```csharp
+string traditional = EcanConvertToCh.ToTraditionalChinese("中国");
+// traditional: "中國"
+
+string simplified = EcanConvertToCh.ToSimplifiedChinese("中國");
+// simplified: "中国"
+```
+
+## O2Html
+对象到 HTML 的序列化库，支持将 .NET 对象、集合、DataTable、JSON 等各种类型转换为友好的 HTML 展示。
+
+### HtmlSerializer
+核心序列化类，负责将 .NET 对象转换为 HTML 文档。
+
+**Options:**
+- `MaxDepth` - 最大序列化深度，防止循环引用导致栈溢出
+- `ReferenceLoopHandling` - 循环引用处理策略（Ignore/Error/Serialize）
+- `Formatting` - HTML 输出格式（压缩/缩进）
+
+**Supported Types:**
+- 基本类型（string, int, DateTime 等）
+- 集合类型（List, Array, Dictionary 等）
+- DataTable / DataSet
+- 匿名类型
+- 元组 (Tuple / ValueTuple)
+- JSON 文档（JsonDocument / JsonElement）
+- XML 节点（XNode / XmlNode）
+- 多维数组
+- 内存流（Memory / ReadOnlyMemory）
+- 文件系统信息（FileInfo / DirectoryInfo）
+
+**Example:**
+```csharp
+var serializer = new HtmlSerializer();
+string html = serializer.Serialize(new { Name = "Alice", Age = 30 });
+```
+
+### HtmlConverter
+静态入口类，提供简洁的序列化方法。
+
+**Methods:**
+- `ToHtml(object obj)` - 使用默认设置将对象转换为 HTML
+- `ToHtml(object obj, HtmlSerializerOptions options)` - 使用自定义设置转换
+
+**Example:**
+```csharp
+string html = HtmlConverter.ToHtml(myObject);
+```
 
 ## Office
 
@@ -249,7 +331,7 @@ Excel导出相关类。
 - `IExcelExporter` - Excel导出器接口
 
 **Example:**
-``csharp
+```csharp
 // Excel导出示例（具体用法需查看源代码）
 ```
 
@@ -366,8 +448,8 @@ var types = DynamicLoadHelper.FindSpecifiedTypeInheritFromFolderAndSpecifiedAttr
 
 ## DataStruct
 
-### Data Structures
-数据结构相关类，位于 [DataStruct/Structure](file:///F:/software/Nuget%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/SharpBoxesCore/DataStruct/Structure) 目录。
+### Shape Structures
+数据结构相关类，位于 `DataStruct/Structure` 目录。
 
 **Classes:**
 - `Point` - 点结构
@@ -383,23 +465,25 @@ var types = DynamicLoadHelper.FindSpecifiedTypeInheritFromFolderAndSpecifiedAttr
 - `IShapeStructure` - 形状结构接口
 - `EmptyShape` - 空形状
 
-### Math Extensions
-数学扩展方法。
+### Math & Shape Extensions
+数学与图形扩展方法，提供形状计算与几何变换功能。
 
-**Extensions:**
-- `Round()` - 四舍五入扩展方法
-- `Angle()` - 计算两点间角度
-- `DistanceToLine()` - 计算点到线段的距离
-- `Translate()` - 平移
-- `Rotate()` - 旋转
-- `ExtendLine()` - 延长线段
-- `ProjectionOfLine()` - 计算点在线段上的投影
-- `Centroid()` - 计算点集的质心
-- `IsIntersect()` - 判断线段是否相交
-- `ToListAsync()` - 异步转换为列表
+**Extensions (MathExtensions):**
+- `Round(double value, int digits)` - 四舍五入
+- `ToListAsync<T>(IAsyncEnumerable<T> source)` - 异步转换为列表
+
+**Extensions (ShapeExtensions):**
+- `Angle(Point origin, Point p1)` - 计算三点间角度
+- `DistanceToLine(Point p, Point lineStart, Point lineEnd)` - 计算点到线段的距离
+- `Translate(Point p, double dx, double dy)` - 平移点
+- `Rotate(Point p, double angleDeg, Point center)` - 绕中心旋转点
+- `ExtendLine(Point start, Point end, double distance)` - 延长线段
+- `ProjectionOfLine(Point p, Point lineStart, Point lineEnd)` - 计算点在线段上的投影
+- `Centroid(params Point[] points)` - 计算点集的质心
+- `IsIntersect(Line l1, Line l2)` - 判断两条线段是否相交
 
 **Example:**
-``csharp
+```csharp
 // 计算两点间距离
 var point1 = new Point(0, 0);
 var point2 = new Point(3, 4);
@@ -408,27 +492,8 @@ var distance = point1.DistanceToLine(point2, new Point(1, 1));
 // 旋转点
 var rotatedPoint = point1.Rotate(45, new Point(0, 0));
 
-// 四舍五入
-var roundedValue = 3.14159.Round(2); // 3.14
-```
-
-## Everything
-
-### Everything Search Integration
-Everything搜索集成，提供对Everything搜索工具的访问。
-
-**Classes:**
-- `Everything` - Everything搜索主类
-- `EverythingState` - Everything状态管理
-- `EverythingWrapper` - Everything API包装器
-- `SearchResult` - 搜索结果类
-- 各种查询接口和实现类
-
-**Example:**
-```csharp
-// 使用Everything搜索
-var everything = new Everything();
-var results = everything.Search().Name("*.txt").ToList();
+// 计算质心
+var centroid = Point.Centroid(new Point(0,0), new Point(10,0), new Point(5,10));
 ```
 
 ## Mvvm
@@ -462,17 +527,51 @@ public class MyViewModel : VMBase
 ## TaskHelper
 
 ### BackgroundTaskManager
-后台任务管理器。
+后台任务管理器，支持任务的注册、启动、暂停、取消和状态监控。
+
+**Features:**
+- 任务生命周期管理（启动、暂停、恢复、取消）
+- 任务状态变更通知
+- 支持异步任务执行
+- 错误处理与日志记录
 
 **Example:**
-``csharp
-// 使用后台任务管理器（具体用法需查看源代码）
+```csharp
+// 创建后台任务
+var task = new BackgroundTaskManager("MyTask", async (ct, reporter) =>
+{
+    while (!ct.IsCancellationRequested)
+    {
+        await Task.Delay(1000, ct);
+        reporter.ReportProgress("Working...");
+    }
+});
+task.Start();
 ```
 
 ### ThreadPoolManager
-线程池管理器。
+线程池管理器，提供线程池的创建、调度和监控功能。
 
 **Example:**
-``csharp
+```csharp
 // 使用线程池管理器（具体用法需查看源代码）
+```
+
+### AsyncManualResetEvent
+异步手动重置事件，用于异步协调。
+
+**Methods:**
+- `Set()` - 将事件设置为有信号状态
+- `Reset()` - 将事件设置为无信号状态
+- `WaitAsync()` - 异步等待事件变为有信号状态
+
+**Example:**
+```csharp
+var resetEvent = new AsyncManualResetEvent(false);
+
+// 等待信号
+await resetEvent.WaitAsync();
+
+// 发送信号
+resetEvent.Set();
 ```
